@@ -2,3 +2,5 @@ numpy
 pyqtgraph
 PyQt5
 PyOpenGL
+bleak
+pyserial

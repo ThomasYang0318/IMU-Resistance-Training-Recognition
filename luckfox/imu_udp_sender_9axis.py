@@ -3,7 +3,7 @@ import time
 import struct
 import fcntl
 
-DEST_IP = "192.168.0.125"   # 改成你的 Mac IP
+DEST_IP = "192.168.50.169"   # 改成你的 Mac IP
 DEST_PORT = 10000
 
 I2C_DEV = "/dev/i2c-2"
