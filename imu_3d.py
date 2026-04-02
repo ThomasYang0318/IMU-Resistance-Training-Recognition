@@ -16,20 +16,27 @@ import pyqtgraph.opengl as gl
 # =========================
 # Config
 # =========================
+
+# UDP port，IMU sender 要送到這個 port
 PORT = 10000
+
+# 是否儲存資料（做 dataset / debug 很重要）
 SAVE_CSV = True
+
+# CSV 檔名（時間戳避免覆蓋）
 CSV_FILENAME = f"imu9axis_6dof_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
 
-# 軌跡顯示點數
+# 軌跡最多保留點數，避免記憶體爆掉，畫面上也不會太亂
 MAX_TRAJ_POINTS = 300
 
-# 是否把磁力計納入 yaw 修正
-USE_MAG_YAW = False
+# 是否使用磁力計修正 yaw（避免漂移）
+USE_MAG_YAW = True
 
 # 若你的 accel 單位是 raw counts，不是 m/s^2，可先把這裡改成 False
 ACC_INPUT_IS_MS2 = False
 
 # 若 ACC_INPUT_IS_MS2=False，下面用來把 accel raw 轉成 m/s^2
+# raw → g 的比例（±2g 常見設定）
 # 常見：±2g 量測範圍時，16384 LSB/g
 ACC_LSB_PER_G = 16384.0
 
@@ -37,17 +44,21 @@ ACC_LSB_PER_G = 16384.0
 GYRO_INPUT_IS_DEG_S = True
 
 # 靜止判定門檻
+# | |a|-g | 小於這個 → 近似靜止
 STATIONARY_ACC_ERR_MS2 = 0.20     # | |a|-g | < 0.35
+# gyro 小於這個 → 近似靜止
 STATIONARY_GYRO_DPS = 1.2         # |gyro| < 2 deg/s
 
 # 軌跡積分控制
 VEL_DAMPING = 0.985               # 速度阻尼，避免無限制飄移
 POS_DAMPING = 0.999               # 位置微阻尼
 ACC_DEADBAND_MS2 = 0.10           # 去掉小震動
+
+# dt 限制（避免時間錯誤）
 MAX_DT = 0.05
 MIN_DT = 0.001
 
-# 顯示比例
+# 顯示比例，避免飛出去
 BODY_AXIS_LEN = 0.18
 WORLD_BOX = 0.6                   # 畫面 world 範圍 +-WORLD_BOX
 
@@ -57,8 +68,10 @@ WORLD_BOX = 0.6                   # 畫面 world 範圍 +-WORLD_BOX
 # =========================
 @dataclass
 class IMUSample:
-    recv_time: str
-    timestamp: int
+    recv_time: str                # 接收時間（PC）
+    timestamp: int                # sensor timestamp（毫秒）
+
+    # 原始資料（已轉單位）
     ax: float
     ay: float
     az: float
@@ -69,29 +82,37 @@ class IMUSample:
     my: float
     mz: float
 
+    # 姿態
     roll: float = 0.0
     pitch: float = 0.0
     yaw: float = 0.0
+
+    # 接收頻率
     fps: float = 0.0
 
     q: np.ndarray = None
 
+    # norm（用來判斷靜止/品質）
     a_norm: float = 0.0
     g_norm: float = 0.0
     m_norm: float = 0.0
 
+    # 世界座標加速度（重力補償後）
     ax_w: float = 0.0
     ay_w: float = 0.0
     az_w: float = 0.0
 
+    # 世界座標速度
     vx: float = 0.0
     vy: float = 0.0
     vz: float = 0.0
 
+    # 位置（短期軌跡）
     x: float = 0.0
     y: float = 0.0
     z: float = 0.0
 
+    # 狀態
     stationary: bool = False
     bias_ready: bool = False
 
@@ -249,7 +270,7 @@ class MotionEstimator:
         gx_dps, gy_dps, gz_dps = gyro_to_deg_s(gx, gy, gz)
 
         # gyro low-pass
-        beta = 0.92
+        beta = 0.75
         if self.gx_f is None:
             self.gx_f, self.gy_f, self.gz_f = gx_dps, gy_dps, gz_dps
         else:
@@ -319,12 +340,24 @@ class MotionEstimator:
         self.yaw = wrap_angle_deg(self.yaw)
         q = euler_to_quaternion(self.roll, self.pitch, self.yaw)
 
-        # body accel -> world accel
-        a_world_total = body_to_world(q, [ax_ms2, ay_ms2, az_ms2])
+        # --- gravity estimate in body frame ---
+        if not hasattr(self, "g_body_est"):
+            self.g_body_est = np.array([ax_ms2, ay_ms2, az_ms2], dtype=float)
 
-        # 扣重力：假設世界 z 向上，重力向下
-        a_world_lin = a_world_total - np.array([0.0, 0.0, 9.80665], dtype=float)
+        a_body_vec = np.array([ax_ms2, ay_ms2, az_ms2], dtype=float)
 
+        # 只有接近靜止才更新重力估計
+        if stationary:
+            g_beta = 0.92
+            self.g_body_est = g_beta * self.g_body_est + (1.0 - g_beta) * a_body_vec
+
+        # 線性加速度
+        a_body_lin = a_body_vec - self.g_body_est
+        a_world_lin = body_to_world(q, a_body_lin)
+
+        # 分軸 deadband：Z 軸放比較小，避免上抬被吃掉
+        xy_deadband = ACC_DEADBAND_MS2
+        z_deadband = 0.02
         # deadband
         a_world_lin = np.array([
             apply_deadband(a_world_lin[0], ACC_DEADBAND_MS2),
@@ -428,7 +461,7 @@ def udp_receiver():
         while shared.running:
             try:
                 data, addr = sock.recvfrom(2048)
-            except socket.timeout:
+            except socket.timeout: 
                 continue
 
             msg = data.decode(errors="ignore").strip()

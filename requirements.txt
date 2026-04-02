@@ -4,3 +4,4 @@ PyQt5
 PyOpenGL
 bleak
 pyserial
+joblib
