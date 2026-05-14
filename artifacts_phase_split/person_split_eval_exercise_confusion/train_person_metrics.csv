@@ -1,0 +1,6 @@
+person,split,reps,mae_samples,median_error_samples,mae_pct_rep,mae_seconds,median_error_seconds,mean_iou,median_iou,mean_min_iou,acc_<=_5_samples,acc_<=_10_samples,acc_<=_15_samples,acc_<=_5pct_rep,acc_<=_10pct_rep,acc_>=_75pct_iou,acc_>=_90pct_iou
+haoyu0512workout,train,257,16.26,13.0,4.18,0.1495,0.1197,0.919,0.932,0.9056,23.74,41.63,56.81,66.93,93.0,98.83,68.09
+thomas0506workout,train,245,7.96,6.0,3.13,0.0732,0.0552,0.9401,0.9513,0.9369,46.12,70.61,88.57,80.82,97.55,100.0,82.04
+yoru0511workout,train,261,17.0,15.0,5.56,0.1561,0.1375,0.8961,0.9045,0.8872,16.48,34.87,51.72,50.57,86.59,97.7,52.49
+yushuan0513workout,train,270,15.93,12.0,4.36,0.1462,0.1105,0.9169,0.9308,0.9077,22.96,42.59,59.26,65.19,92.22,97.78,68.52
+ziho0512workout,train,258,18.68,16.0,5.43,0.1716,0.1471,0.8983,0.9067,0.888,18.99,32.56,48.45,50.39,85.27,96.12,52.33
