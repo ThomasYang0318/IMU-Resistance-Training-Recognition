@@ -1,0 +1,3 @@
+person,split,reps,mae_samples,median_error_samples,mae_pct_rep,mae_seconds,median_error_seconds,mean_iou,median_iou,mean_min_iou,acc_<=_5_samples,acc_<=_10_samples,acc_<=_15_samples,acc_<=_5pct_rep,acc_<=_10pct_rep,acc_>=_75pct_iou,acc_>=_90pct_iou
+kevin0509workout,test_uncalibrated,245,14.42,11.0,4.7,0.1326,0.1007,0.9126,0.9301,0.9055,30.61,49.39,64.08,63.27,91.43,97.14,64.49
+yanz0510workout,test_uncalibrated,261,26.48,19.0,7.85,0.2433,0.1743,0.8578,0.8764,0.8397,14.18,26.44,39.46,36.4,75.48,86.97,40.61

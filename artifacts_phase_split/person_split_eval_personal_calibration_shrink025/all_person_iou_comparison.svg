@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="608" viewBox="0 0 1100 608">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="32" y="34" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#111827">All Person IoU Accuracy</text>
+<text x="32" y="58" font-family="Arial, sans-serif" font-size="13" fill="#4b5563">Bar = mean phase IoU &gt;= 0.90; red marker = mean absolute error in seconds.</text>
+<line x1="190" y1="70" x2="840" y2="70" stroke="#d1d5db"/>
+<line x1="190.00" y1="64" x2="190.00" y2="556" stroke="#f3f4f6"/>
+<text x="181.00" y="58" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">0%</text>
+<line x1="352.50" y1="64" x2="352.50" y2="556" stroke="#f3f4f6"/>
+<text x="343.50" y="58" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">25%</text>
+<line x1="515.00" y1="64" x2="515.00" y2="556" stroke="#f3f4f6"/>
+<text x="506.00" y="58" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">50%</text>
+<line x1="677.50" y1="64" x2="677.50" y2="556" stroke="#f3f4f6"/>
+<text x="668.50" y="58" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">75%</text>
+<line x1="840.00" y1="64" x2="840.00" y2="556" stroke="#f3f4f6"/>
+<text x="831.00" y="58" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">100%</text>
+<text x="32" y="110" font-family="Arial, sans-serif" font-size="13" fill="#111827">haoyu0512workout</text>
+<text x="32" y="130" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">train, reps=257</text>
+<rect x="190" y="97" width="650" height="24" rx="4" fill="#eef2ff"/>
+<rect x="190" y="97" width="442.58" height="24" rx="4" fill="#64748b"/>
+<line x1="583.10" y1="91" x2="583.10" y2="129" stroke="#dc2626" stroke-width="3"/>
+<text x="858" y="113" font-family="Arial, sans-serif" font-size="12" fill="#111827">acc 68.09%</text>
+<text x="950" y="113" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">MAE 0.149s</text>
+<text x="32" y="174" font-family="Arial, sans-serif" font-size="13" fill="#111827">thomas0506workout</text>
+<text x="32" y="194" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">train, reps=245</text>
+<rect x="190" y="161" width="650" height="24" rx="4" fill="#eef2ff"/>
+<rect x="190" y="161" width="533.26" height="24" rx="4" fill="#64748b"/>
+<line x1="382.48" y1="155" x2="382.48" y2="193" stroke="#dc2626" stroke-width="3"/>
+<text x="858" y="177" font-family="Arial, sans-serif" font-size="12" fill="#111827">acc 82.04%</text>
+<text x="950" y="177" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">MAE 0.073s</text>
+<text x="32" y="238" font-family="Arial, sans-serif" font-size="13" fill="#111827">yoru0511workout</text>
+<text x="32" y="258" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">train, reps=261</text>
+<rect x="190" y="225" width="650" height="24" rx="4" fill="#eef2ff"/>
+<rect x="190" y="225" width="341.19" height="24" rx="4" fill="#64748b"/>
+<line x1="600.46" y1="219" x2="600.46" y2="257" stroke="#dc2626" stroke-width="3"/>
+<text x="858" y="241" font-family="Arial, sans-serif" font-size="12" fill="#111827">acc 52.49%</text>
+<text x="950" y="241" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">MAE 0.156s</text>
+<text x="32" y="302" font-family="Arial, sans-serif" font-size="13" fill="#111827">yushuan0513workout</text>
+<text x="32" y="322" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">train, reps=270</text>
+<rect x="190" y="289" width="650" height="24" rx="4" fill="#eef2ff"/>
+<rect x="190" y="289" width="445.38" height="24" rx="4" fill="#64748b"/>
+<line x1="574.43" y1="283" x2="574.43" y2="321" stroke="#dc2626" stroke-width="3"/>
+<text x="858" y="305" font-family="Arial, sans-serif" font-size="12" fill="#111827">acc 68.52%</text>
+<text x="950" y="305" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">MAE 0.146s</text>
+<text x="32" y="366" font-family="Arial, sans-serif" font-size="13" fill="#111827">ziho0512workout</text>
+<text x="32" y="386" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">train, reps=258</text>
+<rect x="190" y="353" width="650" height="24" rx="4" fill="#eef2ff"/>
+<rect x="190" y="353" width="340.14" height="24" rx="4" fill="#64748b"/>
+<line x1="641.21" y1="347" x2="641.21" y2="385" stroke="#dc2626" stroke-width="3"/>
+<text x="858" y="369" font-family="Arial, sans-serif" font-size="12" fill="#111827">acc 52.33%</text>
+<text x="950" y="369" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">MAE 0.172s</text>
+<text x="32" y="430" font-family="Arial, sans-serif" font-size="13" fill="#111827">kevin0509workout</text>
+<text x="32" y="450" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">test_calibrated, reps=245</text>
+<rect x="190" y="417" width="650" height="24" rx="4" fill="#eef2ff"/>
+<rect x="190" y="417" width="421.85" height="24" rx="4" fill="#64748b"/>
+<line x1="534.72" y1="411" x2="534.72" y2="449" stroke="#dc2626" stroke-width="3"/>
+<text x="858" y="433" font-family="Arial, sans-serif" font-size="12" fill="#111827">acc 64.90%</text>
+<text x="950" y="433" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">MAE 0.131s</text>
+<text x="32" y="494" font-family="Arial, sans-serif" font-size="13" fill="#111827">yanz0510workout</text>
+<text x="32" y="514" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">test_calibrated, reps=261</text>
+<rect x="190" y="481" width="650" height="24" rx="4" fill="#eef2ff"/>
+<rect x="190" y="481" width="259.02" height="24" rx="4" fill="#64748b"/>
+<line x1="840.00" y1="475" x2="840.00" y2="513" stroke="#dc2626" stroke-width="3"/>
+<text x="858" y="497" font-family="Arial, sans-serif" font-size="12" fill="#111827">acc 39.85%</text>
+<text x="950" y="497" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">MAE 0.247s</text>
+<text x="190" y="586" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">0% accuracy</text>
+<text x="762" y="586" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">100% accuracy</text>
+<text x="858" y="586" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">red marker scaled 0-0.247s</text>
+</svg>

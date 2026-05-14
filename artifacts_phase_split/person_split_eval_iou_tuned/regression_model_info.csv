@@ -1,0 +1,8 @@
+key,value
+model,GradientBoostingRegressor
+n_train_reps,1291
+n_features,25
+target,true_cut / n_samples
+bias_correction,leave-one-person-out median residual by exercise
+bias_shrink,1.0
+bias_selection_metric,OOF mean IoU

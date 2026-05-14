@@ -1,0 +1,3 @@
+person,calibration_reps,test_reps,scope,shrink,raw_global_fraction_bias,global_fraction_bias,exercise_biases
+kevin0509workout,20,245,global,0.25,-0.03004,-0.00751,
+yanz0510workout,20,261,global,0.25,-0.01458,-0.00364,
