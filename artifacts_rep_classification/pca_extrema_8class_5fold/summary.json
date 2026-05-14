@@ -1,0 +1,32 @@
+{
+  "data_dirs": [
+    "datasets/workout"
+  ],
+  "segment_method": "pca-extrema",
+  "num_truth_reps": 2132,
+  "num_predicted_reps": 15337,
+  "num_classified_reps": 2730,
+  "class_names": [
+    "db_bench_press",
+    "db_squat",
+    "db_triceps_curl",
+    "one_arm_db_row",
+    "db_weighted_crunch",
+    "db_biceps_curl",
+    "db_rdl",
+    "db_shoulder_press"
+  ],
+  "folds": 5,
+  "subjects": [
+    "haoyu0512workout",
+    "kevin0509workout",
+    "thomas0506",
+    "yanz0510workout",
+    "yoru0511workout",
+    "yushuan0513workout",
+    "ziho0512workout"
+  ],
+  "accuracy": 0.7652014652014651,
+  "macro_f1": 0.7597550563403814,
+  "weighted_f1": 0.7640851338947764
+}
