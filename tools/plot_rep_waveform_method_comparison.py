@@ -82,12 +82,13 @@ def normalize(values: np.ndarray) -> np.ndarray:
     return (values - float(np.median(values))) / scale
 
 
-def add_intervals(ax, intervals: pd.DataFrame, start_col: str, end_col: str, color: str, alpha: float, label: str) -> None:
+def add_boundary_lines(ax, intervals: pd.DataFrame, start_col: str, end_col: str, color: str, label: str) -> None:
     first = True
     for row in intervals.itertuples(index=False):
         start = int(getattr(row, start_col))
         end = int(getattr(row, end_col))
-        ax.axvspan(start, end, color=color, alpha=alpha, label=label if first else None)
+        ax.axvline(start, color=color, linewidth=0.9, alpha=0.9, label=label if first else None)
+        ax.axvline(end, color=color, linewidth=0.9, alpha=0.9, linestyle="--")
         first = False
 
 
@@ -161,7 +162,7 @@ def plot_waveform(
 
     axes[0].plot(x, signal, color="#1f77b4", linewidth=0.9, label="PCA motion")
     axes[0].plot(x, acc_norm, color="#7f7f7f", linewidth=0.65, alpha=0.65, label="Acc magnitude")
-    add_intervals(axes[0], truth_file, "true_start", "true_end", "#2ca02c", 0.24, "Ground truth rep")
+    add_boundary_lines(axes[0], truth_file, "true_start", "true_end", "#2ca02c", "Ground truth rep")
     axes[0].set_ylabel("truth")
     axes[0].legend(loc="upper right", fontsize=8)
 
@@ -169,8 +170,8 @@ def plot_waveform(
         pred = predictions[method]
         pred_file = overlapping_intervals(pred[pred["file"] == file_path], "start", "end", window_start, window_end)
         ax.plot(x, signal, color="#1f77b4", linewidth=0.9)
-        add_intervals(ax, truth_file, "true_start", "true_end", "#2ca02c", 0.16, "Ground truth")
-        add_intervals(ax, pred_file, "start", "end", "#ff7f0e", 0.28, "Predicted")
+        add_boundary_lines(ax, truth_file, "true_start", "true_end", "#2ca02c", "Ground truth")
+        add_boundary_lines(ax, pred_file, "start", "end", "#ff7f0e", "Predicted")
         ax.set_ylabel(method)
         ax.legend(loc="upper right", fontsize=8)
 
