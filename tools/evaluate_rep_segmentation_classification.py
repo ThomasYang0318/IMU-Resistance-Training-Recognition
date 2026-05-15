@@ -134,6 +134,38 @@ def principal_motion_signal(df: pd.DataFrame, smooth_window: int) -> np.ndarray:
     return moving_average(x @ vt[0], smooth_window)
 
 
+def dominant_axis_signal(df: pd.DataFrame, smooth_window: int) -> np.ndarray:
+    available = [col for col in IMU_COLUMNS if col in df.columns]
+    x = df.loc[:, available].to_numpy(dtype=np.float64)
+    if x.size == 0:
+        return np.zeros(len(df), dtype=np.float64)
+    x = np.apply_along_axis(robust_zscore, 0, x)
+    axis_idx = int(np.argmax(np.var(x, axis=0)))
+    return moving_average(x[:, axis_idx], smooth_window)
+
+
+def acceleration_magnitude_signal(df: pd.DataFrame, smooth_window: int) -> np.ndarray:
+    available = [col for col in ("ax", "ay", "az") if col in df.columns]
+    if not available:
+        return np.zeros(len(df), dtype=np.float64)
+    x = df.loc[:, available].to_numpy(dtype=np.float64)
+    magnitude = np.linalg.norm(x, axis=1)
+    magnitude = robust_zscore(magnitude)
+    return moving_average(np.abs(magnitude), smooth_window)
+
+
+def short_time_energy(signal: np.ndarray, window: int) -> np.ndarray:
+    window = max(3, min(window, len(signal)))
+    if window % 2 == 0:
+        window -= 1
+    if window < 3:
+        return signal**2
+    pad = window // 2
+    padded = np.pad(signal.astype(np.float64), pad_width=pad, mode="edge")
+    kernel = np.ones(window, dtype=np.float64)
+    return np.convolve(padded**2, kernel, mode="valid")
+
+
 def true_rep_segments(df: pd.DataFrame, path: Path, min_samples: int) -> list[RepSegment]:
     phases = df["phase"].map(clean_label).str.lower()
     active = phases.isin(ACTIVE_PHASES).to_numpy()
@@ -258,6 +290,102 @@ def pca_extrema_segments(
                     block.start + start,
                     block.start + end,
                     "pca_extrema",
+                )
+            )
+    return predicted
+
+
+def extrema_segments_from_signal(
+    df: pd.DataFrame,
+    path: Path,
+    signal_fn,
+    source: str,
+    smooth_window: int,
+    min_samples: int,
+    peak_prominence_scale: float,
+) -> list[RepSegment]:
+    predicted: list[RepSegment] = []
+    for block in set_blocks_from_labels(df, path, min_samples=min_samples):
+        segment_df = df.iloc[block.start : block.end]
+        signal = signal_fn(segment_df, smooth_window)
+        if len(signal) < min_samples * 2:
+            continue
+        prominence = max(float(np.std(signal)) * peak_prominence_scale, 1e-6)
+        distance = max(min_samples, 1)
+
+        candidates: list[np.ndarray] = []
+        for candidate_signal in (signal, -signal):
+            peaks, _ = find_peaks(candidate_signal, distance=distance, prominence=prominence)
+            if len(peaks) >= 1:
+                candidates.append(peaks)
+        if not candidates:
+            continue
+        peaks = max(candidates, key=len)
+        centers = np.sort(peaks)
+        boundaries = [0]
+        if len(centers) > 1:
+            boundaries.extend(int(round((centers[i] + centers[i + 1]) / 2.0)) for i in range(len(centers) - 1))
+        boundaries.append(len(segment_df))
+        boundaries = sorted(set(boundaries))
+        for rep_idx, (start, end) in enumerate(zip(boundaries[:-1], boundaries[1:])):
+            if end - start < min_samples:
+                continue
+            predicted.append(
+                RepSegment(
+                    path,
+                    block.subject,
+                    block.exercise,
+                    block.set_id,
+                    str(rep_idx),
+                    block.start + start,
+                    block.start + end,
+                    source,
+                )
+            )
+    return predicted
+
+
+def short_time_energy_segments(
+    df: pd.DataFrame,
+    path: Path,
+    smooth_window: int,
+    min_samples: int,
+    peak_prominence_scale: float,
+) -> list[RepSegment]:
+    predicted: list[RepSegment] = []
+    for block in set_blocks_from_labels(df, path, min_samples=min_samples):
+        segment_df = df.iloc[block.start : block.end]
+        motion = acceleration_magnitude_signal(segment_df, smooth_window)
+        energy = short_time_energy(motion, window=max(min_samples, smooth_window))
+        if len(energy) < min_samples * 2:
+            continue
+        prominence = max(float(np.std(energy)) * peak_prominence_scale, 1e-6)
+        peaks, _ = find_peaks(energy, distance=max(min_samples, 1), prominence=prominence)
+        if len(peaks) == 0:
+            continue
+
+        boundaries = [0]
+        for left_peak, right_peak in zip(peaks[:-1], peaks[1:]):
+            if right_peak <= left_peak:
+                continue
+            valley = int(left_peak + np.argmin(energy[left_peak:right_peak + 1]))
+            boundaries.append(valley)
+        boundaries.append(len(segment_df))
+        boundaries = sorted(set(boundaries))
+
+        for rep_idx, (start, end) in enumerate(zip(boundaries[:-1], boundaries[1:])):
+            if end - start < min_samples:
+                continue
+            predicted.append(
+                RepSegment(
+                    path,
+                    block.subject,
+                    block.exercise,
+                    block.set_id,
+                    str(rep_idx),
+                    block.start + start,
+                    block.start + end,
+                    "short_time_energy",
                 )
             )
     return predicted
@@ -583,10 +711,15 @@ def segmentation_summary(predicted: Sequence[RepSegment], truth: Sequence[RepSeg
     return rows
 
 
+def group_segments_by_file(segments: Sequence[RepSegment]) -> dict[Path, list[RepSegment]]:
+    grouped: dict[Path, list[RepSegment]] = {}
+    for segment in segments:
+        grouped.setdefault(segment.file_path, []).append(segment)
+    return grouped
+
+
 def best_truth_match_rows(predicted: Sequence[RepSegment], truth: Sequence[RepSegment]) -> list[dict[str, object]]:
-    by_file_predicted: dict[Path, list[RepSegment]] = {}
-    for segment in predicted:
-        by_file_predicted.setdefault(segment.file_path, []).append(segment)
+    by_file_predicted = group_segments_by_file(predicted)
 
     rows: list[dict[str, object]] = []
     for true_segment in truth:
@@ -612,13 +745,20 @@ def best_truth_match_rows(predicted: Sequence[RepSegment], truth: Sequence[RepSe
 
 def greedy_match_count(predicted: Sequence[RepSegment], truth: Sequence[RepSegment], threshold: float) -> tuple[int, list[float]]:
     candidate_pairs: list[tuple[float, int, int]] = []
-    for pred_idx, pred_segment in enumerate(predicted):
-        for true_idx, true_segment in enumerate(truth):
-            if pred_segment.file_path != true_segment.file_path:
-                continue
-            iou = segment_iou(pred_segment, true_segment)
-            if iou >= threshold:
-                candidate_pairs.append((iou, pred_idx, true_idx))
+    predicted_by_file = group_segments_by_file(predicted)
+    truth_by_file = group_segments_by_file(truth)
+    pred_offset = 0
+    truth_offset = 0
+    for file_path in sorted(set(predicted_by_file) | set(truth_by_file)):
+        file_predicted = predicted_by_file.get(file_path, [])
+        file_truth = truth_by_file.get(file_path, [])
+        for pred_idx, pred_segment in enumerate(file_predicted):
+            for true_idx, true_segment in enumerate(file_truth):
+                iou = segment_iou(pred_segment, true_segment)
+                if iou >= threshold:
+                    candidate_pairs.append((iou, pred_offset + pred_idx, truth_offset + true_idx))
+        pred_offset += len(file_predicted)
+        truth_offset += len(file_truth)
     candidate_pairs.sort(reverse=True)
 
     matched_pred: set[int] = set()
@@ -748,7 +888,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--folds", type=int, default=5)
     parser.add_argument("--num-classes", type=int, default=8)
     parser.add_argument("--include-other", action="store_true", help="Add an 'other' class for unmatched/non-top exercise segments.")
-    parser.add_argument("--segment-method", choices=["labels", "pca-extrema", "pca-extrema-fft"], default="labels")
+    parser.add_argument(
+        "--segment-method",
+        choices=["labels", "dominant-axis", "short-time-energy", "pca-extrema", "pca-extrema-fft"],
+        default="labels",
+    )
     parser.add_argument("--min-segment-samples", type=int, default=20)
     parser.add_argument("--smooth-window", type=int, default=9)
     parser.add_argument("--peak-prominence-scale", type=float, default=0.35)
@@ -792,6 +936,32 @@ def main() -> None:
                     df,
                     path,
                     truth_by_file.get(path, []),
+                    smooth_window=args.smooth_window,
+                    min_samples=args.min_segment_samples,
+                    peak_prominence_scale=args.peak_prominence_scale,
+                )
+            )
+    elif args.segment_method == "dominant-axis":
+        predicted = []
+        for path, df in session_cache.items():
+            predicted.extend(
+                extrema_segments_from_signal(
+                    df,
+                    path,
+                    signal_fn=dominant_axis_signal,
+                    source="dominant_axis",
+                    smooth_window=args.smooth_window,
+                    min_samples=args.min_segment_samples,
+                    peak_prominence_scale=args.peak_prominence_scale,
+                )
+            )
+    elif args.segment_method == "short-time-energy":
+        predicted = []
+        for path, df in session_cache.items():
+            predicted.extend(
+                short_time_energy_segments(
+                    df,
+                    path,
                     smooth_window=args.smooth_window,
                     min_samples=args.min_segment_samples,
                     peak_prominence_scale=args.peak_prominence_scale,

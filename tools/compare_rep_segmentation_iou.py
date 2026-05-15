@@ -47,7 +47,7 @@ def write_csv(path: Path, rows: Sequence[dict[str, object]]) -> None:
         writer.writerows(rows)
 
 
-def plot_overall(df: pd.DataFrame, output_dir: Path) -> None:
+def plot_overall(df: pd.DataFrame, output_dir: Path, filename: str = "rep_segmentation_methods_f1.png") -> None:
     thresholds = sorted(df["iou_threshold"].astype(float).unique())
     methods = df["method"].drop_duplicates().tolist()
     x = np.arange(len(thresholds))
@@ -66,15 +66,20 @@ def plot_overall(df: pd.DataFrame, output_dir: Path) -> None:
     ax.set_xticklabels([f"IoU >= {threshold:.2f}" for threshold in thresholds])
     ax.set_ylim(0.0, 1.05)
     ax.set_ylabel("F1")
-    ax.set_title("Rep Segmentation F1: Without vs With FFT Guidance")
+    ax.set_title("Rep Segmentation F1 by Method")
     ax.grid(axis="y", alpha=0.25)
     ax.legend(loc="upper right")
     fig.tight_layout()
-    fig.savefig(output_dir / "rep_segmentation_fft_comparison_f1.png", dpi=180)
+    fig.savefig(output_dir / filename, dpi=180)
     plt.close(fig)
 
 
-def plot_precision_recall(df: pd.DataFrame, output_dir: Path, threshold: float) -> None:
+def plot_precision_recall(
+    df: pd.DataFrame,
+    output_dir: Path,
+    threshold: float,
+    filename_prefix: str = "rep_segmentation_methods",
+) -> None:
     subset = df[np.isclose(df["iou_threshold"].astype(float), threshold)]
     methods = subset["method"].drop_duplicates().tolist()
     x = np.arange(len(methods))
@@ -92,7 +97,7 @@ def plot_precision_recall(df: pd.DataFrame, output_dir: Path, threshold: float) 
     ax.grid(axis="y", alpha=0.25)
     ax.legend(loc="upper right")
     fig.tight_layout()
-    fig.savefig(output_dir / f"rep_segmentation_fft_comparison_iou_{threshold:.2f}.png", dpi=180)
+    fig.savefig(output_dir / f"{filename_prefix}_iou_{threshold:.2f}.png", dpi=180)
     plt.close(fig)
 
 
@@ -115,11 +120,22 @@ def plot_exercise_delta(df: pd.DataFrame, output_dir: Path, baseline: str, candi
     plt.close(fig)
 
 
+def parse_run(value: str) -> tuple[str, Path]:
+    if "=" not in value:
+        raise argparse.ArgumentTypeError("--run must be formatted as method_name=run_dir")
+    name, path = value.split("=", 1)
+    name = name.strip()
+    if not name:
+        raise argparse.ArgumentTypeError("method_name cannot be empty")
+    return name, Path(path)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Compare rep segmentation IoU results across methods.")
-    parser.add_argument("--baseline-dir", type=Path, required=True)
+    parser.add_argument("--run", type=parse_run, action="append", help="Method result in the form method_name=run_dir.")
+    parser.add_argument("--baseline-dir", type=Path)
     parser.add_argument("--baseline-name", default="pca-extrema")
-    parser.add_argument("--candidate-dir", type=Path, required=True)
+    parser.add_argument("--candidate-dir", type=Path)
     parser.add_argument("--candidate-name", default="pca-extrema-fft")
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--focus-iou", type=float, default=0.5)
@@ -130,26 +146,27 @@ def main() -> None:
     args = parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
+    runs = args.run or []
+    if not runs:
+        if args.baseline_dir is None or args.candidate_dir is None:
+            raise ValueError("Provide either --run method=dir entries or both --baseline-dir and --candidate-dir.")
+        runs = [(args.baseline_name, args.baseline_dir), (args.candidate_name, args.candidate_dir)]
+
     overall = pd.concat(
-        [
-            read_metrics(args.baseline_dir, args.baseline_name),
-            read_metrics(args.candidate_dir, args.candidate_name),
-        ],
+        [read_metrics(run_dir, method) for method, run_dir in runs],
         ignore_index=True,
     )
     by_exercise = pd.concat(
-        [
-            read_exercise_metrics(args.baseline_dir, args.baseline_name),
-            read_exercise_metrics(args.candidate_dir, args.candidate_name),
-        ],
+        [read_exercise_metrics(run_dir, method) for method, run_dir in runs],
         ignore_index=True,
     )
 
-    write_csv(args.output_dir / "rep_segmentation_fft_comparison.csv", overall.to_dict("records"))
-    write_csv(args.output_dir / "rep_segmentation_fft_comparison_by_exercise.csv", by_exercise.to_dict("records"))
+    write_csv(args.output_dir / "rep_segmentation_methods_comparison.csv", overall.to_dict("records"))
+    write_csv(args.output_dir / "rep_segmentation_methods_comparison_by_exercise.csv", by_exercise.to_dict("records"))
     plot_overall(overall, args.output_dir)
     plot_precision_recall(overall, args.output_dir, args.focus_iou)
-    plot_exercise_delta(by_exercise, args.output_dir, args.baseline_name, args.candidate_name, args.focus_iou)
+    if len(runs) == 2:
+        plot_exercise_delta(by_exercise, args.output_dir, runs[0][0], runs[1][0], args.focus_iou)
 
 
 if __name__ == "__main__":

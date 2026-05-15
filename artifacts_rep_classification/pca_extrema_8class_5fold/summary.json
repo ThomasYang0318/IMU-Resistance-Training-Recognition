@@ -3,60 +3,61 @@
     "datasets/workout"
   ],
   "segment_method": "pca-extrema",
-  "num_truth_reps": 2132,
-  "num_predicted_reps": 15337,
-  "num_classified_reps": 2730,
+  "num_truth_reps": 2424,
+  "num_predicted_reps": 18505,
+  "num_classified_reps": 3077,
   "class_names": [
     "db_bench_press",
     "db_squat",
-    "db_triceps_curl",
     "one_arm_db_row",
+    "db_triceps_curl",
     "db_weighted_crunch",
-    "db_biceps_curl",
     "db_rdl",
+    "db_biceps_curl",
     "db_shoulder_press"
   ],
   "segmentation_metrics": [
     {
       "iou_threshold": 0.25,
-      "true_reps": 2132,
-      "predicted_reps": 15337,
-      "matched_reps": 1770,
-      "false_positives": 13567,
-      "false_negatives": 362,
-      "precision": 0.1154,
-      "recall": 0.8302,
-      "f1": 0.2026,
-      "mean_matched_iou": 0.4554
+      "true_reps": 2424,
+      "predicted_reps": 18505,
+      "matched_reps": 1984,
+      "false_positives": 16521,
+      "false_negatives": 440,
+      "precision": 0.1072,
+      "recall": 0.8185,
+      "f1": 0.1896,
+      "mean_matched_iou": 0.4536
     },
     {
       "iou_threshold": 0.5,
-      "true_reps": 2132,
-      "predicted_reps": 15337,
-      "matched_reps": 563,
-      "false_positives": 14774,
-      "false_negatives": 1569,
-      "precision": 0.0367,
-      "recall": 0.2641,
-      "f1": 0.0645,
-      "mean_matched_iou": 0.6208
+      "true_reps": 2424,
+      "predicted_reps": 18505,
+      "matched_reps": 627,
+      "false_positives": 17878,
+      "false_negatives": 1797,
+      "precision": 0.0339,
+      "recall": 0.2587,
+      "f1": 0.0599,
+      "mean_matched_iou": 0.6209
     },
     {
       "iou_threshold": 0.75,
-      "true_reps": 2132,
-      "predicted_reps": 15337,
-      "matched_reps": 92,
-      "false_positives": 15245,
-      "false_negatives": 2040,
-      "precision": 0.006,
-      "recall": 0.0432,
-      "f1": 0.0105,
-      "mean_matched_iou": 0.8401
+      "true_reps": 2424,
+      "predicted_reps": 18505,
+      "matched_reps": 96,
+      "false_positives": 18409,
+      "false_negatives": 2328,
+      "precision": 0.0052,
+      "recall": 0.0396,
+      "f1": 0.0092,
+      "mean_matched_iou": 0.8412
     }
   ],
   "folds": 5,
   "subjects": [
     "haoyu0512workout",
+    "hsianshun0514workout",
     "kevin0509workout",
     "thomas0506",
     "yanz0510workout",
@@ -64,7 +65,7 @@
     "yushuan0513workout",
     "ziho0512workout"
   ],
-  "accuracy": 0.7652014652014651,
-  "macro_f1": 0.7597550563403814,
-  "weighted_f1": 0.7640851338947764
+  "accuracy": 0.753331166720832,
+  "macro_f1": 0.7456684502897386,
+  "weighted_f1": 0.7546795114733796
 }

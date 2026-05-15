@@ -1,6 +1,6 @@
 fold,train_subjects,val_subjects,val_samples,accuracy
-1,"haoyu0512workout,thomas0506,yanz0510workout,yoru0511workout,yushuan0513workout,ziho0512workout",kevin0509workout,395,0.9063
-2,"kevin0509workout,thomas0506,yanz0510workout,yoru0511workout,yushuan0513workout,ziho0512workout",haoyu0512workout,383,0.7598
-3,"haoyu0512workout,kevin0509workout,thomas0506,yanz0510workout,yoru0511workout,ziho0512workout",yushuan0513workout,325,0.84
-4,"haoyu0512workout,kevin0509workout,thomas0506,yanz0510workout,yushuan0513workout","yoru0511workout,ziho0512workout",559,0.7388
-5,"haoyu0512workout,kevin0509workout,yoru0511workout,yushuan0513workout,ziho0512workout","thomas0506,yanz0510workout",503,0.7714
+1,"haoyu0512workout,hsianshun0514workout,thomas0506,yanz0510workout,yoru0511workout,yushuan0513workout,ziho0512workout",kevin0509workout,395,0.9063
+2,"hsianshun0514workout,kevin0509workout,thomas0506,yanz0510workout,yoru0511workout,yushuan0513workout,ziho0512workout",haoyu0512workout,383,0.8068
+3,"haoyu0512workout,kevin0509workout,thomas0506,yanz0510workout,yoru0511workout,yushuan0513workout","hsianshun0514workout,ziho0512workout",572,0.8374
+4,"haoyu0512workout,hsianshun0514workout,kevin0509workout,thomas0506,yoru0511workout,ziho0512workout","yanz0510workout,yushuan0513workout",567,0.866
+5,"haoyu0512workout,hsianshun0514workout,kevin0509workout,yanz0510workout,yushuan0513workout,ziho0512workout","thomas0506,yoru0511workout",584,0.8031
