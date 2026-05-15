@@ -656,6 +656,83 @@ def refine_boundaries_by_motion_minima(
     return monotonic
 
 
+def vector_magnitude_signal(df: pd.DataFrame, columns: Sequence[str], smooth_window: int) -> np.ndarray:
+    available = [col for col in columns if col in df.columns]
+    if not available:
+        return np.zeros(len(df), dtype=np.float64)
+    x = df.loc[:, available].to_numpy(dtype=np.float64)
+    x = np.apply_along_axis(robust_zscore, 0, x)
+    return moving_average(np.linalg.norm(x, axis=1), smooth_window)
+
+
+def feature_boundary_score(
+    segment_df: pd.DataFrame,
+    pca_signal: np.ndarray,
+    exercise: str,
+    smooth_window: int,
+    energy_window: int,
+) -> tuple[np.ndarray, str, str]:
+    pca = robust_zscore(pca_signal)
+    pca_velocity = robust_zscore(moving_average(np.abs(np.diff(pca, prepend=pca[:1])), max(3, energy_window)))
+    acc_mag = robust_zscore(vector_magnitude_signal(segment_df, ("ax", "ay", "az"), smooth_window))
+    gyro_mag = robust_zscore(vector_magnitude_signal(segment_df, ("gx", "gy", "gz"), smooth_window))
+    acc_jerk = robust_zscore(moving_average(np.abs(np.diff(acc_mag, prepend=acc_mag[:1])), max(3, energy_window)))
+    gyro_jerk = robust_zscore(moving_average(np.abs(np.diff(gyro_mag, prepend=gyro_mag[:1])), max(3, energy_window)))
+    transition_energy = robust_zscore(acc_jerk + gyro_jerk + pca_velocity)
+
+    if exercise == "db_bench_press":
+        return np.abs(pca), "max", "pca_extreme_max"
+    if exercise == "db_shoulder_press":
+        return transition_energy, "max", "transition_energy_max"
+    if exercise == "db_rdl":
+        return pca_velocity, "min", "pca_velocity_min"
+    return gyro_mag, "min", "gyro_magnitude_min"
+
+
+def refine_boundaries_by_feature_score(
+    boundaries: Sequence[int],
+    score: np.ndarray,
+    min_samples: int,
+    search_fraction: float,
+    objective: str,
+) -> list[int]:
+    if len(boundaries) <= 2 or len(score) < 3:
+        return list(boundaries)
+
+    refined = [int(boundaries[0])]
+    for left, boundary, right in zip(boundaries[:-2], boundaries[1:-1], boundaries[2:]):
+        left = int(left)
+        boundary = int(boundary)
+        right = int(right)
+        left_span = max(1, boundary - left)
+        right_span = max(1, right - boundary)
+        radius = max(min_samples, int(round(min(left_span, right_span) * search_fraction)))
+        lo = max(left + min_samples, boundary - radius)
+        hi = min(right - min_samples, boundary + radius)
+        if hi <= lo:
+            refined.append(boundary)
+            continue
+        local = score[lo : hi + 1]
+        if len(local) == 0:
+            refined.append(boundary)
+        elif objective == "min":
+            refined.append(int(lo + np.argmin(local)))
+        elif objective == "max":
+            refined.append(int(lo + np.argmax(local)))
+        else:
+            raise ValueError(f"Unknown boundary score objective: {objective}")
+    refined.append(int(boundaries[-1]))
+
+    monotonic = [refined[0]]
+    for boundary in refined[1:]:
+        if boundary - monotonic[-1] < min_samples:
+            boundary = monotonic[-1] + min_samples
+        monotonic.append(min(boundary, len(score)))
+    if len(monotonic) >= 2:
+        monotonic[-1] = len(score)
+    return monotonic
+
+
 def segments_from_block_boundaries(
     path: Path,
     block: RepSegment,
@@ -680,6 +757,72 @@ def segments_from_block_boundaries(
                 source,
             )
         )
+    return predicted
+
+
+def autocorr_feature_refined_pca_segments(
+    df: pd.DataFrame,
+    path: Path,
+    smooth_window: int,
+    min_samples: int,
+    peak_prominence_scale: float,
+    autocorr_min_period_samples: int,
+    autocorr_max_period_fraction: float,
+    autocorr_peak_distance_scale: float,
+    true_segments: Sequence[RepSegment],
+    block_source: str,
+    boundary_refine_search_fraction: float,
+    boundary_refine_energy_window: int,
+) -> list[RepSegment]:
+    predicted: list[RepSegment] = []
+    for block in candidate_blocks(df, path, true_segments, min_samples=min_samples, block_source=block_source):
+        segment_df = df.iloc[block.start : block.end]
+        signal = principal_motion_signal(segment_df, smooth_window)
+        if len(signal) < min_samples * 2:
+            predicted.extend(segments_from_block_boundaries(path, block, [0, len(signal)], min_samples, "pca_autocorr_feature_refined"))
+            continue
+
+        max_period = max(min_samples, int(round(len(signal) * autocorr_max_period_fraction)))
+        period = estimate_autocorrelation_period(
+            signal,
+            min_period=max(min_samples, autocorr_min_period_samples),
+            max_period=max_period,
+        )
+        if period is None:
+            predicted.extend(segments_from_block_boundaries(path, block, [0, len(signal)], min_samples, "pca_autocorr_feature_refined"))
+            continue
+
+        centers = select_period_guided_peaks(
+            signal,
+            period=period,
+            min_samples=min_samples,
+            peak_prominence_scale=peak_prominence_scale,
+            peak_distance_scale=autocorr_peak_distance_scale,
+        )
+        if len(centers) == 0:
+            predicted.extend(segments_from_block_boundaries(path, block, [0, len(signal)], min_samples, "pca_autocorr_feature_refined"))
+            continue
+
+        boundaries = [0]
+        if len(centers) > 1:
+            boundaries.extend(int(round((centers[i] + centers[i + 1]) / 2.0)) for i in range(len(centers) - 1))
+        boundaries.append(len(segment_df))
+        boundaries = sorted(set(boundaries))
+        score, objective, _feature_name = feature_boundary_score(
+            segment_df,
+            signal,
+            block.exercise,
+            smooth_window=smooth_window,
+            energy_window=boundary_refine_energy_window,
+        )
+        boundaries = refine_boundaries_by_feature_score(
+            boundaries,
+            score,
+            min_samples=min_samples,
+            search_fraction=boundary_refine_search_fraction,
+            objective=objective,
+        )
+        predicted.extend(segments_from_block_boundaries(path, block, boundaries, min_samples, "pca_autocorr_feature_refined"))
     return predicted
 
 
@@ -1620,6 +1763,7 @@ def parse_args() -> argparse.Namespace:
             "pca-extrema",
             "pca-autocorr",
             "pca-autocorr-refined",
+            "pca-autocorr-feature-refined",
             "pca-extrema-fft",
         ],
         default="labels",
@@ -1742,6 +1886,25 @@ def main() -> None:
         for path, df in session_cache.items():
             predicted.extend(
                 autocorr_refined_pca_segments(
+                    df,
+                    path,
+                    smooth_window=args.smooth_window,
+                    min_samples=args.min_segment_samples,
+                    peak_prominence_scale=args.peak_prominence_scale,
+                    autocorr_min_period_samples=args.autocorr_min_period_samples,
+                    autocorr_max_period_fraction=args.autocorr_max_period_fraction,
+                    autocorr_peak_distance_scale=args.autocorr_peak_distance_scale,
+                    true_segments=truth_by_file.get(path, []),
+                    block_source=args.block_source,
+                    boundary_refine_search_fraction=args.boundary_refine_search_fraction,
+                    boundary_refine_energy_window=args.boundary_refine_energy_window,
+                )
+            )
+    elif args.segment_method == "pca-autocorr-feature-refined":
+        predicted = []
+        for path, df in session_cache.items():
+            predicted.extend(
+                autocorr_feature_refined_pca_segments(
                     df,
                     path,
                     smooth_window=args.smooth_window,

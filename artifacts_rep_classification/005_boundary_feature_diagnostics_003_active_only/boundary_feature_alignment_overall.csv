@@ -1,0 +1,9 @@
+feature,objective,boundaries,mean_abs_error,median_abs_error,p80_abs_error,p90_abs_error,within_25_samples,within_50_samples,within_100_samples
+acc_jerk_max,max,2214,64.7751,66.0,99.0,115.7,0.1987,0.3835,0.8085
+acc_magnitude_min,min,2214,60.4196,60.0,93.0,108.0,0.2154,0.4192,0.8582
+gyro_jerk_max,max,2214,63.0492,64.0,97.0,114.0,0.2091,0.4051,0.8252
+gyro_magnitude_min,min,2214,46.2791,36.5,83.0,102.0,0.4042,0.593,0.8921
+motion_energy_min,min,2214,58.5438,59.0,96.0,111.0,0.2868,0.4508,0.8338
+pca_extreme_max,max,2214,57.6052,54.0,91.0,108.0,0.2191,0.4706,0.8735
+pca_velocity_min,min,2214,55.8808,50.0,95.0,110.0,0.2981,0.5009,0.8446
+transition_energy_max,max,2214,63.252,63.0,97.0,113.7,0.2105,0.4042,0.8229

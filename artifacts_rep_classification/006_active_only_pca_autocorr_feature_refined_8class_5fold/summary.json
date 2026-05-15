@@ -1,0 +1,120 @@
+{
+  "data_dirs": [
+    "datasets/workout/haoyu0512workout",
+    "datasets/workout/hsianshun0514workout",
+    "datasets/workout/kevin0509workout",
+    "datasets/workout/thomas0506workout",
+    "datasets/workout/yanz0510workout",
+    "datasets/workout/yoru0511workout",
+    "datasets/workout/yushuan0513workout",
+    "datasets/workout/ziho0512workout"
+  ],
+  "segment_method": "pca-autocorr-feature-refined",
+  "block_source": "active-phase-contiguous",
+  "num_truth_reps": 2424,
+  "num_predicted_reps": 2374,
+  "num_classified_reps": 2338,
+  "class_names": [
+    "db_bench_press",
+    "db_squat",
+    "one_arm_db_row",
+    "db_triceps_curl",
+    "db_weighted_crunch",
+    "db_rdl",
+    "db_biceps_curl",
+    "db_shoulder_press"
+  ],
+  "segmentation_metrics": [
+    {
+      "iou_threshold": 0.25,
+      "true_reps": 2424,
+      "predicted_reps": 2374,
+      "matched_reps": 2231,
+      "false_positives": 143,
+      "false_negatives": 193,
+      "precision": 0.9398,
+      "recall": 0.9204,
+      "f1": 0.93,
+      "mean_matched_iou": 0.6909
+    },
+    {
+      "iou_threshold": 0.5,
+      "true_reps": 2424,
+      "predicted_reps": 2374,
+      "matched_reps": 1764,
+      "false_positives": 610,
+      "false_negatives": 660,
+      "precision": 0.743,
+      "recall": 0.7277,
+      "f1": 0.7353,
+      "mean_matched_iou": 0.7634
+    },
+    {
+      "iou_threshold": 0.75,
+      "true_reps": 2424,
+      "predicted_reps": 2374,
+      "matched_reps": 952,
+      "false_positives": 1422,
+      "false_negatives": 1472,
+      "precision": 0.401,
+      "recall": 0.3927,
+      "f1": 0.3968,
+      "mean_matched_iou": 0.8794
+    }
+  ],
+  "phase_split_method": "pca-reversal",
+  "num_truth_phase_segments": 4776,
+  "num_predicted_phase_segments": 4748,
+  "phase_split_metrics": [
+    {
+      "iou_threshold": 0.25,
+      "true_phase_segments": 4776,
+      "predicted_phase_segments": 4748,
+      "matched_phase_segments": 3346,
+      "false_positives": 1402,
+      "false_negatives": 1430,
+      "precision": 0.7047,
+      "recall": 0.7006,
+      "f1": 0.7026,
+      "mean_matched_iou": 0.6033
+    },
+    {
+      "iou_threshold": 0.5,
+      "true_phase_segments": 4776,
+      "predicted_phase_segments": 4748,
+      "matched_phase_segments": 2216,
+      "false_positives": 2532,
+      "false_negatives": 2560,
+      "precision": 0.4667,
+      "recall": 0.464,
+      "f1": 0.4654,
+      "mean_matched_iou": 0.7188
+    },
+    {
+      "iou_threshold": 0.75,
+      "true_phase_segments": 4776,
+      "predicted_phase_segments": 4748,
+      "matched_phase_segments": 932,
+      "false_positives": 3816,
+      "false_negatives": 3844,
+      "precision": 0.1963,
+      "recall": 0.1951,
+      "f1": 0.1957,
+      "mean_matched_iou": 0.852
+    }
+  ],
+  "folds": 5,
+  "subjects": [
+    "haoyu0512workout",
+    "hsianshun0514workout",
+    "kevin0509workout",
+    "thomas0506",
+    "yanz0510workout",
+    "yoru0511workout",
+    "yushuan0513workout",
+    "ziho0512workout"
+  ],
+  "accuracy": 0.8455945252352438,
+  "macro_f1": 0.8430021189381395,
+  "weighted_f1": 0.8459774537090525
+}

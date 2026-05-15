@@ -274,6 +274,15 @@ artifacts_rep_classification/004_waveform_rep_accuracy_003_active_only/
 
 其中 `sets_all/` 內每一張圖代表一組 set。每張圖用上下兩排呈現同一段 sample waveform：上排是 ground truth rep boundary，下排是 predicted rep boundary。藍線代表 ground truth，紅線代表 prediction；實線是 start，虛線是 end。
 
+boundary feature 診斷與 exercise-aware refinement：
+
+```text
+artifacts_rep_classification/005_boundary_feature_diagnostics_003_active_only/
+artifacts_rep_classification/006_active_only_pca_autocorr_feature_refined_8class_5fold/
+```
+
+第 005 版用 ground truth boundary 量化 PCA、acc magnitude、gyro magnitude、jerk、energy 等特徵的對齊誤差；第 006 版用第 005 版結果做 exercise-aware boundary refinement。
+
 ## 目前方法
 
 | 方法 | 說明 |
@@ -284,6 +293,7 @@ artifacts_rep_classification/004_waveform_rep_accuracy_003_active_only/
 | `pca-extrema` | 將 6-axis IMU 用 PCA 壓成主要運動訊號，再找 extrema |
 | `pca-autocorr` | 用 PCA 主要運動訊號加上自相關週期估計，限制 peak distance |
 | `pca-autocorr-refined` | active-contiguous block + PCA/autocorr + motion-energy minima boundary refinement |
+| `pca-autocorr-feature-refined` | active-contiguous block + PCA/autocorr + exercise-aware feature boundary refinement |
 | `pca-extrema-fft` | 用 FFT 估計 set-level dominant period，約束 PCA extrema 切割 |
 
 詳細方法與文獻比較請看：

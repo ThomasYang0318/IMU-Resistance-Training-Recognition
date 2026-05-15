@@ -1,0 +1,9 @@
+exercise,feature,objective,boundaries,mean_abs_error,median_abs_error,p80_abs_error,p90_abs_error,within_25_samples,within_50_samples,within_100_samples
+db_bench_press,pca_extreme_max,max,309,52.2039,42.0,78.6,115.4,0.2524,0.6181,0.8608
+db_biceps_curl,gyro_magnitude_min,min,262,31.5534,18.0,56.0,93.0,0.626,0.7824,0.9351
+db_rdl,pca_velocity_min,min,268,59.2463,50.5,105.2,123.3,0.2873,0.5,0.7836
+db_shoulder_press,transition_energy_max,max,251,42.7331,34.0,73.0,88.0,0.3785,0.6215,0.9562
+db_squat,gyro_magnitude_min,min,288,39.3021,31.0,69.6,88.3,0.4583,0.6597,0.9514
+db_triceps_curl,gyro_magnitude_min,min,279,40.7276,30.0,70.0,87.6,0.4194,0.6452,0.9283
+db_weighted_crunch,gyro_magnitude_min,min,273,49.4139,38.0,94.0,108.0,0.3846,0.5788,0.8462
+one_arm_db_row,gyro_magnitude_min,min,284,38.8099,29.0,74.0,89.0,0.4683,0.6444,0.9577

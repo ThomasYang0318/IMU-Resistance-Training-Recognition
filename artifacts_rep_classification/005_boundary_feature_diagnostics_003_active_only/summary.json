@@ -1,0 +1,11 @@
+{
+  "run_dir": "artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold",
+  "set_summary": "artifacts_rep_classification/004_waveform_rep_accuracy_003_active_only/waveform_rep_accuracy_set_summary.csv",
+  "num_boundary_feature_rows": 17712,
+  "num_internal_boundaries": 2214,
+  "search_fraction": 0.35,
+  "min_search_radius": 20,
+  "max_search_radius": 160,
+  "smooth_window": 9,
+  "energy_window": 51
+}

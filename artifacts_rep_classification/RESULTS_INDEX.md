@@ -5,7 +5,8 @@
 ```text
 001_<experiment_name>/
 002_<experiment_name>/
-003_<experiment_name>/
+...
+006_<experiment_name>/
 ```
 
 ## 001_active_only_labels_8class_5fold
@@ -93,6 +94,126 @@ phase IoU@0.75 F1: 0.1671
 - `phase_split_metrics_by_phase.csv`
 - `phase_split_iou_metrics.png`
 - `phase_split_iou_f1_by_phase.png`
+
+## 005_boundary_feature_diagnostics_003_active_only
+
+目的：
+
+診斷第 003 版切割不準是否來自特徵選擇不足。針對每個 ground truth internal rep boundary，在附近搜尋不同特徵的 local min / max，量化候選點與真實 boundary 的 sample 誤差。
+
+設定：
+
+- input run：`003_active_only_pca_autocorr_refined_8class_5fold`
+- search fraction：`0.35`
+- min search radius：`20`
+- max search radius：`160`
+- features：PCA extreme、PCA velocity、acc magnitude、gyro magnitude、acc jerk、gyro jerk、motion energy、transition energy
+
+主要觀察：
+
+```text
+overall best feature: gyro_magnitude_min
+overall gyro_magnitude_min median absolute error: 36.5 samples
+overall gyro_magnitude_min within 50 samples: 0.5930
+db_shoulder_press best feature: transition_energy_max
+db_bench_press best feature: pca_extreme_max
+```
+
+各動作建議特徵：
+
+```text
+db_bench_press: pca_extreme_max
+db_biceps_curl: gyro_magnitude_min
+db_rdl: pca_velocity_min
+db_shoulder_press: transition_energy_max
+db_squat: gyro_magnitude_min
+db_triceps_curl: gyro_magnitude_min
+db_weighted_crunch: gyro_magnitude_min
+one_arm_db_row: gyro_magnitude_min
+```
+
+解讀：
+
+PCA 不是所有動作的最佳 boundary 特徵。多數動作的 boundary 更接近 gyroscope magnitude minima；`db_shoulder_press` 則更接近 transition / jerk 類特徵。這表示後續應使用 exercise-aware 或 supervised boundary score，而不是所有動作共用同一個 PCA energy minima。
+
+重點檔案：
+
+- `boundary_feature_alignment_by_exercise.csv`
+- `boundary_feature_alignment_by_subject.csv`
+- `boundary_feature_alignment_overall.csv`
+- `boundary_feature_recommendations_by_exercise.csv`
+- `boundary_feature_median_error_by_exercise.png`
+- `boundary_feature_within_50_by_exercise.png`
+- `feature_waveform_examples/*.png`
+
+## 006_active_only_pca_autocorr_feature_refined_8class_5fold
+
+目的：
+
+用第 005 版診斷出的 exercise-aware feature score 取代第 003 版的通用 motion-energy minima boundary refinement，驗證換特徵是否能改善 rep boundary IoU。
+
+設定：
+
+- segment method：`pca-autocorr-feature-refined`
+- block source：`active-phase-contiguous`
+- boundary refine search fraction：`0.25`
+- boundary refine energy window：`51`
+- classes：8
+- folds：subject-wise 5-fold
+- phase split：`pca-reversal`
+- data：與第 003 版相同的 8 位 subject
+
+主要數值：
+
+```text
+true reps: 2424
+predicted reps: 2374
+classified reps: 2338
+rep IoU@0.25 F1: 0.9300
+rep IoU@0.50 F1: 0.7353
+rep IoU@0.75 F1: 0.3968
+exercise classification accuracy: 0.8456
+exercise macro F1: 0.8430
+phase IoU@0.25 F1: 0.7026
+phase IoU@0.50 F1: 0.4654
+phase IoU@0.75 F1: 0.1957
+```
+
+與第 003 版比較：
+
+```text
+rep IoU@0.50 F1: 0.7182 -> 0.7353
+rep IoU@0.75 F1: 0.3622 -> 0.3968
+phase IoU@0.50 F1: 0.4383 -> 0.4654
+classification accuracy: 0.8414 -> 0.8456
+```
+
+動作別重點：
+
+```text
+db_shoulder_press IoU@0.50 F1: 0.4972 -> 0.7081
+db_bench_press IoU@0.50 F1: 0.5621 -> 0.5820
+one_arm_db_row IoU@0.50 F1: 0.8525 -> 0.8164
+db_biceps_curl IoU@0.50 F1: 0.6853 -> 0.6608
+```
+
+解讀：
+
+換特徵方向有效，尤其大幅改善 `db_shoulder_press`；但固定 exercise feature map 也讓部分原本高分動作退步。下一步應做 train-fold 內的 per-exercise feature selection 或 supervised boundary probability，而不是手寫固定規則。
+
+重點檔案：
+
+- `summary.json`
+- `rep_segmentation_metrics.csv`
+- `rep_segmentation_metrics_by_exercise.csv`
+- `rep_segmentation_metrics_by_subject.csv`
+- `rep_segmentation_iou_metrics.png`
+- `rep_segmentation_iou_f1_by_exercise.png`
+- `rep_segmentation_iou_f1_by_subject.png`
+- `confusion_matrix.png`
+- `confusion_matrix_normalized.png`
+- `phase_split_metrics.csv`
+- `phase_split_iou_metrics.png`
 
 ## 004_waveform_rep_accuracy_003_active_only
 

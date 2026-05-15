@@ -900,3 +900,65 @@ set-assigned F1 = 0.7132
 說明：
 
 第 004 版是 visualization / per-set diagnostic，不是新的模型。正式 overall rep segmentation 數值仍以第 003 版 `summary.json` 為主；第 004 版的 F1 是把 prediction 指派回每組 set 後，方便對照 waveform 圖的診斷數值。
+
+## 2026-05-16：Boundary Feature 診斷與 Exercise-aware Refinement
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+回應「目前還是不準，是否要回去看其他特徵」的問題。先不盲目調參，而是量化不同特徵和 ground truth rep boundary 的對齊誤差，再用診斷結果做一版 exercise-aware boundary refinement。
+
+第 005 版診斷：
+
+- 新增 `tools/analyze_rep_boundary_features.py`；
+- 針對 2214 個 internal rep boundary 分析 feature local min / max；
+- 輸出特徵對齊誤差、within 50 samples 比例、每個動作推薦特徵、特徵波形範例圖。
+
+主要診斷結果：
+
+```text
+overall best feature = gyro_magnitude_min
+gyro_magnitude_min median error = 36.5 samples
+gyro_magnitude_min within 50 samples = 0.5930
+db_shoulder_press best feature = transition_energy_max
+db_bench_press best feature = pca_extreme_max
+```
+
+第 006 版實作：
+
+- 新增 segment method：`pca-autocorr-feature-refined`；
+- rep count 與大致位置仍用 PCA/autocorr；
+- boundary refinement 改成 exercise-aware feature score：
+  - `db_bench_press`：PCA extreme max；
+  - `db_shoulder_press`：transition energy max；
+  - `db_rdl`：PCA velocity min；
+  - 其他動作：gyro magnitude min。
+
+實際結果：
+
+```text
+003 rep IoU@0.50 F1 = 0.7182
+006 rep IoU@0.50 F1 = 0.7353
+003 rep IoU@0.75 F1 = 0.3622
+006 rep IoU@0.75 F1 = 0.3968
+003 phase IoU@0.50 F1 = 0.4383
+006 phase IoU@0.50 F1 = 0.4654
+003 classification accuracy = 0.8414
+006 classification accuracy = 0.8456
+```
+
+動作別觀察：
+
+```text
+db_shoulder_press IoU@0.50 F1: 0.4972 -> 0.7081
+db_bench_press IoU@0.50 F1: 0.5621 -> 0.5820
+one_arm_db_row IoU@0.50 F1: 0.8525 -> 0.8164
+db_biceps_curl IoU@0.50 F1: 0.6853 -> 0.6608
+```
+
+結論：
+
+換特徵方向是對的，但固定規則還不夠。第 006 版證明 `shoulder_press` 這類弱項可以靠不同 feature 改善，但也讓部分原本穩定的動作退步。下一步要避免手寫固定 feature map，改成在 training subjects 上做 per-exercise feature selection，或訓練輕量 boundary probability model，再用 duration prior / dynamic programming 產生最終切點。
