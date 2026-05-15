@@ -12,6 +12,7 @@ METHOD_DIR_NAMES = {
     "dominant-axis": "dominant_axis",
     "short-time-energy": "short_time_energy",
     "pca-extrema": "pca_extrema",
+    "pca-autocorr": "pca_autocorr",
     "pca-extrema-fft": "pca_extrema_fft",
 }
 
@@ -20,6 +21,7 @@ DEFAULT_METHODS = [
     "dominant-axis",
     "short-time-energy",
     "pca-extrema",
+    "pca-autocorr",
     "pca-extrema-fft",
 ]
 
@@ -27,6 +29,7 @@ DEFAULT_COMPARISON_METHODS = [
     "dominant-axis",
     "short-time-energy",
     "pca-extrema",
+    "pca-autocorr",
     "pca-extrema-fft",
 ]
 
@@ -70,6 +73,12 @@ def add_evaluation_args(command: list[str], args: argparse.Namespace) -> list[st
             str(args.fft_max_period_fraction),
             "--fft-peak-distance-scale",
             str(args.fft_peak_distance_scale),
+            "--autocorr-min-period-samples",
+            str(args.autocorr_min_period_samples),
+            "--autocorr-max-period-fraction",
+            str(args.autocorr_max_period_fraction),
+            "--autocorr-peak-distance-scale",
+            str(args.autocorr_peak_distance_scale),
             "--min-label-iou",
             str(args.min_label_iou),
             "--segmentation-iou-thresholds",
@@ -174,6 +183,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--fft-min-period-samples", type=int, default=25)
     parser.add_argument("--fft-max-period-fraction", type=float, default=0.8)
     parser.add_argument("--fft-peak-distance-scale", type=float, default=1.2)
+    parser.add_argument("--autocorr-min-period-samples", type=int, default=25)
+    parser.add_argument("--autocorr-max-period-fraction", type=float, default=0.8)
+    parser.add_argument("--autocorr-peak-distance-scale", type=float, default=0.75)
     parser.add_argument("--min-label-iou", type=float, default=0.25)
     parser.add_argument("--segmentation-iou-thresholds", type=float, nargs="+", default=[0.25, 0.5, 0.75])
     parser.add_argument("--focus-iou", type=float, default=0.5)

@@ -94,11 +94,11 @@
 
 等待使用者審核文件內容。若同意，下一個 proposal 建議是「PCA + autocorrelation-constrained peak segmentation」。
 
-## 下一個建議 proposal：PCA + Autocorrelation + Peak
+## 2026-05-15：PCA + Autocorrelation + Peak
 
-日期：待定
+日期：2026-05-15
 
-狀態：proposal
+狀態：implemented
 
 目的：
 
@@ -150,6 +150,114 @@
 
 審核結果：
 
+使用者回覆「可以開始做」，同意實作此 proposal。
+
+實際結果：
+
+已新增 `pca-autocorr` segmentation method，並更新一鍵 pipeline、README、實驗規劃與文獻比較文件。
+
+實作重點：
+
+- 在 PCA principal motion signal 上估計 autocorrelation dominant period；
+- 用 dominant period 限制 peak distance；
+- 用 peak / trough midpoint 形成 rep boundary；
+- 自相關實作採用 FFT-based autocorrelation，避免直接 `np.correlate` 在長 set 上造成 O(n^2) 計算瓶頸。
+
+數值結果：
+
+```text
+true reps: 2424
+predicted reps: 4846
+classified reps: 1627
+IoU@0.25 F1: 0.4116
+IoU@0.50 precision: 0.2070
+IoU@0.50 recall: 0.4138
+IoU@0.50 F1: 0.2759
+IoU@0.75 F1: 0.0930
+classification accuracy: 0.8482
+macro F1: 0.8240
+weighted F1: 0.8490
+```
+
+與 `pca-extrema-fft` 相比：
+
+```text
+predicted reps: 5942 -> 4846
+IoU@0.50 F1: 0.2044 -> 0.2759
+IoU@0.75 F1: 0.0304 -> 0.0930
+set-level mean best IoU: 0.3479 -> 0.3606
+set-level prediction ratio: 0.9211 -> 0.9774
+```
+
+輸出結果：
+
+- `artifacts_rep_classification/pca_autocorr_8class_5fold/`
+- `artifacts_rep_classification/methods_comparison/`
+- `artifacts_rep_classification/waveform_method_comparison/sets_all/`
+- `artifacts_rep_classification/waveform_method_comparison/set_level_results/`
+
+下一步：
+
+下一個建議 proposal 是「active set detection + exercise-aware prior」。原因是 `pca-autocorr` 已把 prediction ratio 拉近到 `0.9774`，但 IoU@0.50 false positives 仍有 `3843`；如果能先把不穩定的 set/rest 邊界處理好，再依動作類別限制合理 rep duration，應該比直接加更複雜模型更務實。
+
+## 下一個建議 proposal：Active Set Detection + Exercise-aware Prior
+
+日期：待定
+
+狀態：proposal
+
+目的：
+
+在進一步做 Wavelet、DTW 或 TCN 前，先降低 set/rest 邊界污染與跨動作週期差異造成的錯切。
+
+背景問題：
+
+目前 `pca-autocorr` 已經改善過切，但仍有不少 false positives。主要可能來自：
+
+- set 起訖包含拿放啞鈴或姿勢調整；
+- 不同動作合理 rep duration 不同；
+- peak distance 仍是全域比例，沒有使用 exercise-specific prior。
+
+假設：
+
+先做 active set trimming，再根據 exercise 設定 period / duration prior，可以比直接加入更複雜模型更有效降低 false positives。
+
+預計改動：
+
+- 從 labeled set block 內部再用 motion energy trim 開頭與結尾；
+- 從 ground truth training folds 估計 per-exercise rep duration quantile；
+- 在 validation / test block 中用該 exercise prior 限制 autocorr period；
+- 新增 method 名稱，例如 `pca-autocorr-prior`。
+
+不做的事：
+
+- 不做 Wavelet；
+- 不做 DTW；
+- 不做 phase split；
+- 不做 Luckfox 部署。
+
+預期改善：
+
+- IoU@0.50 precision 提升；
+- false positives 降低；
+- boundary start/end error 降低；
+- set-level prediction ratio 維持接近 1。
+
+評估指標：
+
+- IoU@0.50 F1；
+- false positives；
+- per-exercise IoU@0.50 F1；
+- set-level count MAE；
+- waveform boundary comparison。
+
+風險：
+
+- 若 prior 從全部資料估計，會有資料洩漏疑慮；正式比較時應改成 fold-wise prior；
+- 若 trim 太 aggressive，可能漏掉第一下或最後一下 rep。
+
+審核結果：
+
 待使用者確認。
 
 實際結果：
@@ -158,4 +266,4 @@
 
 下一步：
 
-若使用者同意，先做小範圍實作與快速評估，再決定是否重跑完整 pipeline。
+等待使用者審核。

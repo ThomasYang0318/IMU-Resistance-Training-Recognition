@@ -419,15 +419,56 @@ def estimate_fft_period(signal: np.ndarray, min_period: int, max_period: int) ->
     return period if math.isfinite(period) and period > 0 else None
 
 
-def select_fft_guided_peaks(
+def estimate_autocorrelation_period(signal: np.ndarray, min_period: int, max_period: int) -> float | None:
+    if len(signal) < max(min_period * 2, 4):
+        return None
+    max_period = min(max_period, len(signal) - 1)
+    if max_period < min_period:
+        return None
+
+    values = robust_zscore(signal)
+    values = values - float(np.mean(values))
+    std = float(np.std(values))
+    if std < 1e-9:
+        return None
+
+    n_fft = 1 << (2 * len(values) - 1).bit_length()
+    spectrum = np.fft.rfft(values, n=n_fft)
+    autocorr = np.fft.irfft(spectrum * np.conj(spectrum), n=n_fft)[: len(values)]
+    if float(autocorr[0]) <= 1e-9:
+        return None
+    autocorr = autocorr / float(autocorr[0])
+    lags = np.arange(len(autocorr))
+    valid = (lags >= min_period) & (lags <= max_period)
+    if not np.any(valid):
+        return None
+
+    valid_lags = lags[valid]
+    valid_autocorr = autocorr[valid]
+    peaks, props = find_peaks(valid_autocorr, prominence=0.03)
+    if len(peaks):
+        prominences = props.get("prominences", peak_prominences(valid_autocorr, peaks)[0])
+        positive = valid_autocorr[peaks] > 0
+        if np.any(positive):
+            peaks = peaks[positive]
+            prominences = prominences[positive]
+        best_idx = peaks[int(np.argmax(prominences))]
+        return float(valid_lags[best_idx])
+
+    best_idx = int(np.argmax(valid_autocorr))
+    period = float(valid_lags[best_idx])
+    return period if math.isfinite(period) and period > 0 else None
+
+
+def select_period_guided_peaks(
     signal: np.ndarray,
     period: float,
     min_samples: int,
     peak_prominence_scale: float,
-    fft_peak_distance_scale: float,
+    peak_distance_scale: float,
 ) -> np.ndarray:
     expected_reps = max(1, int(round(len(signal) / max(period, 1.0))))
-    distance = max(int(round(period * fft_peak_distance_scale)), min_samples, 1)
+    distance = max(int(round(period * peak_distance_scale)), min_samples, 1)
     prominence = max(float(np.std(signal)) * peak_prominence_scale, 1e-6)
 
     candidates: list[tuple[np.ndarray, np.ndarray]] = []
@@ -444,6 +485,79 @@ def select_fft_guided_peaks(
         top_indices = np.argsort(prominences)[-expected_reps:]
         peaks = peaks[np.sort(top_indices)]
     return np.sort(peaks)
+
+
+def select_fft_guided_peaks(
+    signal: np.ndarray,
+    period: float,
+    min_samples: int,
+    peak_prominence_scale: float,
+    fft_peak_distance_scale: float,
+) -> np.ndarray:
+    return select_period_guided_peaks(
+        signal,
+        period=period,
+        min_samples=min_samples,
+        peak_prominence_scale=peak_prominence_scale,
+        peak_distance_scale=fft_peak_distance_scale,
+    )
+
+
+def autocorr_guided_pca_extrema_segments(
+    df: pd.DataFrame,
+    path: Path,
+    smooth_window: int,
+    min_samples: int,
+    peak_prominence_scale: float,
+    autocorr_min_period_samples: int,
+    autocorr_max_period_fraction: float,
+    autocorr_peak_distance_scale: float,
+) -> list[RepSegment]:
+    predicted: list[RepSegment] = []
+    for block in set_blocks_from_labels(df, path, min_samples=min_samples):
+        segment_df = df.iloc[block.start : block.end]
+        signal = principal_motion_signal(segment_df, smooth_window)
+        max_period = max(min_samples, int(round(len(signal) * autocorr_max_period_fraction)))
+        period = estimate_autocorrelation_period(
+            signal,
+            min_period=max(min_samples, autocorr_min_period_samples),
+            max_period=max_period,
+        )
+        if period is None:
+            continue
+
+        centers = select_period_guided_peaks(
+            signal,
+            period=period,
+            min_samples=min_samples,
+            peak_prominence_scale=peak_prominence_scale,
+            peak_distance_scale=autocorr_peak_distance_scale,
+        )
+        if len(centers) == 0:
+            continue
+
+        boundaries = [0]
+        if len(centers) > 1:
+            boundaries.extend(int(round((centers[i] + centers[i + 1]) / 2.0)) for i in range(len(centers) - 1))
+        boundaries.append(len(segment_df))
+        boundaries = sorted(set(boundaries))
+
+        for rep_idx, (start, end) in enumerate(zip(boundaries[:-1], boundaries[1:])):
+            if end - start < min_samples:
+                continue
+            predicted.append(
+                RepSegment(
+                    path,
+                    block.subject,
+                    block.exercise,
+                    block.set_id,
+                    str(rep_idx),
+                    block.start + start,
+                    block.start + end,
+                    "pca_autocorr",
+                )
+            )
+    return predicted
 
 
 def fft_guided_pca_extrema_segments(
@@ -897,7 +1011,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--include-other", action="store_true", help="Add an 'other' class for unmatched/non-top exercise segments.")
     parser.add_argument(
         "--segment-method",
-        choices=["labels", "dominant-axis", "short-time-energy", "pca-extrema", "pca-extrema-fft"],
+        choices=[
+            "labels",
+            "dominant-axis",
+            "short-time-energy",
+            "pca-extrema",
+            "pca-autocorr",
+            "pca-extrema-fft",
+        ],
         default="labels",
     )
     parser.add_argument("--min-segment-samples", type=int, default=20)
@@ -907,6 +1028,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--fft-min-period-samples", type=int, default=25)
     parser.add_argument("--fft-max-period-fraction", type=float, default=0.8)
     parser.add_argument("--fft-peak-distance-scale", type=float, default=1.2)
+    parser.add_argument("--autocorr-min-period-samples", type=int, default=25)
+    parser.add_argument("--autocorr-max-period-fraction", type=float, default=0.8)
+    parser.add_argument("--autocorr-peak-distance-scale", type=float, default=0.75)
     parser.add_argument("--min-label-iou", type=float, default=0.25)
     parser.add_argument("--segmentation-iou-thresholds", type=float, nargs="+", default=[0.25, 0.5, 0.75])
     parser.add_argument("--seed", type=int, default=42)
@@ -977,6 +1101,21 @@ def main() -> None:
                     min_samples=args.min_segment_samples,
                     peak_prominence_scale=args.peak_prominence_scale,
                     peak_distance_scale=args.peak_distance_scale,
+                )
+            )
+    elif args.segment_method == "pca-autocorr":
+        predicted = []
+        for path, df in session_cache.items():
+            predicted.extend(
+                autocorr_guided_pca_extrema_segments(
+                    df,
+                    path,
+                    smooth_window=args.smooth_window,
+                    min_samples=args.min_segment_samples,
+                    peak_prominence_scale=args.peak_prominence_scale,
+                    autocorr_min_period_samples=args.autocorr_min_period_samples,
+                    autocorr_max_period_fraction=args.autocorr_max_period_fraction,
+                    autocorr_peak_distance_scale=args.autocorr_peak_distance_scale,
                 )
             )
     else:

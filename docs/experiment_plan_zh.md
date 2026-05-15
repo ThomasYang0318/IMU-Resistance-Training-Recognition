@@ -19,6 +19,7 @@
 - `dominant-axis`
 - `short-time-energy`
 - `pca-extrema`
+- `pca-autocorr`
 - `pca-extrema-fft`
 - oracle `labels`
 
@@ -117,7 +118,7 @@
 | 傳統 baseline | Dominant-axis peak | 高 | 低成本 baseline | 即時、可部署 | 對配戴方向敏感 |
 | 傳統 baseline | Short-time energy | 中 | 能量法 baseline | 對強度變化敏感 | 容易受雜訊與休息動作影響 |
 | 核心 baseline | PCA + peak | 很高 | 目前主要 baseline | 不必人工選軸 | over-segmentation |
-| 改良方法 | PCA + autocorrelation + peak | 很高 | 第一個改善方法 | 用週期限制 peak distance | 變速或不穩節奏會失準 |
+| 改良方法 | PCA + autocorrelation + peak | 很高 | 已實作改善方法 | 用週期限制 peak distance | 變速或不穩節奏會失準 |
 | 改良方法 | PCA + wavelet + peak | 高 | 非穩態訊號改善 | 適合速度變化與疲勞 | 參數較多 |
 | 個人化方法 | DTW template refinement | 高 | 少量標註後改善新人 | 適合形狀比對與 few-shot | 計算量較高 |
 | Phase 方法 | State machine | 很高 | 向心/離心切割 | 可解釋、低成本 | 規則需依動作調整 |
@@ -155,6 +156,33 @@ set detection
 - per-exercise matched rate；
 - set-level count MAE；
 - waveforms with boundary lines。
+
+目前結果：
+
+```text
+method: pca-autocorr
+true reps: 2424
+predicted reps: 4846
+IoU@0.50 precision: 0.2070
+IoU@0.50 recall: 0.4138
+IoU@0.50 F1: 0.2759
+IoU@0.75 F1: 0.0930
+classification accuracy: 0.8482
+```
+
+與 `pca-extrema-fft` 比較：
+
+```text
+predicted reps: 5942 -> 4846
+IoU@0.50 precision: 0.1439 -> 0.2070
+IoU@0.50 recall: 0.3527 -> 0.4138
+IoU@0.50 F1: 0.2044 -> 0.2759
+IoU@0.75 F1: 0.0304 -> 0.0930
+```
+
+初步結論：
+
+自相關週期限制比目前 FFT 週期限制更適合這批資料，主要改善是降低 over-segmentation 並提升高 IoU 門檻下的匹配數。但 IoU@0.50 F1 仍只有 `0.2759`，下一步仍需要 active set detection、per-exercise prior 或 phase-aware refinement。
 
 ### 方向 B：Wavelet-Denoised PCA Boundary
 

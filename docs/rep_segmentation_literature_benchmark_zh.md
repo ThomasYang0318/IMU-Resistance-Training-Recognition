@@ -6,7 +6,7 @@
 
 原因是多數文獻回報的是 repetition counting accuracy，例如一組動作的總 rep 數是否正確，或允許 +/-1 rep count error；我們目前評估的是更嚴格的 rep boundary IoU，也就是每一下 rep 的 start/end 是否切準。這兩種指標不能直接等價比較。
 
-若只看本專案目前的 boundary-level 結果，`pca-extrema-fft` 是目前最佳方法，但 IoU@0.50 F1 仍只有 `0.2011`，代表它比 baseline 好，但還不到可以宣稱實用級精準 rep segmentation。
+若只看本專案目前的 boundary-level 結果，`pca-autocorr` 是目前最佳方法，但 IoU@0.50 F1 仍只有 `0.2759`，代表它比既有 classical baseline 好，但還不到可以宣稱實用級精準 rep segmentation。
 
 ## 參考文獻方法
 
@@ -36,6 +36,7 @@ ground truth rep boundaries
 dominant-axis predicted boundaries
 short-time-energy predicted boundaries
 pca-extrema predicted boundaries
+pca-autocorr predicted boundaries
 pca-extrema-fft predicted boundaries
 ```
 
@@ -119,7 +120,28 @@ IMU 6-axis signal
 -> IoU matching 評估 boundary accuracy
 ```
 
-這是目前效果最好的版本，原因是 FFT 週期約束能明顯降低 over-segmentation。
+這個版本證明週期約束能明顯降低 over-segmentation；後續 `pca-autocorr` 則在同樣概念下取得更好的 boundary-level IoU。
+
+### 5. Autocorrelation-guided PCA extrema
+
+自相關常用於估計重複訊號週期。相較於 FFT 的全域頻率估計，自相關可直接在時間 lag 上找 dominant period，較容易轉成 peak distance constraint。本專案對應實作：
+
+```text
+pca-autocorr
+```
+
+本專案方法：
+
+```text
+IMU 6-axis signal
+-> PCA principal motion signal
+-> FFT-based autocorrelation 估計 set-level dominant period
+-> 用 dominant period 限制 peak distance
+-> peak / trough midpoint 形成 rep boundary
+-> IoU matching 評估 boundary accuracy
+```
+
+實作細節上，自相關使用 FFT-based autocorrelation，而不是直接 `np.correlate`，避免長 set 造成 O(n^2) 計算瓶頸。
 
 ## 實驗設定
 
@@ -152,6 +174,7 @@ validation: subject-wise 5-fold
 | dominant-axis | 22103 | 0.0362 | 0.3300 | 0.0652 | 0.0101 |
 | short-time-energy | 15391 | 0.0670 | 0.4253 | 0.1157 | 0.0231 |
 | pca-extrema | 11480 | 0.0841 | 0.3981 | 0.1388 | 0.0237 |
+| pca-autocorr | 4846 | 0.2070 | 0.4138 | 0.2759 | 0.0930 |
 | pca-extrema-fft | 5942 | 0.1439 | 0.3527 | 0.2044 | 0.0304 |
 
 比較圖：
@@ -171,15 +194,15 @@ artifacts_rep_classification/waveform_method_comparison/set_level_results/
 
 ### 1. 比一般 dominant-axis peak detection 更不依賴人工選軸
 
-Dominant-axis 方法對手錶/IMU 的配戴方向與動作平面很敏感。`pca-extrema-fft` 先用 PCA 找主要變動方向，減少手動指定 axis 的需求。
+Dominant-axis 方法對手錶/IMU 的配戴方向與動作平面很敏感。`pca-autocorr` 先用 PCA 找主要變動方向，減少手動指定 axis 的需求。
 
 ### 2. 比 short-time-energy 更能抑制過切
 
-STE baseline 在目前資料產生 `15391` 個 predicted reps，true reps 只有 `2424`，over-segmentation 明顯。FFT-guided 方法把 predicted reps 降到 `5942`，IoU@0.50 precision 從 `0.0670` 提升到 `0.1439`。
+STE baseline 在目前資料產生 `15391` 個 predicted reps，true reps 只有 `2424`，over-segmentation 明顯。Autocorrelation-guided 方法把 predicted reps 降到 `4846`，IoU@0.50 precision 從 `0.0670` 提升到 `0.2070`。
 
 ### 3. 比原始 PCA peak detection 更穩
 
-原始 `pca-extrema` 的 IoU@0.50 F1 是 `0.1388`；加入 FFT dominant-period constraint 後提升到 `0.2044`。這代表週期先驗對 resistance training waveform 的切割有幫助。
+原始 `pca-extrema` 的 IoU@0.50 F1 是 `0.1388`；加入 FFT dominant-period constraint 後提升到 `0.2044`，再改用 autocorrelation period constraint 後提升到 `0.2759`。這代表週期先驗對 resistance training waveform 的切割有幫助，而目前自相關週期估計比 FFT 更適合這批資料。
 
 ### 4. 評估比單純 rep counting 更嚴格
 
@@ -193,7 +216,7 @@ STE baseline 在目前資料產生 `15391` 個 predicted reps，true reps 只有
 
 ### 2. Boundary precision 仍低
 
-即使最佳方法 `pca-extrema-fft`，predicted reps 仍是 true reps 的約 3.97 倍，false positives 很多。下一步應該加入：
+即使最佳方法 `pca-autocorr`，predicted reps 仍是 true reps 的約 2.00 倍，在 IoU@0.50 下 false positives 仍有 `3843`。下一步應該加入：
 
 ```text
 per-exercise period prior

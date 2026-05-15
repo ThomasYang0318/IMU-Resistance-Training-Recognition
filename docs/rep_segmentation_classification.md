@@ -53,7 +53,7 @@ datasets/workout
 
 ## Rep Segmentation
 
-目前支援五種模式：
+目前支援六種模式：
 
 ```bash
 --segment-method labels
@@ -80,10 +80,16 @@ datasets/workout
 使用 PCA principal motion signal + smoothing + local extrema 做 experimental rep segmentation。這個方法比人工選軸更穩，但仍容易 over-segment。
 
 ```bash
+--segment-method pca-autocorr
+```
+
+使用 PCA principal motion signal，再用 autocorrelation 估計 set 內 dominant period，並用此週期限制 peak distance。這是目前 classical signal-processing 方法中 boundary-level IoU 最好的版本。
+
+```bash
 --segment-method pca-extrema-fft
 ```
 
-用 FFT 估計 set-level dominant period，再約束 PCA extrema 的 peak distance。這是目前 classical signal-processing 方法中最穩的版本。
+用 FFT 估計 set-level dominant period，再約束 PCA extrema 的 peak distance。這個版本比原始 PCA peak 穩定，但目前已被 `pca-autocorr` 超越。
 
 ## 分類器
 
@@ -273,6 +279,7 @@ python tools/evaluate_rep_segmentation_classification.py \
   --run dominant-axis=artifacts_rep_classification/dominant_axis_8class_5fold \
   --run short-time-energy=artifacts_rep_classification/short_time_energy_8class_5fold \
   --run pca-extrema=artifacts_rep_classification/pca_extrema_8class_5fold \
+  --run pca-autocorr=artifacts_rep_classification/pca_autocorr_8class_5fold \
   --run pca-extrema-fft=artifacts_rep_classification/pca_extrema_fft_8class_5fold \
   --output-dir artifacts_rep_classification/methods_comparison
 ```
@@ -344,9 +351,10 @@ artifacts_rep_classification/waveform_method_comparison/
 | dominant-axis | 22103 | 0.0362 | 0.3300 | 0.0652 | 0.0101 |
 | short-time-energy | 15391 | 0.0670 | 0.4253 | 0.1157 | 0.0231 |
 | pca-extrema | 11480 | 0.0841 | 0.3981 | 0.1388 | 0.0237 |
+| pca-autocorr | 4846 | 0.2070 | 0.4138 | 0.2759 | 0.0930 |
 | pca-extrema-fft | 5942 | 0.1439 | 0.3527 | 0.2044 | 0.0304 |
 
-`pca-extrema-fft` 的 precision、F1 與 over-segmentation 控制目前最好，但 boundary-level F1 還不高，不能宣稱已超越高品質文獻。
+`pca-autocorr` 的 precision、F1 與 over-segmentation 控制目前最好。它把 predicted reps 從 `pca-extrema-fft` 的 `5942` 降到 `4846`，IoU@0.50 F1 從 `0.2044` 提升到 `0.2759`。但 boundary-level F1 仍不高，不能宣稱已超越高品質文獻。
 
 ## Oracle Label Baseline
 

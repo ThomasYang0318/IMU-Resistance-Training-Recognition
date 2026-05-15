@@ -65,6 +65,7 @@ python3.11 -m venv .venv311
 - `dominant-axis`
 - `short-time-energy`
 - `pca-extrema`
+- `pca-autocorr`
 - `pca-extrema-fft`
 
 接著輸出方法比較圖、每組波形切割圖、set-level 比較圖。
@@ -167,6 +168,7 @@ artifacts_rep_classification/waveform_method_comparison/set_level_results/
 | `dominant-axis` | 參考 dominant sensor axis + peak detection 類方法 |
 | `short-time-energy` | 參考 acceleration magnitude short-time energy 的 rep 切割方法 |
 | `pca-extrema` | 將 6-axis IMU 用 PCA 壓成主要運動訊號，再找 extrema |
+| `pca-autocorr` | 用 PCA 主要運動訊號加上自相關週期估計，限制 peak distance |
 | `pca-extrema-fft` | 用 FFT 估計 set-level dominant period，約束 PCA extrema 切割 |
 
 詳細方法與文獻比較請看：
