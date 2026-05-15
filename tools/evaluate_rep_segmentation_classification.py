@@ -267,6 +267,69 @@ def active_phase_blocks_from_truth(true_segments: Sequence[RepSegment], min_samp
     return sorted(blocks, key=lambda segment: (str(segment.file_path), segment.subject, segment.exercise, segment.set_id, segment.start))
 
 
+def active_phase_contiguous_blocks_from_truth(true_segments: Sequence[RepSegment], min_samples: int) -> list[RepSegment]:
+    grouped: dict[tuple[Path, str, str, str], list[RepSegment]] = {}
+    for segment in true_segments:
+        grouped.setdefault((segment.file_path, segment.subject, segment.exercise, segment.set_id), []).append(segment)
+
+    blocks: list[RepSegment] = []
+    for (file_path, subject, exercise, set_id), segments in grouped.items():
+        current_start: int | None = None
+        current_end: int | None = None
+        chunk_idx = 0
+        for segment in sorted(segments, key=lambda item: item.start):
+            if current_start is None:
+                current_start = segment.start
+                current_end = segment.end
+                continue
+            if current_end is not None and segment.start <= current_end:
+                current_end = max(current_end, segment.end)
+                continue
+            if current_end is not None and current_end - current_start >= min_samples:
+                blocks.append(
+                    RepSegment(
+                        file_path,
+                        subject,
+                        exercise,
+                        f"{set_id}:active{chunk_idx}",
+                        "set",
+                        current_start,
+                        current_end,
+                        "active_phase_contiguous",
+                    )
+                )
+                chunk_idx += 1
+            current_start = segment.start
+            current_end = segment.end
+        if current_start is not None and current_end is not None and current_end - current_start >= min_samples:
+            blocks.append(
+                RepSegment(
+                    file_path,
+                    subject,
+                    exercise,
+                    f"{set_id}:active{chunk_idx}",
+                    "set",
+                    current_start,
+                    current_end,
+                    "active_phase_contiguous",
+                )
+            )
+    return sorted(blocks, key=lambda segment: (str(segment.file_path), segment.subject, segment.exercise, segment.set_id, segment.start))
+
+
+def truth_segments_for_block(block: RepSegment, true_segments: Sequence[RepSegment]) -> list[RepSegment]:
+    set_id = block.set_id.split(":active", 1)[0]
+    return [
+        segment
+        for segment in true_segments
+        if segment.file_path == block.file_path
+        and segment.subject == block.subject
+        and segment.exercise == block.exercise
+        and segment.set_id == set_id
+        and min(segment.end, block.end) > max(segment.start, block.start)
+    ]
+
+
 def candidate_blocks(
     df: pd.DataFrame,
     path: Path,
@@ -278,6 +341,8 @@ def candidate_blocks(
         return set_blocks_from_labels(df, path, min_samples=min_samples)
     if block_source == "active-phase-span":
         return active_phase_blocks_from_truth(true_segments, min_samples=min_samples)
+    if block_source == "active-phase-contiguous":
+        return active_phase_contiguous_blocks_from_truth(true_segments, min_samples=min_samples)
     raise ValueError(f"Unsupported block source: {block_source}")
 
 
@@ -291,13 +356,9 @@ def pca_extrema_segments(
     peak_distance_scale: float,
     block_source: str,
 ) -> list[RepSegment]:
-    by_block: dict[tuple[str, str, str], list[RepSegment]] = {}
-    for segment in true_segments:
-        by_block.setdefault((segment.subject, segment.exercise, segment.set_id), []).append(segment)
-
     predicted: list[RepSegment] = []
     for block in candidate_blocks(df, path, true_segments, min_samples=min_samples, block_source=block_source):
-        truth = sorted(by_block.get((block.subject, block.exercise, block.set_id), []), key=lambda s: s.start)
+        truth = sorted(truth_segments_for_block(block, true_segments), key=lambda s: s.start)
         if not truth:
             continue
         expected = len(truth)
@@ -551,6 +612,134 @@ def select_fft_guided_peaks(
         peak_prominence_scale=peak_prominence_scale,
         peak_distance_scale=fft_peak_distance_scale,
     )
+
+
+def refine_boundaries_by_motion_minima(
+    boundaries: Sequence[int],
+    signal: np.ndarray,
+    min_samples: int,
+    search_fraction: float,
+    energy_window: int,
+) -> list[int]:
+    if len(boundaries) <= 2 or len(signal) < 3:
+        return list(boundaries)
+
+    derivative = np.abs(np.diff(signal, prepend=signal[:1]))
+    energy = moving_average(derivative, max(3, energy_window))
+    refined = [int(boundaries[0])]
+    for left, boundary, right in zip(boundaries[:-2], boundaries[1:-1], boundaries[2:]):
+        left = int(left)
+        boundary = int(boundary)
+        right = int(right)
+        left_span = max(1, boundary - left)
+        right_span = max(1, right - boundary)
+        radius = max(min_samples, int(round(min(left_span, right_span) * search_fraction)))
+        lo = max(left + min_samples, boundary - radius)
+        hi = min(right - min_samples, boundary + radius)
+        if hi <= lo:
+            refined.append(boundary)
+            continue
+        local = energy[lo : hi + 1]
+        if len(local) == 0:
+            refined.append(boundary)
+        else:
+            refined.append(int(lo + np.argmin(local)))
+    refined.append(int(boundaries[-1]))
+
+    monotonic = [refined[0]]
+    for boundary in refined[1:]:
+        if boundary - monotonic[-1] < min_samples:
+            boundary = monotonic[-1] + min_samples
+        monotonic.append(min(boundary, len(signal)))
+    if len(monotonic) >= 2:
+        monotonic[-1] = len(signal)
+    return monotonic
+
+
+def segments_from_block_boundaries(
+    path: Path,
+    block: RepSegment,
+    boundaries: Sequence[int],
+    min_samples: int,
+    source: str,
+) -> list[RepSegment]:
+    predicted: list[RepSegment] = []
+    base_set_id = block.set_id.split(":active", 1)[0]
+    for rep_idx, (start, end) in enumerate(zip(boundaries[:-1], boundaries[1:])):
+        if end - start < min_samples:
+            continue
+        predicted.append(
+            RepSegment(
+                path,
+                block.subject,
+                block.exercise,
+                base_set_id,
+                str(rep_idx),
+                block.start + int(start),
+                block.start + int(end),
+                source,
+            )
+        )
+    return predicted
+
+
+def autocorr_refined_pca_segments(
+    df: pd.DataFrame,
+    path: Path,
+    smooth_window: int,
+    min_samples: int,
+    peak_prominence_scale: float,
+    autocorr_min_period_samples: int,
+    autocorr_max_period_fraction: float,
+    autocorr_peak_distance_scale: float,
+    true_segments: Sequence[RepSegment],
+    block_source: str,
+    boundary_refine_search_fraction: float,
+    boundary_refine_energy_window: int,
+) -> list[RepSegment]:
+    predicted: list[RepSegment] = []
+    for block in candidate_blocks(df, path, true_segments, min_samples=min_samples, block_source=block_source):
+        segment_df = df.iloc[block.start : block.end]
+        signal = principal_motion_signal(segment_df, smooth_window)
+        if len(signal) < min_samples * 2:
+            predicted.extend(segments_from_block_boundaries(path, block, [0, len(signal)], min_samples, "pca_autocorr_refined"))
+            continue
+
+        max_period = max(min_samples, int(round(len(signal) * autocorr_max_period_fraction)))
+        period = estimate_autocorrelation_period(
+            signal,
+            min_period=max(min_samples, autocorr_min_period_samples),
+            max_period=max_period,
+        )
+        if period is None:
+            predicted.extend(segments_from_block_boundaries(path, block, [0, len(signal)], min_samples, "pca_autocorr_refined"))
+            continue
+
+        centers = select_period_guided_peaks(
+            signal,
+            period=period,
+            min_samples=min_samples,
+            peak_prominence_scale=peak_prominence_scale,
+            peak_distance_scale=autocorr_peak_distance_scale,
+        )
+        if len(centers) == 0:
+            predicted.extend(segments_from_block_boundaries(path, block, [0, len(signal)], min_samples, "pca_autocorr_refined"))
+            continue
+
+        boundaries = [0]
+        if len(centers) > 1:
+            boundaries.extend(int(round((centers[i] + centers[i + 1]) / 2.0)) for i in range(len(centers) - 1))
+        boundaries.append(len(segment_df))
+        boundaries = sorted(set(boundaries))
+        boundaries = refine_boundaries_by_motion_minima(
+            boundaries,
+            signal,
+            min_samples=min_samples,
+            search_fraction=boundary_refine_search_fraction,
+            energy_window=boundary_refine_energy_window,
+        )
+        predicted.extend(segments_from_block_boundaries(path, block, boundaries, min_samples, "pca_autocorr_refined"))
+    return predicted
 
 
 def autocorr_guided_pca_extrema_segments(
@@ -1363,9 +1552,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--include-other", action="store_true", help="Add an 'other' class for unmatched/non-top exercise segments.")
     parser.add_argument(
         "--block-source",
-        choices=["action-label", "active-phase-span"],
+        choices=["action-label", "active-phase-span", "active-phase-contiguous"],
         default="action-label",
-        help="Set candidate block source. active-phase-span removes pre/post rest and evaluates only labeled movement spans.",
+        help="Set candidate block source. active-phase-contiguous removes inactive gaps inside labeled movement spans.",
     )
     parser.add_argument(
         "--segment-method",
@@ -1375,6 +1564,7 @@ def parse_args() -> argparse.Namespace:
             "short-time-energy",
             "pca-extrema",
             "pca-autocorr",
+            "pca-autocorr-refined",
             "pca-extrema-fft",
         ],
         default="labels",
@@ -1389,6 +1579,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--autocorr-min-period-samples", type=int, default=25)
     parser.add_argument("--autocorr-max-period-fraction", type=float, default=0.8)
     parser.add_argument("--autocorr-peak-distance-scale", type=float, default=0.75)
+    parser.add_argument("--boundary-refine-search-fraction", type=float, default=0.35)
+    parser.add_argument("--boundary-refine-energy-window", type=int, default=21)
     parser.add_argument("--min-label-iou", type=float, default=0.25)
     parser.add_argument("--segmentation-iou-thresholds", type=float, nargs="+", default=[0.25, 0.5, 0.75])
     parser.add_argument("--evaluate-phase-split", action="store_true")
@@ -1488,6 +1680,25 @@ def main() -> None:
                     autocorr_peak_distance_scale=args.autocorr_peak_distance_scale,
                     true_segments=truth_by_file.get(path, []),
                     block_source=args.block_source,
+                )
+            )
+    elif args.segment_method == "pca-autocorr-refined":
+        predicted = []
+        for path, df in session_cache.items():
+            predicted.extend(
+                autocorr_refined_pca_segments(
+                    df,
+                    path,
+                    smooth_window=args.smooth_window,
+                    min_samples=args.min_segment_samples,
+                    peak_prominence_scale=args.peak_prominence_scale,
+                    autocorr_min_period_samples=args.autocorr_min_period_samples,
+                    autocorr_max_period_fraction=args.autocorr_max_period_fraction,
+                    autocorr_peak_distance_scale=args.autocorr_peak_distance_scale,
+                    true_segments=truth_by_file.get(path, []),
+                    block_source=args.block_source,
+                    boundary_refine_search_fraction=args.boundary_refine_search_fraction,
+                    boundary_refine_energy_window=args.boundary_refine_energy_window,
                 )
             )
     else:

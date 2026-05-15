@@ -43,6 +43,7 @@ artifacts_rep_classification/
   RESULTS_INDEX.md                  rep segmentation / classification 結果版本索引
   001_active_only_labels_8class_5fold/
   002_active_only_pca_autocorr_8class_5fold/
+  003_active_only_pca_autocorr_refined_8class_5fold/
   *_8class_5fold/                   各方法的 K-fold、IoU、混淆矩陣結果
   methods_comparison/               多方法 IoU 比較圖
   waveform_method_comparison/       波形切割圖與 set-level 結果圖
@@ -169,14 +170,33 @@ subject-wise supervised active / set detector：
   --folds 5 \
   --num-classes 8 \
   --evaluate-phase-split
+
+.venv311/bin/python tools/evaluate_rep_segmentation_classification.py \
+  --data-dirs datasets/workout/haoyu0512workout \
+    datasets/workout/hsianshun0514workout \
+    datasets/workout/kevin0509workout \
+    datasets/workout/thomas0506workout \
+    datasets/workout/yanz0510workout \
+    datasets/workout/yoru0511workout \
+    datasets/workout/yushuan0513workout \
+    datasets/workout/ziho0512workout \
+  --output-dir artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold \
+  --segment-method pca-autocorr-refined \
+  --block-source active-phase-contiguous \
+  --boundary-refine-search-fraction 0.25 \
+  --boundary-refine-energy-window 51 \
+  --folds 5 \
+  --num-classes 8 \
+  --evaluate-phase-split
 ```
 
-`002_active_only_pca_autocorr_8class_5fold` 目前結果：
+`003_active_only_pca_autocorr_refined_8class_5fold` 目前結果：
 
 ```text
-rep IoU@0.50 F1: 0.7083
-exercise classification accuracy: 0.8459
-phase IoU@0.50 F1: 0.4063
+rep IoU@0.50 F1: 0.7182
+rep IoU@0.75 F1: 0.3622
+exercise classification accuracy: 0.8414
+phase IoU@0.50 F1: 0.4383
 ```
 
 以 FFT-guided PCA extrema 為例：
@@ -253,6 +273,7 @@ artifacts_rep_classification/waveform_method_comparison/set_level_results/
 | `short-time-energy` | 參考 acceleration magnitude short-time energy 的 rep 切割方法 |
 | `pca-extrema` | 將 6-axis IMU 用 PCA 壓成主要運動訊號，再找 extrema |
 | `pca-autocorr` | 用 PCA 主要運動訊號加上自相關週期估計，限制 peak distance |
+| `pca-autocorr-refined` | active-contiguous block + PCA/autocorr + motion-energy minima boundary refinement |
 | `pca-extrema-fft` | 用 FFT 估計 set-level dominant period，約束 PCA extrema 切割 |
 
 詳細方法與文獻比較請看：

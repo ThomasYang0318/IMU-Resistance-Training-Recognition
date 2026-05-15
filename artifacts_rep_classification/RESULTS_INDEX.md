@@ -91,3 +91,64 @@ phase IoU@0.75 F1: 0.1671
 - `phase_split_metrics_by_phase.csv`
 - `phase_split_iou_metrics.png`
 - `phase_split_iou_f1_by_phase.png`
+
+## 003_active_only_pca_autocorr_refined_8class_5fold
+
+目的：
+
+在 active-only 條件下改善 rep boundary，避免使用 set 內部的 inactive gaps，並用局部 motion-energy minima 修正 PCA/autocorr 產生的 boundary。
+
+設定：
+
+- segment method：`pca-autocorr-refined`
+- block source：`active-phase-contiguous`
+- boundary refine search fraction：`0.25`
+- boundary refine energy window：`51`
+- classes：8
+- folds：subject-wise 5-fold
+- phase split：`pca-reversal`
+- data：與 `002_active_only_pca_autocorr_8class_5fold` 相同的 8 位 subject
+
+主要數值：
+
+```text
+true reps: 2424
+predicted reps: 2374
+classified reps: 2327
+rep IoU@0.25 F1: 0.9287
+rep IoU@0.50 F1: 0.7182
+rep IoU@0.75 F1: 0.3622
+exercise classification accuracy: 0.8414
+exercise macro F1: 0.8382
+phase IoU@0.25 F1: 0.6865
+phase IoU@0.50 F1: 0.4383
+phase IoU@0.75 F1: 0.1730
+```
+
+與 `002_active_only_pca_autocorr_8class_5fold` 比較：
+
+```text
+rep IoU@0.50 F1: 0.7083 -> 0.7182
+rep IoU@0.75 F1: 0.3308 -> 0.3622
+phase IoU@0.50 F1: 0.4063 -> 0.4383
+exercise classification accuracy: 0.8459 -> 0.8414
+```
+
+解讀：
+
+boundary refinement 有改善較嚴格的 rep boundary 指標，尤其 IoU@0.75；phase split 也小幅改善。但分類 accuracy 略降，代表 refinement 目前主要改善邊界，不一定直接改善分類特徵。
+
+重點檔案：
+
+- `summary.json`
+- `rep_segmentation_metrics.csv`
+- `rep_segmentation_metrics_by_exercise.csv`
+- `rep_segmentation_iou_metrics.png`
+- `rep_segmentation_iou_f1_by_exercise.png`
+- `classification_report.json`
+- `confusion_matrix.png`
+- `confusion_matrix_normalized.png`
+- `phase_split_metrics.csv`
+- `phase_split_metrics_by_phase.csv`
+- `phase_split_iou_metrics.png`
+- `phase_split_iou_f1_by_phase.png`

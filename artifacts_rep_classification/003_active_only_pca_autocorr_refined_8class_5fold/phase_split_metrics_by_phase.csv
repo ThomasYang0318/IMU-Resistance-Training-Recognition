@@ -1,0 +1,7 @@
+phase,iou_threshold,true_phase_segments,predicted_phase_segments,matched_phase_segments,false_positives,false_negatives,precision,recall,f1,mean_matched_iou
+concentric,0.25,2396,2374,1713,661,683,0.7216,0.7149,0.7182,0.5842
+concentric,0.5,2396,2374,1096,1278,1300,0.4617,0.4574,0.4595,0.698
+concentric,0.75,2396,2374,380,1994,2016,0.1601,0.1586,0.1593,0.8474
+eccentric,0.25,2380,2374,1556,818,824,0.6554,0.6538,0.6546,0.5974
+eccentric,0.5,2380,2374,991,1383,1389,0.4174,0.4164,0.4169,0.7279
+eccentric,0.75,2380,2374,444,1930,1936,0.187,0.1866,0.1868,0.8524

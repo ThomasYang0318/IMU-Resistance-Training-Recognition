@@ -711,3 +711,120 @@ true reps: 2424
 - 只在 active-phase-span 內改善 rep boundary；
 - 針對 IoU@0.75 低的問題做 boundary refinement；
 - 比較 midpoint、PCA reversal、DTW template refinement 或 per-exercise duration prior。
+
+## 2026-05-15：Active-only PCA Autocorr Boundary Refinement
+
+日期：2026-05-15
+
+狀態：implemented
+
+目的：
+
+在不使用休息資料的 active-only 條件下，改善 `pca-autocorr` 的 rep boundary，特別是 IoU@0.75。
+
+背景問題：
+
+`002_active_only_pca_autocorr_8class_5fold` 的 IoU@0.50 F1 已達 `0.7083`，但 IoU@0.75 F1 只有 `0.3308`。這表示 rep count 和大致位置已經可用，但 start/end 邊界仍不夠準。另有一個問題是 `active-phase-span` 仍會把同一 set 內部的 inactive gap 包進處理範圍，不夠符合「不要使用休息資料」的要求。
+
+假設：
+
+- 改用 active-contiguous block 可以排除 set 內部 inactive gaps；
+- PCA/autocorr 先決定候選 rep 數與大致週期；
+- 在候選 boundary 附近搜尋 motion-energy local minima，可以改善 start/end 對齊；
+- 調參應先用 segmentation-only grid，不直接反覆跑完整分類。
+
+預計改動：
+
+- 新增 `--block-source active-phase-contiguous`；
+- 新增 `pca-autocorr-refined` segmentation method；
+- 新增 boundary refinement 參數：
+  - `--boundary-refine-search-fraction`
+  - `--boundary-refine-energy-window`
+- 正式輸出 `003_active_only_pca_autocorr_refined_8class_5fold`；
+- 更新 `artifacts_rep_classification/RESULTS_INDEX.md`。
+
+不做的事：
+
+- 不做 active/rest detection；
+- 不使用休息資料；
+- 不加入 supervised boundary model；
+- 不重跑低分 threshold 類方法；
+- 不把新增的本機第 9 人資料混進和第 002 版的比較。
+
+預期改善：
+
+- rep IoU@0.75 F1 提升；
+- phase split IoU@0.50 F1 小幅提升；
+- predicted reps 數量仍接近 true reps。
+
+評估指標：
+
+- rep IoU@0.25 / 0.50 / 0.75 F1；
+- phase IoU@0.25 / 0.50 / 0.75 F1；
+- subject-wise 5-fold classification accuracy；
+- per-exercise rep IoU heatmap；
+- confusion matrix。
+
+風險：
+
+- `active-phase-contiguous` 仍依賴 phase 標註，屬於 active-only 診斷，不是完整即時 pipeline；
+- motion-energy minima 對所有動作不一定一致；
+- 分類 accuracy 不一定跟 boundary IoU 同步提升。
+
+審核結果：
+
+使用者要求「做 active-only 的 rep boundary refinement」，因此直接實作並跑正式結果。
+
+實際結果：
+
+先用 segmentation-only grid 比較後，選擇：
+
+```text
+block source = active-phase-contiguous
+boundary refine search fraction = 0.25
+boundary refine energy window = 51
+```
+
+正式結果 `003_active_only_pca_autocorr_refined_8class_5fold`：
+
+```text
+true reps = 2424
+predicted reps = 2374
+classified reps = 2327
+rep IoU@0.25 F1 = 0.9287
+rep IoU@0.50 F1 = 0.7182
+rep IoU@0.75 F1 = 0.3622
+exercise classification accuracy = 0.8414
+exercise macro F1 = 0.8382
+phase IoU@0.25 F1 = 0.6865
+phase IoU@0.50 F1 = 0.4383
+phase IoU@0.75 F1 = 0.1730
+```
+
+與第 002 版比較：
+
+```text
+rep IoU@0.50 F1: 0.7083 -> 0.7182
+rep IoU@0.75 F1: 0.3308 -> 0.3622
+phase IoU@0.50 F1: 0.4063 -> 0.4383
+classification accuracy: 0.8459 -> 0.8414
+```
+
+結論：
+
+這次 refinement 對 boundary 有小幅但實質改善，尤其 IoU@0.75。phase split 也因 rep boundary 稍微變好而提升。但分類 accuracy 略降，代表目前 refinement 主要改善邊界精度，不一定改善分類特徵。距離 90% rep IoU@0.50 仍有差距，下一步應轉向更強的 boundary refinement，例如 per-exercise duration prior、DTW template refinement 或 supervised boundary model。
+
+輸出結果：
+
+- `artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold/`
+- `artifacts_rep_classification/RESULTS_INDEX.md`
+
+下一步：
+
+建議下一個正式實驗是 `004_active_only_dtw_template_refinement/`：
+
+- 仍不使用休息資料；
+- 用第 003 版 boundary 作候選；
+- 每個動作從 training subjects 建立 rep template；
+- validation subject 只用 template score 微調 boundary；
+- 主指標看 IoU@0.75 和 phase IoU@0.50 是否繼續提升。

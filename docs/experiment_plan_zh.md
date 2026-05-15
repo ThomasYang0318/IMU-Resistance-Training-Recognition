@@ -238,13 +238,21 @@ rep IoU@0.50 F1 = 0.7083
 rep IoU@0.75 F1 = 0.3308
 exercise classification accuracy = 0.8459
 phase IoU@0.50 F1 = 0.4063
+
+003_active_only_pca_autocorr_refined_8class_5fold:
+rep IoU@0.25 F1 = 0.9287
+rep IoU@0.50 F1 = 0.7182
+rep IoU@0.75 F1 = 0.3622
+exercise classification accuracy = 0.8414
+phase IoU@0.50 F1 = 0.4383
 ```
 
 解讀：
 
 - active-only 後，`pca-autocorr` rep IoU@0.50 F1 從 `0.2759` 提升到 `0.7083`；
 - 這表示前段 rest / preparation contamination 是主要瓶頸之一；
-- phase split 在真實 rep 邊界下可達 IoU@0.50 F1 `0.8333`，但在 predicted reps 上只有 `0.4063`，因此 phase split 目前應先依賴更好的 rep boundary refinement。
+- `pca-autocorr-refined` 在不使用 inactive gaps 的條件下，將 rep IoU@0.75 F1 從 `0.3308` 提升到 `0.3622`；
+- phase split 在真實 rep 邊界下可達 IoU@0.50 F1 `0.8333`，但在 predicted reps 上目前最高只有 `0.4383`，因此 phase split 目前應先依賴更好的 rep boundary refinement。
 
 ### 方向 B：Wavelet-Denoised PCA Boundary
 

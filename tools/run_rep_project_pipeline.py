@@ -13,6 +13,7 @@ METHOD_DIR_NAMES = {
     "short-time-energy": "short_time_energy",
     "pca-extrema": "pca_extrema",
     "pca-autocorr": "pca_autocorr",
+    "pca-autocorr-refined": "pca_autocorr_refined",
     "pca-extrema-fft": "pca_extrema_fft",
 }
 
@@ -22,6 +23,7 @@ DEFAULT_METHODS = [
     "short-time-energy",
     "pca-extrema",
     "pca-autocorr",
+    "pca-autocorr-refined",
     "pca-extrema-fft",
 ]
 
@@ -30,6 +32,7 @@ DEFAULT_COMPARISON_METHODS = [
     "short-time-energy",
     "pca-extrema",
     "pca-autocorr",
+    "pca-autocorr-refined",
     "pca-extrema-fft",
 ]
 
@@ -81,6 +84,10 @@ def add_evaluation_args(command: list[str], args: argparse.Namespace) -> list[st
             str(args.autocorr_max_period_fraction),
             "--autocorr-peak-distance-scale",
             str(args.autocorr_peak_distance_scale),
+            "--boundary-refine-search-fraction",
+            str(args.boundary_refine_search_fraction),
+            "--boundary-refine-energy-window",
+            str(args.boundary_refine_energy_window),
             "--min-label-iou",
             str(args.min_label_iou),
             "--segmentation-iou-thresholds",
@@ -178,7 +185,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--folds", type=int, default=5)
     parser.add_argument("--num-classes", type=int, default=8)
     parser.add_argument("--include-other", action="store_true")
-    parser.add_argument("--block-source", choices=["action-label", "active-phase-span"], default="action-label")
+    parser.add_argument("--block-source", choices=["action-label", "active-phase-span", "active-phase-contiguous"], default="action-label")
     parser.add_argument("--min-segment-samples", type=int, default=20)
     parser.add_argument("--smooth-window", type=int, default=9)
     parser.add_argument("--peak-prominence-scale", type=float, default=0.35)
@@ -189,6 +196,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--autocorr-min-period-samples", type=int, default=25)
     parser.add_argument("--autocorr-max-period-fraction", type=float, default=0.8)
     parser.add_argument("--autocorr-peak-distance-scale", type=float, default=0.75)
+    parser.add_argument("--boundary-refine-search-fraction", type=float, default=0.35)
+    parser.add_argument("--boundary-refine-energy-window", type=int, default=21)
     parser.add_argument("--min-label-iou", type=float, default=0.25)
     parser.add_argument("--segmentation-iou-thresholds", type=float, nargs="+", default=[0.25, 0.5, 0.75])
     parser.add_argument("--focus-iou", type=float, default=0.5)

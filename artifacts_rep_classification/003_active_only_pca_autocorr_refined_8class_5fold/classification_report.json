@@ -1,0 +1,63 @@
+{
+  "db_bench_press": {
+    "precision": 0.7341389728096677,
+    "recall": 0.7363636363636363,
+    "f1-score": 0.735249621785174,
+    "support": 330.0
+  },
+  "db_squat": {
+    "precision": 0.9570957095709571,
+    "recall": 0.932475884244373,
+    "f1-score": 0.9446254071661238,
+    "support": 311.0
+  },
+  "one_arm_db_row": {
+    "precision": 0.9084967320261438,
+    "recall": 0.9266666666666666,
+    "f1-score": 0.9174917491749175,
+    "support": 300.0
+  },
+  "db_triceps_curl": {
+    "precision": 0.9,
+    "recall": 0.9795918367346939,
+    "f1-score": 0.9381107491856677,
+    "support": 294.0
+  },
+  "db_weighted_crunch": {
+    "precision": 0.78839590443686,
+    "recall": 0.7993079584775087,
+    "f1-score": 0.7938144329896907,
+    "support": 289.0
+  },
+  "db_rdl": {
+    "precision": 0.9194139194139194,
+    "recall": 0.9061371841155235,
+    "f1-score": 0.9127272727272727,
+    "support": 277.0
+  },
+  "db_biceps_curl": {
+    "precision": 0.9755102040816327,
+    "recall": 0.8690909090909091,
+    "f1-score": 0.9192307692307692,
+    "support": 275.0
+  },
+  "db_shoulder_press": {
+    "precision": 0.5390625,
+    "recall": 0.549800796812749,
+    "f1-score": 0.5443786982248521,
+    "support": 251.0
+  },
+  "accuracy": 0.8414267296948861,
+  "macro avg": {
+    "precision": 0.8402642427923976,
+    "recall": 0.8374293590632576,
+    "f1-score": 0.8382035875605585,
+    "support": 2327.0
+  },
+  "weighted avg": {
+    "precision": 0.8436466317120578,
+    "recall": 0.8414267296948861,
+    "f1-score": 0.841911603911993,
+    "support": 2327.0
+  }
+}
