@@ -206,6 +206,57 @@ rep_segmentation_iou_f1_by_exercise.png
 
 第一張呈現不同 IoU 門檻下的 precision / recall / F1；第二張呈現每個動作在不同 IoU 門檻下的 F1。
 
+## FFT 輔助 rep 切割
+
+部分 rep counting 文獻會用 Fourier transform 估計重複動作的 dominant frequency，再用：
+
+```text
+estimated_rep_count = dominant_frequency * set_duration
+```
+
+這類方法適合估計「一組大概做了幾下」，但單純 FFT 是全域頻率估計，無法直接給出每一下 rep 的精準 start / end。對變速、疲勞、不同人節奏不一致的 resistance training，單靠 FFT 容易失準。
+
+因此目前實作把 FFT 當作輔助約束，而不是獨立切割器：
+
+```text
+PCA principal motion signal
+-> FFT 估計 set 內 dominant period
+-> 用 dominant period 約束 peak distance 與候選 rep 數
+-> peak/trough midpoint 形成 rep boundary
+-> 用 IoU@0.25 / IoU@0.50 / IoU@0.75 評估
+```
+
+執行 FFT-guided 版本：
+
+```bash
+python tools/evaluate_rep_segmentation_classification.py \
+  --output-dir artifacts_rep_classification/pca_extrema_fft_8class_5fold \
+  --segment-method pca-extrema-fft \
+  --folds 5 \
+  --num-classes 8
+```
+
+比較未使用 FFT 與使用 FFT：
+
+```bash
+python tools/compare_rep_segmentation_iou.py \
+  --baseline-dir artifacts_rep_classification/pca_extrema_8class_5fold \
+  --baseline-name pca-extrema \
+  --candidate-dir artifacts_rep_classification/pca_extrema_fft_8class_5fold \
+  --candidate-name pca-extrema-fft \
+  --output-dir artifacts_rep_classification/pca_extrema_fft_comparison
+```
+
+比較輸出：
+
+```text
+rep_segmentation_fft_comparison.csv
+rep_segmentation_fft_comparison_by_exercise.csv
+rep_segmentation_fft_comparison_f1.png
+rep_segmentation_fft_comparison_iou_0.50.png
+rep_segmentation_fft_exercise_delta_iou_0.50.png
+```
+
 ## 輸出檔案
 
 ```text

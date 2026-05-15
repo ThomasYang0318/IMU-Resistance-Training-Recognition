@@ -1,0 +1,4 @@
+iou_threshold,true_reps,predicted_reps,matched_reps,false_positives,false_negatives,precision,recall,f1,mean_matched_iou
+0.25,2132,8589,1679,6910,453,0.1955,0.7875,0.3132,0.577
+0.5,2132,8589,1033,7556,1099,0.1203,0.4845,0.1927,0.6701
+0.75,2132,8589,303,8286,1829,0.0353,0.1421,0.0565,0.854

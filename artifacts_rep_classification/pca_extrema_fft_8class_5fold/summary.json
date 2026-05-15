@@ -1,0 +1,70 @@
+{
+  "data_dirs": [
+    "datasets/workout"
+  ],
+  "segment_method": "pca-extrema-fft",
+  "num_truth_reps": 2132,
+  "num_predicted_reps": 8589,
+  "num_classified_reps": 2165,
+  "class_names": [
+    "db_bench_press",
+    "db_squat",
+    "db_triceps_curl",
+    "one_arm_db_row",
+    "db_weighted_crunch",
+    "db_biceps_curl",
+    "db_rdl",
+    "db_shoulder_press"
+  ],
+  "segmentation_metrics": [
+    {
+      "iou_threshold": 0.25,
+      "true_reps": 2132,
+      "predicted_reps": 8589,
+      "matched_reps": 1679,
+      "false_positives": 6910,
+      "false_negatives": 453,
+      "precision": 0.1955,
+      "recall": 0.7875,
+      "f1": 0.3132,
+      "mean_matched_iou": 0.577
+    },
+    {
+      "iou_threshold": 0.5,
+      "true_reps": 2132,
+      "predicted_reps": 8589,
+      "matched_reps": 1033,
+      "false_positives": 7556,
+      "false_negatives": 1099,
+      "precision": 0.1203,
+      "recall": 0.4845,
+      "f1": 0.1927,
+      "mean_matched_iou": 0.6701
+    },
+    {
+      "iou_threshold": 0.75,
+      "true_reps": 2132,
+      "predicted_reps": 8589,
+      "matched_reps": 303,
+      "false_positives": 8286,
+      "false_negatives": 1829,
+      "precision": 0.0353,
+      "recall": 0.1421,
+      "f1": 0.0565,
+      "mean_matched_iou": 0.854
+    }
+  ],
+  "folds": 5,
+  "subjects": [
+    "haoyu0512workout",
+    "kevin0509workout",
+    "thomas0506",
+    "yanz0510workout",
+    "yoru0511workout",
+    "yushuan0513workout",
+    "ziho0512workout"
+  ],
+  "accuracy": 0.7958429561200924,
+  "macro_f1": 0.7950071789429384,
+  "weighted_f1": 0.7970854522161999
+}

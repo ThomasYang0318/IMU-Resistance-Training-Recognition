@@ -19,7 +19,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.signal import find_peaks
+from scipy.signal import find_peaks, peak_prominences
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import ConfusionMatrixDisplay, classification_report, confusion_matrix
 from sklearn.model_selection import GroupKFold
@@ -258,6 +258,111 @@ def pca_extrema_segments(
                     block.start + start,
                     block.start + end,
                     "pca_extrema",
+                )
+            )
+    return predicted
+
+
+def estimate_fft_period(signal: np.ndarray, min_period: int, max_period: int) -> float | None:
+    if len(signal) < max(min_period * 2, 4):
+        return None
+    values = robust_zscore(signal)
+    values = values - float(np.mean(values))
+    if float(np.std(values)) < 1e-9:
+        return None
+
+    windowed = values * np.hanning(len(values))
+    spectrum = np.fft.rfft(windowed)
+    freqs = np.fft.rfftfreq(len(windowed), d=1.0)
+    power = np.abs(spectrum) ** 2
+    valid = freqs > 0
+    periods = np.divide(1.0, freqs, out=np.full_like(freqs, np.inf), where=freqs > 0)
+    valid &= periods >= min_period
+    valid &= periods <= max_period
+    if not np.any(valid):
+        return None
+    valid_indices = np.flatnonzero(valid)
+    best_idx = valid_indices[int(np.argmax(power[valid]))]
+    period = float(periods[best_idx])
+    return period if math.isfinite(period) and period > 0 else None
+
+
+def select_fft_guided_peaks(
+    signal: np.ndarray,
+    period: float,
+    min_samples: int,
+    peak_prominence_scale: float,
+) -> np.ndarray:
+    expected_reps = max(1, int(round(len(signal) / max(period, 1.0))))
+    distance = max(int(round(period * 0.65)), min_samples, 1)
+    prominence = max(float(np.std(signal)) * peak_prominence_scale, 1e-6)
+
+    candidates: list[tuple[np.ndarray, np.ndarray]] = []
+    for candidate_signal in (signal, -signal):
+        peaks, props = find_peaks(candidate_signal, distance=distance, prominence=prominence)
+        if len(peaks):
+            candidates.append((peaks, props.get("prominences", peak_prominences(candidate_signal, peaks)[0])))
+    if not candidates:
+        centers = (np.arange(expected_reps, dtype=np.float64) + 0.5) * len(signal) / float(expected_reps)
+        return np.clip(np.round(centers).astype(int), 0, max(0, len(signal) - 1))
+
+    peaks, prominences = min(candidates, key=lambda item: abs(len(item[0]) - expected_reps))
+    if len(peaks) > expected_reps:
+        top_indices = np.argsort(prominences)[-expected_reps:]
+        peaks = peaks[np.sort(top_indices)]
+    return np.sort(peaks)
+
+
+def fft_guided_pca_extrema_segments(
+    df: pd.DataFrame,
+    path: Path,
+    smooth_window: int,
+    min_samples: int,
+    peak_prominence_scale: float,
+    fft_min_period_samples: int,
+    fft_max_period_fraction: float,
+) -> list[RepSegment]:
+    predicted: list[RepSegment] = []
+    for block in set_blocks_from_labels(df, path, min_samples=min_samples):
+        segment_df = df.iloc[block.start : block.end]
+        signal = principal_motion_signal(segment_df, smooth_window)
+        max_period = max(min_samples, int(round(len(signal) * fft_max_period_fraction)))
+        period = estimate_fft_period(
+            signal,
+            min_period=max(min_samples, fft_min_period_samples),
+            max_period=max_period,
+        )
+        if period is None:
+            continue
+
+        centers = select_fft_guided_peaks(
+            signal,
+            period=period,
+            min_samples=min_samples,
+            peak_prominence_scale=peak_prominence_scale,
+        )
+        if len(centers) == 0:
+            continue
+
+        boundaries = [0]
+        if len(centers) > 1:
+            boundaries.extend(int(round((centers[i] + centers[i + 1]) / 2.0)) for i in range(len(centers) - 1))
+        boundaries.append(len(segment_df))
+        boundaries = sorted(set(boundaries))
+
+        for rep_idx, (start, end) in enumerate(zip(boundaries[:-1], boundaries[1:])):
+            if end - start < min_samples:
+                continue
+            predicted.append(
+                RepSegment(
+                    path,
+                    block.subject,
+                    block.exercise,
+                    block.set_id,
+                    str(rep_idx),
+                    block.start + start,
+                    block.start + end,
+                    "pca_extrema_fft",
                 )
             )
     return predicted
@@ -643,10 +748,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--folds", type=int, default=5)
     parser.add_argument("--num-classes", type=int, default=8)
     parser.add_argument("--include-other", action="store_true", help="Add an 'other' class for unmatched/non-top exercise segments.")
-    parser.add_argument("--segment-method", choices=["labels", "pca-extrema"], default="labels")
+    parser.add_argument("--segment-method", choices=["labels", "pca-extrema", "pca-extrema-fft"], default="labels")
     parser.add_argument("--min-segment-samples", type=int, default=20)
     parser.add_argument("--smooth-window", type=int, default=9)
     parser.add_argument("--peak-prominence-scale", type=float, default=0.35)
+    parser.add_argument("--fft-min-period-samples", type=int, default=25)
+    parser.add_argument("--fft-max-period-fraction", type=float, default=0.8)
     parser.add_argument("--min-label-iou", type=float, default=0.25)
     parser.add_argument("--segmentation-iou-thresholds", type=float, nargs="+", default=[0.25, 0.5, 0.75])
     parser.add_argument("--seed", type=int, default=42)
@@ -674,7 +781,7 @@ def main() -> None:
 
     if args.segment_method == "labels":
         predicted = list(truth)
-    else:
+    elif args.segment_method == "pca-extrema":
         predicted = []
         truth_by_file: dict[Path, list[RepSegment]] = {}
         for segment in truth:
@@ -688,6 +795,20 @@ def main() -> None:
                     smooth_window=args.smooth_window,
                     min_samples=args.min_segment_samples,
                     peak_prominence_scale=args.peak_prominence_scale,
+                )
+            )
+    else:
+        predicted = []
+        for path, df in session_cache.items():
+            predicted.extend(
+                fft_guided_pca_extrema_segments(
+                    df,
+                    path,
+                    smooth_window=args.smooth_window,
+                    min_samples=args.min_segment_samples,
+                    peak_prominence_scale=args.peak_prominence_scale,
+                    fft_min_period_samples=args.fft_min_period_samples,
+                    fft_max_period_fraction=args.fft_max_period_fraction,
                 )
             )
 
