@@ -1053,3 +1053,73 @@ one_arm_db_row: axis_ax / acc_norm
 - `artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/top_rep_features_overall.png`
 - `artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/feature_importance_by_exercise.png`
 - `artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/top20_feature_confusion_matrix.png`
+
+## 2026-05-16：第 008 版 Feature-pair Scatter 可分性診斷
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+回應「類似第 007 版，但 x/y 軸是兩種特徵」的想法。這一版不是新增最終分類模型，而是把每個 rep 投到兩個可解釋特徵形成的二維空間，檢查 8 個動作是否有自然分群，並量化每組 feature pair 的 subject-wise 分類能力。
+
+改動：
+
+- 新增 `tools/analyze_feature_pair_scatter.py`；
+- 讀取第 007 版的 `rep_level_feature_table.csv`、`rep_level_feature_metadata.csv`、`rep_feature_relevance_scores.csv`；
+- 選出 34 組 feature pair，包含：
+  - 各 feature method group 的 top-2 pair；
+  - top relevance 且低冗餘的 ranked pairs；
+  - 每個動作 one-vs-rest stable-effect top pair；
+  - acc + gyro / spectral / wavelet / correlation / PCA 的 mixed pairs；
+- 每一組 pair 單獨做 8 動作分類，使用 subject-wise 5-fold；
+- 每一組 pair 輸出 scatter plot 與 normalized confusion matrix；
+- 額外輸出 overall score bar plot、per-exercise F1 dotplot、top pair scatter grid。
+
+方法定位：
+
+這種圖的合理性來自 HAR / wearable sensor 文獻常見的低維 feature-space visualization，例如 PCA scatter 或 t-SNE scatter。這裡的差異是我們不使用不可解釋的 embedding 軸，而是直接用兩個可解釋的 IMU-derived features 作為 x/y 軸。圖只作為 feature separability diagnostic；正式判斷仍看 subject-wise accuracy、macro-F1、per-exercise F1 與 confusion matrix。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/008_feature_pair_scatter_8class/
+input run = artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/
+ground-truth reps = 2424
+subjects = 8
+exercises = 8
+feature pairs = 34
+best pair = best_acc_vs_best_spectral
+best feature x = axis_ax__mean
+best feature y = axis_gz__spectral_entropy
+best accuracy = 0.7116
+best macro-F1 = 0.7122
+```
+
+Top feature pairs：
+
+```text
+best_acc_vs_best_spectral  accuracy 0.7116  macro-F1 0.7122
+best_acc_vs_best_gyro      accuracy 0.6518  macro-F1 0.6517
+best_acc_vs_best_wavelet   accuracy 0.6493  macro-F1 0.6451
+ranked_pair_11             accuracy 0.6498  macro-F1 0.6426
+best_acc_vs_best_corr      accuracy 0.6423  macro-F1 0.6351
+acc_axis_time_top2         accuracy 0.6370  macro-F1 0.6321
+```
+
+結論：
+
+單純用兩個特徵，最佳結果約 `0.7116` accuracy / `0.7122` macro-F1，明顯低於第 007 版 `acc_gyro` 多特徵組合的 `0.8499`。這代表 feature-pair scatter 很適合做論文中的可視化與診斷：它能指出哪些動作在少數特徵上已經分開、哪些動作重疊；但若目標是 90% 以上跨人泛化，仍需要多特徵模型、train-fold feature selection，以及更強的 rep boundary refinement。
+
+輸出結果：
+
+- `artifacts_rep_classification/008_feature_pair_scatter_8class/summary.json`
+- `artifacts_rep_classification/008_feature_pair_scatter_8class/selected_feature_pairs.csv`
+- `artifacts_rep_classification/008_feature_pair_scatter_8class/feature_pair_metrics.csv`
+- `artifacts_rep_classification/008_feature_pair_scatter_8class/feature_pair_per_exercise_metrics.csv`
+- `artifacts_rep_classification/008_feature_pair_scatter_8class/feature_pair_overall_scores.png`
+- `artifacts_rep_classification/008_feature_pair_scatter_8class/feature_pair_per_exercise_f1_dotplot.png`
+- `artifacts_rep_classification/008_feature_pair_scatter_8class/top_feature_pair_scatter_grid.png`
+- `artifacts_rep_classification/008_feature_pair_scatter_8class/scatter_pairs/`
+- `artifacts_rep_classification/008_feature_pair_scatter_8class/confusion_matrices/`

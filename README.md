@@ -48,6 +48,7 @@ artifacts_rep_classification/
   005_boundary_feature_diagnostics_003_active_only/
   006_active_only_pca_autocorr_feature_refined_8class_5fold/
   007_rep_feature_relevance_9axis_8class_5fold/
+  008_feature_pair_scatter_8class/
   *_8class_5fold/                   各方法的 K-fold、IoU、混淆矩陣結果
   methods_comparison/               多方法 IoU 比較圖
   waveform_method_comparison/       波形切割圖與 set-level 結果圖
@@ -284,9 +285,10 @@ boundary feature 診斷與 exercise-aware refinement：
 artifacts_rep_classification/005_boundary_feature_diagnostics_003_active_only/
 artifacts_rep_classification/006_active_only_pca_autocorr_feature_refined_8class_5fold/
 artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/
+artifacts_rep_classification/008_feature_pair_scatter_8class/
 ```
 
-第 005 版用 ground truth boundary 量化 PCA、acc magnitude、gyro magnitude、jerk、energy 等特徵的對齊誤差；第 006 版用第 005 版結果做 exercise-aware boundary refinement；第 007 版改看 ground-truth rep 內的九軸 waveform 特徵，輸出 sensor / feature group ablation、跨人穩定 feature ranking、動作別特徵關聯圖與 top-feature confusion matrix。
+第 005 版用 ground truth boundary 量化 PCA、acc magnitude、gyro magnitude、jerk、energy 等特徵的對齊誤差；第 006 版用第 005 版結果做 exercise-aware boundary refinement；第 007 版改看 ground-truth rep 內的九軸 waveform 特徵，輸出 sensor / feature group ablation、跨人穩定 feature ranking、動作別特徵關聯圖與 top-feature confusion matrix；第 008 版把兩個特徵當 x/y 軸畫 8 動作 feature-pair scatter，並對每組 pair 輸出 subject-wise 分類數值。
 
 ## 目前方法
 

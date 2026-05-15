@@ -6,7 +6,7 @@
 001_<experiment_name>/
 002_<experiment_name>/
 ...
-007_<experiment_name>/
+008_<experiment_name>/
 ```
 
 ## 001_active_only_labels_8class_5fold
@@ -290,6 +290,65 @@ axis_ay__mean
 - `dominant_axis_by_exercise.png`
 - `exercise_feature_embedding_pca.png`
 - `top20_feature_confusion_matrix.png`
+
+## 008_feature_pair_scatter_8class
+
+目的：
+
+延伸第 007 版，不只看 feature ranking，而是把每個 ground-truth rep 當成一個點，使用兩個可解釋 IMU-derived features 當作 x/y 軸，直接檢查 8 個動作在二維特徵空間中的可分性。
+
+設定：
+
+- input run：`007_rep_feature_relevance_9axis_8class_5fold`
+- samples：2424 ground-truth reps
+- subjects：8
+- exercises：8
+- selected feature pairs：34
+- scatter axes：兩個 feature 的 global z-score，只用於視覺化尺度對齊
+- validation：subject-wise 5-fold
+- classifier：每組 feature pair 單獨訓練 Random Forest
+
+方法定位：
+
+這一版是 feature separability diagnostic，不是最終模型。二維 feature scatter 的用法類似 HAR 文獻中常見的 PCA / t-SNE feature-space visualization；差別是這裡刻意使用可解釋的原始衍生特徵作為 x/y 軸。圖用來看群聚與重疊，正式判斷仍以 subject-wise accuracy、macro-F1、per-exercise F1 和 confusion matrix 為準。
+
+主要數值：
+
+```text
+feature pairs: 34
+best pair: best_acc_vs_best_spectral
+feature_x: axis_ax__mean
+feature_y: axis_gz__spectral_entropy
+best pair accuracy: 0.7116
+best pair macro-F1: 0.7122
+```
+
+Top feature pairs：
+
+```text
+best_acc_vs_best_spectral: accuracy 0.7116, macro-F1 0.7122
+best_acc_vs_best_gyro: accuracy 0.6518, macro-F1 0.6517
+best_acc_vs_best_wavelet: accuracy 0.6493, macro-F1 0.6451
+best_acc_vs_best_corr: accuracy 0.6423, macro-F1 0.6351
+acc_axis_time_top2: accuracy 0.6370, macro-F1 0.6321
+```
+
+解讀：
+
+只用兩個 feature 已可分出部分動作，但最佳二維 pair 仍明顯低於第 007 版 `acc_gyro` 多特徵分類的 `0.8499`。這表示單一二維投影適合用來說明「哪些動作自然分開、哪些動作重疊」，但若目標是高準確率，仍需要多特徵組合與 cross-subject feature selection。
+
+重點檔案：
+
+- `summary.json`
+- `selected_feature_pairs.csv`
+- `feature_pair_metrics.csv`
+- `feature_pair_per_exercise_metrics.csv`
+- `feature_pair_fold_metrics.csv`
+- `feature_pair_overall_scores.png`
+- `feature_pair_per_exercise_f1_dotplot.png`
+- `top_feature_pair_scatter_grid.png`
+- `scatter_pairs/*.png`
+- `confusion_matrices/*.png`
 
 ## 004_waveform_rep_accuracy_003_active_only
 

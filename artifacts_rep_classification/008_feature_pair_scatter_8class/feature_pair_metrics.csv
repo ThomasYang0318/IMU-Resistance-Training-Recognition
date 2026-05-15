@@ -1,0 +1,35 @@
+pair_name,pair_type,feature_x,feature_y,rationale,accuracy,balanced_accuracy,macro_f1,min_class_f1,mean_recall
+best_acc_vs_best_spectral,mixed_family,axis_ax__mean,axis_gz__spectral_entropy,Best accelerometer feature vs best spectral feature.,0.7116,0.7104,0.7122,0.4615,0.7104
+best_acc_vs_best_gyro,mixed_sensor,axis_ax__mean,axis_gz__std,Best accelerometer feature vs best gyroscope feature.,0.6518,0.6563,0.6517,0.4207,0.6563
+best_acc_vs_best_wavelet,mixed_family,axis_ax__mean,axis_gy__haar_l2_energy_ratio,Best accelerometer feature vs best wavelet feature.,0.6493,0.6473,0.6451,0.2635,0.6473
+ranked_pair_11,ranked_diverse,axis_ax__rms,acc_norm__abs_mean,High composite relevance with low pairwise redundancy.,0.6498,0.6466,0.6426,0.2713,0.6466
+best_acc_vs_best_corr,mixed_family,axis_ax__mean,corr__gy__gz,Best accelerometer feature vs best axis-correlation feature.,0.6423,0.6398,0.6351,0.2657,0.6398
+ranked_pair_07,ranked_diverse,axis_ax__median,axis_ax__abs_mean,High composite relevance with low pairwise redundancy.,0.6386,0.6357,0.6347,0.2566,0.6357
+acc_axis_time_top2,method_top2,axis_ax__mean,axis_ax__median,Top two ranked features inside acc_axis_time.,0.637,0.6338,0.6321,0.262,0.6338
+db_rdl_best_effect_pair,exercise_effect,axis_ax__max,axis_ax__mean,Top two one-vs-rest stable-effect features for db_rdl.,0.625,0.6238,0.6237,0.3274,0.6238
+ranked_pair_09,ranked_diverse,axis_ax__median,axis_ay__median,High composite relevance with low pairwise redundancy.,0.6167,0.6165,0.6196,0.2316,0.6165
+db_bench_press_best_effect_pair,exercise_effect,axis_ax__min,axis_ax__mean,Top two one-vs-rest stable-effect features for db_bench_press.,0.6163,0.6129,0.6126,0.2967,0.6129
+ranked_pair_10,ranked_diverse,axis_ax__median,axis_ay__mean,High composite relevance with low pairwise redundancy.,0.6106,0.6093,0.6112,0.1875,0.6093
+one_arm_db_row_best_effect_pair,exercise_effect,axis_ax__max,axis_ax__median,Top two one-vs-rest stable-effect features for one_arm_db_row.,0.6073,0.6073,0.6075,0.3165,0.6073
+ranked_pair_01,ranked_diverse,axis_ax__mean,axis_ax__rms,High composite relevance with low pairwise redundancy.,0.6089,0.6079,0.6041,0.249,0.6079
+ranked_pair_02,ranked_diverse,axis_ax__mean,axis_ax__energy_mean,High composite relevance with low pairwise redundancy.,0.6089,0.6079,0.6041,0.249,0.6079
+ranked_pair_05,ranked_diverse,axis_ax__median,axis_ax__rms,High composite relevance with low pairwise redundancy.,0.5961,0.5954,0.5983,0.2842,0.5954
+ranked_pair_06,ranked_diverse,axis_ax__median,axis_ax__energy_mean,High composite relevance with low pairwise redundancy.,0.5961,0.5954,0.5983,0.2842,0.5954
+ranked_pair_04,ranked_diverse,axis_ax__mean,axis_ay__median,High composite relevance with low pairwise redundancy.,0.5932,0.5922,0.5965,0.2378,0.5922
+ranked_pair_08,ranked_diverse,axis_ax__mean,axis_ay__mean,High composite relevance with low pairwise redundancy.,0.5965,0.5951,0.5958,0.1996,0.5951
+best_acc_vs_best_pca,mixed_family,axis_ax__mean,gyro_pca__pca3_var_ratio,Best accelerometer feature vs best PCA feature.,0.5932,0.5887,0.5896,0.2428,0.5887
+ranked_pair_03,ranked_diverse,axis_ax__mean,axis_ax__abs_mean,High composite relevance with low pairwise redundancy.,0.5755,0.5748,0.5747,0.2735,0.5748
+duration_vs_best_acc,duration,rep_duration_samples,axis_ax__mean,Rep duration vs best accelerometer feature.,0.5689,0.5677,0.5671,0.2647,0.5677
+ranked_pair_12,ranked_diverse,axis_ax__rms,axis_ay__median,High composite relevance with low pairwise redundancy.,0.5483,0.5457,0.552,0.276,0.5457
+axis_correlation_top2,method_top2,corr__gy__gz,corr__ax__az,Top two ranked features inside axis_correlation.,0.5235,0.5262,0.5245,0.2362,0.5262
+acc_norm_time_top2,method_top2,acc_norm__abs_mean,acc_norm__mean,Top two ranked features inside acc_norm_time.,0.4781,0.4794,0.4801,0.1978,0.4794
+wavelet_top2,method_top2,axis_gy__haar_l2_energy_ratio,axis_gz__haar_l3_energy_ratio,Top two ranked features inside wavelet.,0.4121,0.4157,0.4166,0.153,0.4157
+db_triceps_curl_best_effect_pair,exercise_effect,axis_ay__median,axis_ay__mean,Top two one-vs-rest stable-effect features for db_triceps_curl.,0.4088,0.4126,0.4117,0.2036,0.4126
+db_weighted_crunch_best_effect_pair,exercise_effect,corr__ax__az,acc_norm__spectral_entropy,Top two one-vs-rest stable-effect features for db_weighted_crunch.,0.3944,0.3957,0.3927,0.1133,0.3957
+fft_spectral_top2,method_top2,axis_gz__spectral_entropy,axis_ax__spectral_entropy,Top two ranked features inside fft_spectral.,0.3787,0.3794,0.3781,0.1783,0.3794
+db_squat_best_effect_pair,exercise_effect,axis_az__mean,axis_az__median,Top two one-vs-rest stable-effect features for db_squat.,0.3552,0.3533,0.3525,0.178,0.3533
+db_biceps_curl_best_effect_pair,exercise_effect,axis_ax__std,axis_ax__range,Top two one-vs-rest stable-effect features for db_biceps_curl.,0.3474,0.3511,0.3502,0.1672,0.3511
+pca_variance_top2,method_top2,gyro_pca__pca3_var_ratio,acc_pca__pca1_var_ratio,Top two ranked features inside pca_variance.,0.3436,0.3443,0.3421,0.1676,0.3443
+mag_axis_time_top2,method_top2,axis_mx__min,axis_my__mean,Top two ranked features inside mag_axis_time.,0.3193,0.3193,0.3113,0.1787,0.3193
+gyro_norm_time_top2,method_top2,gyro_norm__median,gyro_norm__abs_mean,Top two ranked features inside gyro_norm_time.,0.2892,0.2929,0.2926,0.0961,0.2929
+gyro_axis_time_top2,method_top2,axis_gz__std,axis_gz__rms,Top two ranked features inside gyro_axis_time.,0.2739,0.279,0.2784,0.1008,0.279

@@ -159,6 +159,45 @@ pca_only accuracy = 0.3771
 - magnetometer：除非先做校正與 subject/device placement normalization，否則容易降低跨人泛化；
 - PCA：適合做降噪、週期估計與 visualization，不適合單獨作為分類主特徵。
 
+## Feature-pair Scatter 可分性診斷
+
+第 008 版新增的分析工具：
+
+```bash
+.venv311/bin/python tools/analyze_feature_pair_scatter.py \
+  --feature-run-dir artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold \
+  --output-dir artifacts_rep_classification/008_feature_pair_scatter_8class \
+  --folds 5
+```
+
+這個工具回答「如果 x 軸和 y 軸各用一個可解釋特徵，8 個動作是否能自然分開」。每個點是一個 ground-truth rep，顏色是動作類別，x/y 軸是兩個 feature 的 z-score。
+
+為什麼可以這樣做：
+
+- HAR / wearable sensor 文獻常用 PCA、t-SNE 或低維 feature-space scatter 來做 feature separability 的 qualitative analysis；
+- 這裡不是把圖當成最終準確率，而是把它當成「特徵可分性診斷」；
+- 和 PCA / t-SNE 不同，這裡刻意使用原始衍生特徵作為 x/y 軸，所以比較能解釋「到底是哪個 IMU feature 在分動作」；
+- 每組 feature pair 仍會用 subject-wise GroupKFold 輸出 accuracy、macro-F1、per-exercise F1 和 confusion matrix，避免只憑視覺判斷。
+
+目前第 008 版結論：
+
+```text
+best pair = axis_ax__mean x axis_gz__spectral_entropy
+best pair accuracy = 0.7116
+best pair macro-F1 = 0.7122
+007 acc_gyro multi-feature accuracy = 0.8499
+```
+
+因此二維 feature-pair scatter 很適合用來寫論文中的「特徵空間可視化」與「為什麼需要多特徵組合」；但若目標是部署模型或追求 90% 以上準確率，不能只靠兩個 feature。
+
+第 008 版的主要輸出：
+
+- `top_feature_pair_scatter_grid.png`：最佳幾組 feature pair 的二維散點總覽；
+- `scatter_pairs/*.png`：每一組 feature pair 的單張散點圖；
+- `feature_pair_overall_scores.png`：每組 pair 的 accuracy / macro-F1；
+- `feature_pair_per_exercise_f1_dotplot.png`：每組 pair 對每個動作的 F1；
+- `confusion_matrices/*.png`：每組 pair 的混淆矩陣。
+
 ## Subject-wise K-fold
 
 使用 `GroupKFold`，group 是 `subject_id`。

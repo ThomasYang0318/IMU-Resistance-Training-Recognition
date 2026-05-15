@@ -1,0 +1,35 @@
+pair_name,pair_type,feature_x,feature_y,x_sensor_group,x_family,x_source,y_sensor_group,y_family,y_source,rationale
+acc_axis_time_top2,method_top2,axis_ax__mean,axis_ax__median,acc,time,ax,acc,time,ax,Top two ranked features inside acc_axis_time.
+acc_norm_time_top2,method_top2,acc_norm__abs_mean,acc_norm__mean,acc,time,acc_norm,acc,time,acc_norm,Top two ranked features inside acc_norm_time.
+gyro_axis_time_top2,method_top2,axis_gz__std,axis_gz__rms,gyro,time,gz,gyro,time,gz,Top two ranked features inside gyro_axis_time.
+gyro_norm_time_top2,method_top2,gyro_norm__median,gyro_norm__abs_mean,gyro,time,gyro_norm,gyro,time,gyro_norm,Top two ranked features inside gyro_norm_time.
+mag_axis_time_top2,method_top2,axis_mx__min,axis_my__mean,mag,time,mx,mag,time,my,Top two ranked features inside mag_axis_time.
+axis_correlation_top2,method_top2,corr__gy__gz,corr__ax__az,gyro,axis_correlation,"gy,gz",acc,axis_correlation,"ax,az",Top two ranked features inside axis_correlation.
+fft_spectral_top2,method_top2,axis_gz__spectral_entropy,axis_ax__spectral_entropy,gyro,time_frequency,gz,acc,time_frequency,ax,Top two ranked features inside fft_spectral.
+wavelet_top2,method_top2,axis_gy__haar_l2_energy_ratio,axis_gz__haar_l3_energy_ratio,gyro,wavelet,gy,gyro,wavelet,gz,Top two ranked features inside wavelet.
+pca_variance_top2,method_top2,gyro_pca__pca3_var_ratio,acc_pca__pca1_var_ratio,gyro,pca,gyro_pca,acc,pca,acc_pca,Top two ranked features inside pca_variance.
+best_acc_vs_best_gyro,mixed_sensor,axis_ax__mean,axis_gz__std,acc,time,ax,gyro,time,gz,Best accelerometer feature vs best gyroscope feature.
+best_acc_vs_best_corr,mixed_family,axis_ax__mean,corr__gy__gz,acc,time,ax,gyro,axis_correlation,"gy,gz",Best accelerometer feature vs best axis-correlation feature.
+best_acc_vs_best_wavelet,mixed_family,axis_ax__mean,axis_gy__haar_l2_energy_ratio,acc,time,ax,gyro,wavelet,gy,Best accelerometer feature vs best wavelet feature.
+best_acc_vs_best_spectral,mixed_family,axis_ax__mean,axis_gz__spectral_entropy,acc,time,ax,gyro,time_frequency,gz,Best accelerometer feature vs best spectral feature.
+best_acc_vs_best_pca,mixed_family,axis_ax__mean,gyro_pca__pca3_var_ratio,acc,time,ax,gyro,pca,gyro_pca,Best accelerometer feature vs best PCA feature.
+duration_vs_best_acc,duration,rep_duration_samples,axis_ax__mean,temporal,temporal,rep_duration,acc,time,ax,Rep duration vs best accelerometer feature.
+ranked_pair_01,ranked_diverse,axis_ax__mean,axis_ax__rms,acc,time,ax,acc,time,ax,High composite relevance with low pairwise redundancy.
+ranked_pair_02,ranked_diverse,axis_ax__mean,axis_ax__energy_mean,acc,time,ax,acc,time,ax,High composite relevance with low pairwise redundancy.
+ranked_pair_03,ranked_diverse,axis_ax__mean,axis_ax__abs_mean,acc,time,ax,acc,time,ax,High composite relevance with low pairwise redundancy.
+ranked_pair_04,ranked_diverse,axis_ax__mean,axis_ay__median,acc,time,ax,acc,time,ay,High composite relevance with low pairwise redundancy.
+ranked_pair_05,ranked_diverse,axis_ax__median,axis_ax__rms,acc,time,ax,acc,time,ax,High composite relevance with low pairwise redundancy.
+ranked_pair_06,ranked_diverse,axis_ax__median,axis_ax__energy_mean,acc,time,ax,acc,time,ax,High composite relevance with low pairwise redundancy.
+ranked_pair_07,ranked_diverse,axis_ax__median,axis_ax__abs_mean,acc,time,ax,acc,time,ax,High composite relevance with low pairwise redundancy.
+ranked_pair_08,ranked_diverse,axis_ax__mean,axis_ay__mean,acc,time,ax,acc,time,ay,High composite relevance with low pairwise redundancy.
+ranked_pair_09,ranked_diverse,axis_ax__median,axis_ay__median,acc,time,ax,acc,time,ay,High composite relevance with low pairwise redundancy.
+ranked_pair_10,ranked_diverse,axis_ax__median,axis_ay__mean,acc,time,ax,acc,time,ay,High composite relevance with low pairwise redundancy.
+ranked_pair_11,ranked_diverse,axis_ax__rms,acc_norm__abs_mean,acc,time,ax,acc,time,acc_norm,High composite relevance with low pairwise redundancy.
+ranked_pair_12,ranked_diverse,axis_ax__rms,axis_ay__median,acc,time,ax,acc,time,ay,High composite relevance with low pairwise redundancy.
+db_bench_press_best_effect_pair,exercise_effect,axis_ax__min,axis_ax__mean,acc,time,ax,acc,time,ax,Top two one-vs-rest stable-effect features for db_bench_press.
+db_biceps_curl_best_effect_pair,exercise_effect,axis_ax__std,axis_ax__range,acc,time,ax,acc,time,ax,Top two one-vs-rest stable-effect features for db_biceps_curl.
+db_rdl_best_effect_pair,exercise_effect,axis_ax__max,axis_ax__mean,acc,time,ax,acc,time,ax,Top two one-vs-rest stable-effect features for db_rdl.
+db_squat_best_effect_pair,exercise_effect,axis_az__mean,axis_az__median,acc,time,az,acc,time,az,Top two one-vs-rest stable-effect features for db_squat.
+db_triceps_curl_best_effect_pair,exercise_effect,axis_ay__median,axis_ay__mean,acc,time,ay,acc,time,ay,Top two one-vs-rest stable-effect features for db_triceps_curl.
+db_weighted_crunch_best_effect_pair,exercise_effect,corr__ax__az,acc_norm__spectral_entropy,acc,axis_correlation,"ax,az",acc,time_frequency,acc_norm,Top two one-vs-rest stable-effect features for db_weighted_crunch.
+one_arm_db_row_best_effect_pair,exercise_effect,axis_ax__max,axis_ax__median,acc,time,ax,acc,time,ax,Top two one-vs-rest stable-effect features for one_arm_db_row.
