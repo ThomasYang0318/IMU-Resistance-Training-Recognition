@@ -33,6 +33,9 @@ tools/
 docs/
   rep_segmentation_classification.md
   rep_segmentation_literature_benchmark_zh.md
+  project_organization_zh.md
+  experiment_plan_zh.md
+  change_log_zh.md
 artifacts_rep_classification/
   *_8class_5fold/                   各方法的 K-fold、IoU、混淆矩陣結果
   methods_comparison/               多方法 IoU 比較圖
@@ -171,6 +174,8 @@ artifacts_rep_classification/waveform_method_comparison/set_level_results/
 - [Rep 切割與動作分類架構](docs/rep_segmentation_classification.md)
 - [Rep 切割文獻比較與方法架構](docs/rep_segmentation_literature_benchmark_zh.md)
 - [專案整理說明](docs/project_organization_zh.md)
+- [實驗規劃](docs/experiment_plan_zh.md)
+- [變更想法紀錄](docs/change_log_zh.md)
 
 ## 早期 Student Model 流程
 
