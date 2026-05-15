@@ -1,0 +1,12 @@
+feature_set,num_features,mean_accuracy,std_accuracy
+acc_gyro,223,0.8499,0.0749
+top20_stable,20,0.7943,0.0912
+acc_only,107,0.7837,0.0226
+all_9_axis_features,378,0.7824,0.0455
+top40_stable,40,0.7806,0.0762
+correlations_only,36,0.7078,0.0976
+wavelet_only,52,0.6711,0.1151
+mag_only,107,0.6112,0.2111
+magnitudes_only,100,0.6006,0.0705
+gyro_only,107,0.5899,0.0575
+pca_only,16,0.3771,0.0532

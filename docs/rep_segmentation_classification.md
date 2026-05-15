@@ -109,6 +109,56 @@ StandardScaler + RandomForestClassifier
 
 這是目前保守 baseline，資料量不大時比直接訓練深度模型更穩定，也方便解釋與快速驗證。
 
+## Rep 內九軸特徵關聯度分析
+
+第 007 版新增的分析工具：
+
+```bash
+.venv311/bin/python tools/analyze_rep_feature_relevance.py \
+  --run-dir artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold \
+  --output-dir artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold \
+  --folds 5
+```
+
+這個工具不改 rep segmentation，而是用 ground-truth rep 片段建立特徵表，回答「每種動作在一個 rep 內到底靠哪些 IMU waveform 特徵可分」。
+
+抽取的特徵包含：
+
+- `ax`、`ay`、`az`、`gx`、`gy`、`gz`、`mx`、`my`、`mz` 單軸 time-domain 統計；
+- FFT 類 frequency ratio / spectral entropy；
+- Haar wavelet energy ratio；
+- acc / gyro / mag / all-9 norm；
+- acc / gyro / mag / all-9 PCA variance ratio；
+- 九軸兩兩 correlation；
+- rep duration。
+
+評估方式：
+
+- ANOVA F-score；
+- mutual information；
+- Random Forest feature importance；
+- subject-wise GroupKFold 的 fold-wise top-20 feature stability；
+- sensor / feature group ablation accuracy；
+- top-feature confusion matrix。
+
+目前第 007 版結論：
+
+```text
+acc_gyro accuracy = 0.8499
+acc_only accuracy = 0.7837
+all_9_axis_features accuracy = 0.7824
+wavelet_only accuracy = 0.6711
+mag_only accuracy = 0.6112
+pca_only accuracy = 0.3771
+```
+
+因此目前動作辨識不應盲目把九軸全部塞進模型。較合理的方向是：
+
+- 動作分類：以 accelerometer + gyroscope 的穩定 time-domain / correlation 特徵為主；
+- rep boundary refinement：保留 gyroscope magnitude、transition energy、PCA extrema 等和 boundary 對齊較好的特徵；
+- magnetometer：除非先做校正與 subject/device placement normalization，否則容易降低跨人泛化；
+- PCA：適合做降噪、週期估計與 visualization，不適合單獨作為分類主特徵。
+
 ## Subject-wise K-fold
 
 使用 `GroupKFold`，group 是 `subject_id`。

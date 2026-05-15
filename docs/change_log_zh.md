@@ -962,3 +962,94 @@ db_biceps_curl IoU@0.50 F1: 0.6853 -> 0.6608
 結論：
 
 換特徵方向是對的，但固定規則還不夠。第 006 版證明 `shoulder_press` 這類弱項可以靠不同 feature 改善，但也讓部分原本穩定的動作退步。下一步要避免手寫固定 feature map，改成在 training subjects 上做 per-exercise feature selection，或訓練輕量 boundary probability model，再用 duration prior / dynamic programming 產生最終切點。
+
+## 2026-05-16：第 007 版 Rep 內九軸特徵關聯度分析
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+回應「先找出每種動作在一個 rep 裡 IMU 會有的特徵，分析九軸排列組合特徵或 waveform 特徵與每個動作的關聯度，找出適用於所有人的特徵」。
+
+改動：
+
+- 新增 `tools/analyze_rep_feature_relevance.py`；
+- 使用第 003 版的 `rep_segmentation_truth_matches.csv` 作為 ground-truth rep 來源；
+- 每個 rep 從原始 whole-session CSV 取出 `ax`、`ay`、`az`、`gx`、`gy`、`gz`、`mx`、`my`、`mz`；
+- 抽取 378 個 rep-level 特徵，包含 time-domain、frequency、Haar wavelet、norm、PCA variance ratio、axis correlation、rep duration；
+- 用 ANOVA F、mutual information、Random Forest feature importance 和 subject-wise fold top-20 stability 做 composite ranking；
+- 用 GroupKFold 做 sensor / feature group ablation，確保 validation subject 不會出現在 training；
+- 輸出 paper-style 圖表：overall feature ranking、subject-wise feature stability、feature family importance、sensor group ablation、動作別 feature heatmap、dominant axis distribution、top-feature embedding、top-feature confusion matrix。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/
+input run = artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold/
+ground-truth reps = 2424
+subjects = 8
+exercises = 8
+features = 378
+best feature set = acc_gyro
+best subject-wise accuracy = 0.8499
+```
+
+Sensor / feature group ablation：
+
+```text
+acc_gyro             0.8499 ± 0.0749
+top20_stable         0.7943 ± 0.0912
+acc_only             0.7837 ± 0.0226
+all_9_axis_features  0.7824 ± 0.0455
+top40_stable         0.7806 ± 0.0762
+correlations_only    0.7078 ± 0.0976
+wavelet_only         0.6711 ± 0.1151
+mag_only             0.6112 ± 0.2111
+magnitudes_only      0.6006 ± 0.0705
+gyro_only            0.5899 ± 0.0575
+pca_only             0.3771 ± 0.0532
+```
+
+Top 10 overall features：
+
+```text
+axis_ax__mean
+axis_ax__median
+axis_ax__rms
+axis_ax__energy_mean
+axis_ax__abs_mean
+axis_ax__max
+acc_norm__abs_mean
+axis_ay__median
+acc_norm__mean
+axis_ay__mean
+```
+
+每個動作的穩定特徵方向：
+
+```text
+db_bench_press: axis_ax__min / axis_ax__mean / axis_ax__median
+db_biceps_curl: axis_ax__std / axis_ax__range / axis_ax__iqr / gyro_norm
+db_rdl: axis_ax__max / axis_ax__mean / acc_norm
+db_shoulder_press: acc_norm / axis_ax
+db_squat: axis_az / corr__ax__gz / gyro spectral entropy
+db_triceps_curl: axis_ay / corr__ax__ay
+db_weighted_crunch: corr__ax__az / acc_norm spectral entropy
+one_arm_db_row: axis_ax / acc_norm
+```
+
+結論：
+
+目前資料上，動作分類最穩定的不是「九軸全部使用」，而是 accelerometer + gyroscope。magnetometer 在未做完整校正與配戴位置 normalization 前會拉低跨人泛化；PCA-only 也不足以代表動作類別，較適合用於週期估計、降噪或可視化。下一步如果要改善模型，應把第 007 版的結果用在 train-fold 內 feature selection：分類器使用 `acc_gyro` 主特徵，boundary refinement 使用第 005/006 版已證明有效的 gyro magnitude / transition energy / PCA extrema，再用 per-exercise duration prior 或 supervised boundary score 改善 rep IoU。
+
+輸出結果：
+
+- `artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/summary.json`
+- `artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/rep_feature_relevance_scores.csv`
+- `artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/top_features_by_exercise.csv`
+- `artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/sensor_group_ablation_accuracy.png`
+- `artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/top_rep_features_overall.png`
+- `artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/feature_importance_by_exercise.png`
+- `artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/top20_feature_confusion_matrix.png`

@@ -1,0 +1,379 @@
+feature,sensor_group,family,source,description
+acc_norm__abs_mean,acc,time,acc_norm,abs_mean of acc_norm
+acc_norm__diff_abs_mean,acc,time,acc_norm,diff_abs_mean of acc_norm
+acc_norm__diff_rms,acc,time,acc_norm,diff_rms of acc_norm
+acc_norm__dominant_freq_ratio,acc,time_frequency,acc_norm,dominant_freq_ratio of acc_norm
+acc_norm__energy_mean,acc,time,acc_norm,energy_mean of acc_norm
+acc_norm__haar_l1_energy_ratio,acc,wavelet,acc_norm,haar_l1_energy_ratio of acc_norm
+acc_norm__haar_l2_energy_ratio,acc,wavelet,acc_norm,haar_l2_energy_ratio of acc_norm
+acc_norm__haar_l3_energy_ratio,acc,wavelet,acc_norm,haar_l3_energy_ratio of acc_norm
+acc_norm__haar_l4_energy_ratio,acc,wavelet,acc_norm,haar_l4_energy_ratio of acc_norm
+acc_norm__high_band_ratio,acc,time_frequency,acc_norm,high_band_ratio of acc_norm
+acc_norm__iqr,acc,time,acc_norm,iqr of acc_norm
+acc_norm__kurtosis,acc,time,acc_norm,kurtosis of acc_norm
+acc_norm__low_band_ratio,acc,time_frequency,acc_norm,low_band_ratio of acc_norm
+acc_norm__max,acc,time,acc_norm,max of acc_norm
+acc_norm__mean,acc,time,acc_norm,mean of acc_norm
+acc_norm__median,acc,time,acc_norm,median of acc_norm
+acc_norm__mid_band_ratio,acc,time_frequency,acc_norm,mid_band_ratio of acc_norm
+acc_norm__min,acc,time,acc_norm,min of acc_norm
+acc_norm__range,acc,time,acc_norm,range of acc_norm
+acc_norm__rms,acc,time,acc_norm,rms of acc_norm
+acc_norm__skewness,acc,time,acc_norm,skewness of acc_norm
+acc_norm__slope,acc,time,acc_norm,slope of acc_norm
+acc_norm__spectral_entropy,acc,time_frequency,acc_norm,spectral_entropy of acc_norm
+acc_norm__std,acc,time,acc_norm,std of acc_norm
+acc_norm__zero_crossing_rate,acc,time,acc_norm,zero_crossing_rate of acc_norm
+acc_pca__dominant_axis_var_share,acc,pca,acc_pca,Dominant axis variance share
+acc_pca__pca1_var_ratio,acc,pca,acc_pca,PCA variance ratio
+acc_pca__pca2_var_ratio,acc,pca,acc_pca,PCA variance ratio
+acc_pca__pca3_var_ratio,acc,pca,acc_pca,PCA variance ratio
+all9_norm__abs_mean,all9,time,all9_norm,abs_mean of all9_norm
+all9_norm__diff_abs_mean,all9,time,all9_norm,diff_abs_mean of all9_norm
+all9_norm__diff_rms,all9,time,all9_norm,diff_rms of all9_norm
+all9_norm__dominant_freq_ratio,all9,time_frequency,all9_norm,dominant_freq_ratio of all9_norm
+all9_norm__energy_mean,all9,time,all9_norm,energy_mean of all9_norm
+all9_norm__haar_l1_energy_ratio,all9,wavelet,all9_norm,haar_l1_energy_ratio of all9_norm
+all9_norm__haar_l2_energy_ratio,all9,wavelet,all9_norm,haar_l2_energy_ratio of all9_norm
+all9_norm__haar_l3_energy_ratio,all9,wavelet,all9_norm,haar_l3_energy_ratio of all9_norm
+all9_norm__haar_l4_energy_ratio,all9,wavelet,all9_norm,haar_l4_energy_ratio of all9_norm
+all9_norm__high_band_ratio,all9,time_frequency,all9_norm,high_band_ratio of all9_norm
+all9_norm__iqr,all9,time,all9_norm,iqr of all9_norm
+all9_norm__kurtosis,all9,time,all9_norm,kurtosis of all9_norm
+all9_norm__low_band_ratio,all9,time_frequency,all9_norm,low_band_ratio of all9_norm
+all9_norm__max,all9,time,all9_norm,max of all9_norm
+all9_norm__mean,all9,time,all9_norm,mean of all9_norm
+all9_norm__median,all9,time,all9_norm,median of all9_norm
+all9_norm__mid_band_ratio,all9,time_frequency,all9_norm,mid_band_ratio of all9_norm
+all9_norm__min,all9,time,all9_norm,min of all9_norm
+all9_norm__range,all9,time,all9_norm,range of all9_norm
+all9_norm__rms,all9,time,all9_norm,rms of all9_norm
+all9_norm__skewness,all9,time,all9_norm,skewness of all9_norm
+all9_norm__slope,all9,time,all9_norm,slope of all9_norm
+all9_norm__spectral_entropy,all9,time_frequency,all9_norm,spectral_entropy of all9_norm
+all9_norm__std,all9,time,all9_norm,std of all9_norm
+all9_norm__zero_crossing_rate,all9,time,all9_norm,zero_crossing_rate of all9_norm
+all9_pca__dominant_axis_var_share,all9,pca,all9_pca,Dominant axis variance share
+all9_pca__pca1_var_ratio,all9,pca,all9_pca,PCA variance ratio
+all9_pca__pca2_var_ratio,all9,pca,all9_pca,PCA variance ratio
+all9_pca__pca3_var_ratio,all9,pca,all9_pca,PCA variance ratio
+axis_ax__abs_mean,acc,time,ax,abs_mean of ax
+axis_ax__diff_abs_mean,acc,time,ax,diff_abs_mean of ax
+axis_ax__diff_rms,acc,time,ax,diff_rms of ax
+axis_ax__dominant_freq_ratio,acc,time_frequency,ax,dominant_freq_ratio of ax
+axis_ax__energy_mean,acc,time,ax,energy_mean of ax
+axis_ax__haar_l1_energy_ratio,acc,wavelet,ax,haar_l1_energy_ratio of ax
+axis_ax__haar_l2_energy_ratio,acc,wavelet,ax,haar_l2_energy_ratio of ax
+axis_ax__haar_l3_energy_ratio,acc,wavelet,ax,haar_l3_energy_ratio of ax
+axis_ax__haar_l4_energy_ratio,acc,wavelet,ax,haar_l4_energy_ratio of ax
+axis_ax__high_band_ratio,acc,time_frequency,ax,high_band_ratio of ax
+axis_ax__iqr,acc,time,ax,iqr of ax
+axis_ax__kurtosis,acc,time,ax,kurtosis of ax
+axis_ax__low_band_ratio,acc,time_frequency,ax,low_band_ratio of ax
+axis_ax__max,acc,time,ax,max of ax
+axis_ax__mean,acc,time,ax,mean of ax
+axis_ax__median,acc,time,ax,median of ax
+axis_ax__mid_band_ratio,acc,time_frequency,ax,mid_band_ratio of ax
+axis_ax__min,acc,time,ax,min of ax
+axis_ax__range,acc,time,ax,range of ax
+axis_ax__rms,acc,time,ax,rms of ax
+axis_ax__skewness,acc,time,ax,skewness of ax
+axis_ax__slope,acc,time,ax,slope of ax
+axis_ax__spectral_entropy,acc,time_frequency,ax,spectral_entropy of ax
+axis_ax__std,acc,time,ax,std of ax
+axis_ax__zero_crossing_rate,acc,time,ax,zero_crossing_rate of ax
+axis_ay__abs_mean,acc,time,ay,abs_mean of ay
+axis_ay__diff_abs_mean,acc,time,ay,diff_abs_mean of ay
+axis_ay__diff_rms,acc,time,ay,diff_rms of ay
+axis_ay__dominant_freq_ratio,acc,time_frequency,ay,dominant_freq_ratio of ay
+axis_ay__energy_mean,acc,time,ay,energy_mean of ay
+axis_ay__haar_l1_energy_ratio,acc,wavelet,ay,haar_l1_energy_ratio of ay
+axis_ay__haar_l2_energy_ratio,acc,wavelet,ay,haar_l2_energy_ratio of ay
+axis_ay__haar_l3_energy_ratio,acc,wavelet,ay,haar_l3_energy_ratio of ay
+axis_ay__haar_l4_energy_ratio,acc,wavelet,ay,haar_l4_energy_ratio of ay
+axis_ay__high_band_ratio,acc,time_frequency,ay,high_band_ratio of ay
+axis_ay__iqr,acc,time,ay,iqr of ay
+axis_ay__kurtosis,acc,time,ay,kurtosis of ay
+axis_ay__low_band_ratio,acc,time_frequency,ay,low_band_ratio of ay
+axis_ay__max,acc,time,ay,max of ay
+axis_ay__mean,acc,time,ay,mean of ay
+axis_ay__median,acc,time,ay,median of ay
+axis_ay__mid_band_ratio,acc,time_frequency,ay,mid_band_ratio of ay
+axis_ay__min,acc,time,ay,min of ay
+axis_ay__range,acc,time,ay,range of ay
+axis_ay__rms,acc,time,ay,rms of ay
+axis_ay__skewness,acc,time,ay,skewness of ay
+axis_ay__slope,acc,time,ay,slope of ay
+axis_ay__spectral_entropy,acc,time_frequency,ay,spectral_entropy of ay
+axis_ay__std,acc,time,ay,std of ay
+axis_ay__zero_crossing_rate,acc,time,ay,zero_crossing_rate of ay
+axis_az__abs_mean,acc,time,az,abs_mean of az
+axis_az__diff_abs_mean,acc,time,az,diff_abs_mean of az
+axis_az__diff_rms,acc,time,az,diff_rms of az
+axis_az__dominant_freq_ratio,acc,time_frequency,az,dominant_freq_ratio of az
+axis_az__energy_mean,acc,time,az,energy_mean of az
+axis_az__haar_l1_energy_ratio,acc,wavelet,az,haar_l1_energy_ratio of az
+axis_az__haar_l2_energy_ratio,acc,wavelet,az,haar_l2_energy_ratio of az
+axis_az__haar_l3_energy_ratio,acc,wavelet,az,haar_l3_energy_ratio of az
+axis_az__haar_l4_energy_ratio,acc,wavelet,az,haar_l4_energy_ratio of az
+axis_az__high_band_ratio,acc,time_frequency,az,high_band_ratio of az
+axis_az__iqr,acc,time,az,iqr of az
+axis_az__kurtosis,acc,time,az,kurtosis of az
+axis_az__low_band_ratio,acc,time_frequency,az,low_band_ratio of az
+axis_az__max,acc,time,az,max of az
+axis_az__mean,acc,time,az,mean of az
+axis_az__median,acc,time,az,median of az
+axis_az__mid_band_ratio,acc,time_frequency,az,mid_band_ratio of az
+axis_az__min,acc,time,az,min of az
+axis_az__range,acc,time,az,range of az
+axis_az__rms,acc,time,az,rms of az
+axis_az__skewness,acc,time,az,skewness of az
+axis_az__slope,acc,time,az,slope of az
+axis_az__spectral_entropy,acc,time_frequency,az,spectral_entropy of az
+axis_az__std,acc,time,az,std of az
+axis_az__zero_crossing_rate,acc,time,az,zero_crossing_rate of az
+axis_gx__abs_mean,gyro,time,gx,abs_mean of gx
+axis_gx__diff_abs_mean,gyro,time,gx,diff_abs_mean of gx
+axis_gx__diff_rms,gyro,time,gx,diff_rms of gx
+axis_gx__dominant_freq_ratio,gyro,time_frequency,gx,dominant_freq_ratio of gx
+axis_gx__energy_mean,gyro,time,gx,energy_mean of gx
+axis_gx__haar_l1_energy_ratio,gyro,wavelet,gx,haar_l1_energy_ratio of gx
+axis_gx__haar_l2_energy_ratio,gyro,wavelet,gx,haar_l2_energy_ratio of gx
+axis_gx__haar_l3_energy_ratio,gyro,wavelet,gx,haar_l3_energy_ratio of gx
+axis_gx__haar_l4_energy_ratio,gyro,wavelet,gx,haar_l4_energy_ratio of gx
+axis_gx__high_band_ratio,gyro,time_frequency,gx,high_band_ratio of gx
+axis_gx__iqr,gyro,time,gx,iqr of gx
+axis_gx__kurtosis,gyro,time,gx,kurtosis of gx
+axis_gx__low_band_ratio,gyro,time_frequency,gx,low_band_ratio of gx
+axis_gx__max,gyro,time,gx,max of gx
+axis_gx__mean,gyro,time,gx,mean of gx
+axis_gx__median,gyro,time,gx,median of gx
+axis_gx__mid_band_ratio,gyro,time_frequency,gx,mid_band_ratio of gx
+axis_gx__min,gyro,time,gx,min of gx
+axis_gx__range,gyro,time,gx,range of gx
+axis_gx__rms,gyro,time,gx,rms of gx
+axis_gx__skewness,gyro,time,gx,skewness of gx
+axis_gx__slope,gyro,time,gx,slope of gx
+axis_gx__spectral_entropy,gyro,time_frequency,gx,spectral_entropy of gx
+axis_gx__std,gyro,time,gx,std of gx
+axis_gx__zero_crossing_rate,gyro,time,gx,zero_crossing_rate of gx
+axis_gy__abs_mean,gyro,time,gy,abs_mean of gy
+axis_gy__diff_abs_mean,gyro,time,gy,diff_abs_mean of gy
+axis_gy__diff_rms,gyro,time,gy,diff_rms of gy
+axis_gy__dominant_freq_ratio,gyro,time_frequency,gy,dominant_freq_ratio of gy
+axis_gy__energy_mean,gyro,time,gy,energy_mean of gy
+axis_gy__haar_l1_energy_ratio,gyro,wavelet,gy,haar_l1_energy_ratio of gy
+axis_gy__haar_l2_energy_ratio,gyro,wavelet,gy,haar_l2_energy_ratio of gy
+axis_gy__haar_l3_energy_ratio,gyro,wavelet,gy,haar_l3_energy_ratio of gy
+axis_gy__haar_l4_energy_ratio,gyro,wavelet,gy,haar_l4_energy_ratio of gy
+axis_gy__high_band_ratio,gyro,time_frequency,gy,high_band_ratio of gy
+axis_gy__iqr,gyro,time,gy,iqr of gy
+axis_gy__kurtosis,gyro,time,gy,kurtosis of gy
+axis_gy__low_band_ratio,gyro,time_frequency,gy,low_band_ratio of gy
+axis_gy__max,gyro,time,gy,max of gy
+axis_gy__mean,gyro,time,gy,mean of gy
+axis_gy__median,gyro,time,gy,median of gy
+axis_gy__mid_band_ratio,gyro,time_frequency,gy,mid_band_ratio of gy
+axis_gy__min,gyro,time,gy,min of gy
+axis_gy__range,gyro,time,gy,range of gy
+axis_gy__rms,gyro,time,gy,rms of gy
+axis_gy__skewness,gyro,time,gy,skewness of gy
+axis_gy__slope,gyro,time,gy,slope of gy
+axis_gy__spectral_entropy,gyro,time_frequency,gy,spectral_entropy of gy
+axis_gy__std,gyro,time,gy,std of gy
+axis_gy__zero_crossing_rate,gyro,time,gy,zero_crossing_rate of gy
+axis_gz__abs_mean,gyro,time,gz,abs_mean of gz
+axis_gz__diff_abs_mean,gyro,time,gz,diff_abs_mean of gz
+axis_gz__diff_rms,gyro,time,gz,diff_rms of gz
+axis_gz__dominant_freq_ratio,gyro,time_frequency,gz,dominant_freq_ratio of gz
+axis_gz__energy_mean,gyro,time,gz,energy_mean of gz
+axis_gz__haar_l1_energy_ratio,gyro,wavelet,gz,haar_l1_energy_ratio of gz
+axis_gz__haar_l2_energy_ratio,gyro,wavelet,gz,haar_l2_energy_ratio of gz
+axis_gz__haar_l3_energy_ratio,gyro,wavelet,gz,haar_l3_energy_ratio of gz
+axis_gz__haar_l4_energy_ratio,gyro,wavelet,gz,haar_l4_energy_ratio of gz
+axis_gz__high_band_ratio,gyro,time_frequency,gz,high_band_ratio of gz
+axis_gz__iqr,gyro,time,gz,iqr of gz
+axis_gz__kurtosis,gyro,time,gz,kurtosis of gz
+axis_gz__low_band_ratio,gyro,time_frequency,gz,low_band_ratio of gz
+axis_gz__max,gyro,time,gz,max of gz
+axis_gz__mean,gyro,time,gz,mean of gz
+axis_gz__median,gyro,time,gz,median of gz
+axis_gz__mid_band_ratio,gyro,time_frequency,gz,mid_band_ratio of gz
+axis_gz__min,gyro,time,gz,min of gz
+axis_gz__range,gyro,time,gz,range of gz
+axis_gz__rms,gyro,time,gz,rms of gz
+axis_gz__skewness,gyro,time,gz,skewness of gz
+axis_gz__slope,gyro,time,gz,slope of gz
+axis_gz__spectral_entropy,gyro,time_frequency,gz,spectral_entropy of gz
+axis_gz__std,gyro,time,gz,std of gz
+axis_gz__zero_crossing_rate,gyro,time,gz,zero_crossing_rate of gz
+axis_mx__abs_mean,mag,time,mx,abs_mean of mx
+axis_mx__diff_abs_mean,mag,time,mx,diff_abs_mean of mx
+axis_mx__diff_rms,mag,time,mx,diff_rms of mx
+axis_mx__dominant_freq_ratio,mag,time_frequency,mx,dominant_freq_ratio of mx
+axis_mx__energy_mean,mag,time,mx,energy_mean of mx
+axis_mx__haar_l1_energy_ratio,mag,wavelet,mx,haar_l1_energy_ratio of mx
+axis_mx__haar_l2_energy_ratio,mag,wavelet,mx,haar_l2_energy_ratio of mx
+axis_mx__haar_l3_energy_ratio,mag,wavelet,mx,haar_l3_energy_ratio of mx
+axis_mx__haar_l4_energy_ratio,mag,wavelet,mx,haar_l4_energy_ratio of mx
+axis_mx__high_band_ratio,mag,time_frequency,mx,high_band_ratio of mx
+axis_mx__iqr,mag,time,mx,iqr of mx
+axis_mx__kurtosis,mag,time,mx,kurtosis of mx
+axis_mx__low_band_ratio,mag,time_frequency,mx,low_band_ratio of mx
+axis_mx__max,mag,time,mx,max of mx
+axis_mx__mean,mag,time,mx,mean of mx
+axis_mx__median,mag,time,mx,median of mx
+axis_mx__mid_band_ratio,mag,time_frequency,mx,mid_band_ratio of mx
+axis_mx__min,mag,time,mx,min of mx
+axis_mx__range,mag,time,mx,range of mx
+axis_mx__rms,mag,time,mx,rms of mx
+axis_mx__skewness,mag,time,mx,skewness of mx
+axis_mx__slope,mag,time,mx,slope of mx
+axis_mx__spectral_entropy,mag,time_frequency,mx,spectral_entropy of mx
+axis_mx__std,mag,time,mx,std of mx
+axis_mx__zero_crossing_rate,mag,time,mx,zero_crossing_rate of mx
+axis_my__abs_mean,mag,time,my,abs_mean of my
+axis_my__diff_abs_mean,mag,time,my,diff_abs_mean of my
+axis_my__diff_rms,mag,time,my,diff_rms of my
+axis_my__dominant_freq_ratio,mag,time_frequency,my,dominant_freq_ratio of my
+axis_my__energy_mean,mag,time,my,energy_mean of my
+axis_my__haar_l1_energy_ratio,mag,wavelet,my,haar_l1_energy_ratio of my
+axis_my__haar_l2_energy_ratio,mag,wavelet,my,haar_l2_energy_ratio of my
+axis_my__haar_l3_energy_ratio,mag,wavelet,my,haar_l3_energy_ratio of my
+axis_my__haar_l4_energy_ratio,mag,wavelet,my,haar_l4_energy_ratio of my
+axis_my__high_band_ratio,mag,time_frequency,my,high_band_ratio of my
+axis_my__iqr,mag,time,my,iqr of my
+axis_my__kurtosis,mag,time,my,kurtosis of my
+axis_my__low_band_ratio,mag,time_frequency,my,low_band_ratio of my
+axis_my__max,mag,time,my,max of my
+axis_my__mean,mag,time,my,mean of my
+axis_my__median,mag,time,my,median of my
+axis_my__mid_band_ratio,mag,time_frequency,my,mid_band_ratio of my
+axis_my__min,mag,time,my,min of my
+axis_my__range,mag,time,my,range of my
+axis_my__rms,mag,time,my,rms of my
+axis_my__skewness,mag,time,my,skewness of my
+axis_my__slope,mag,time,my,slope of my
+axis_my__spectral_entropy,mag,time_frequency,my,spectral_entropy of my
+axis_my__std,mag,time,my,std of my
+axis_my__zero_crossing_rate,mag,time,my,zero_crossing_rate of my
+axis_mz__abs_mean,mag,time,mz,abs_mean of mz
+axis_mz__diff_abs_mean,mag,time,mz,diff_abs_mean of mz
+axis_mz__diff_rms,mag,time,mz,diff_rms of mz
+axis_mz__dominant_freq_ratio,mag,time_frequency,mz,dominant_freq_ratio of mz
+axis_mz__energy_mean,mag,time,mz,energy_mean of mz
+axis_mz__haar_l1_energy_ratio,mag,wavelet,mz,haar_l1_energy_ratio of mz
+axis_mz__haar_l2_energy_ratio,mag,wavelet,mz,haar_l2_energy_ratio of mz
+axis_mz__haar_l3_energy_ratio,mag,wavelet,mz,haar_l3_energy_ratio of mz
+axis_mz__haar_l4_energy_ratio,mag,wavelet,mz,haar_l4_energy_ratio of mz
+axis_mz__high_band_ratio,mag,time_frequency,mz,high_band_ratio of mz
+axis_mz__iqr,mag,time,mz,iqr of mz
+axis_mz__kurtosis,mag,time,mz,kurtosis of mz
+axis_mz__low_band_ratio,mag,time_frequency,mz,low_band_ratio of mz
+axis_mz__max,mag,time,mz,max of mz
+axis_mz__mean,mag,time,mz,mean of mz
+axis_mz__median,mag,time,mz,median of mz
+axis_mz__mid_band_ratio,mag,time_frequency,mz,mid_band_ratio of mz
+axis_mz__min,mag,time,mz,min of mz
+axis_mz__range,mag,time,mz,range of mz
+axis_mz__rms,mag,time,mz,rms of mz
+axis_mz__skewness,mag,time,mz,skewness of mz
+axis_mz__slope,mag,time,mz,slope of mz
+axis_mz__spectral_entropy,mag,time_frequency,mz,spectral_entropy of mz
+axis_mz__std,mag,time,mz,std of mz
+axis_mz__zero_crossing_rate,mag,time,mz,zero_crossing_rate of mz
+corr__ax__ay,acc,axis_correlation,"ax,ay",Correlation between ax and ay
+corr__ax__az,acc,axis_correlation,"ax,az",Correlation between ax and az
+corr__ax__gx,acc_gyro,axis_correlation,"ax,gx",Correlation between ax and gx
+corr__ax__gy,acc_gyro,axis_correlation,"ax,gy",Correlation between ax and gy
+corr__ax__gz,acc_gyro,axis_correlation,"ax,gz",Correlation between ax and gz
+corr__ax__mx,acc_mag,axis_correlation,"ax,mx",Correlation between ax and mx
+corr__ax__my,acc_mag,axis_correlation,"ax,my",Correlation between ax and my
+corr__ax__mz,acc_mag,axis_correlation,"ax,mz",Correlation between ax and mz
+corr__ay__az,acc,axis_correlation,"ay,az",Correlation between ay and az
+corr__ay__gx,acc_gyro,axis_correlation,"ay,gx",Correlation between ay and gx
+corr__ay__gy,acc_gyro,axis_correlation,"ay,gy",Correlation between ay and gy
+corr__ay__gz,acc_gyro,axis_correlation,"ay,gz",Correlation between ay and gz
+corr__ay__mx,acc_mag,axis_correlation,"ay,mx",Correlation between ay and mx
+corr__ay__my,acc_mag,axis_correlation,"ay,my",Correlation between ay and my
+corr__ay__mz,acc_mag,axis_correlation,"ay,mz",Correlation between ay and mz
+corr__az__gx,acc_gyro,axis_correlation,"az,gx",Correlation between az and gx
+corr__az__gy,acc_gyro,axis_correlation,"az,gy",Correlation between az and gy
+corr__az__gz,acc_gyro,axis_correlation,"az,gz",Correlation between az and gz
+corr__az__mx,acc_mag,axis_correlation,"az,mx",Correlation between az and mx
+corr__az__my,acc_mag,axis_correlation,"az,my",Correlation between az and my
+corr__az__mz,acc_mag,axis_correlation,"az,mz",Correlation between az and mz
+corr__gx__gy,gyro,axis_correlation,"gx,gy",Correlation between gx and gy
+corr__gx__gz,gyro,axis_correlation,"gx,gz",Correlation between gx and gz
+corr__gx__mx,gyro_mag,axis_correlation,"gx,mx",Correlation between gx and mx
+corr__gx__my,gyro_mag,axis_correlation,"gx,my",Correlation between gx and my
+corr__gx__mz,gyro_mag,axis_correlation,"gx,mz",Correlation between gx and mz
+corr__gy__gz,gyro,axis_correlation,"gy,gz",Correlation between gy and gz
+corr__gy__mx,gyro_mag,axis_correlation,"gy,mx",Correlation between gy and mx
+corr__gy__my,gyro_mag,axis_correlation,"gy,my",Correlation between gy and my
+corr__gy__mz,gyro_mag,axis_correlation,"gy,mz",Correlation between gy and mz
+corr__gz__mx,gyro_mag,axis_correlation,"gz,mx",Correlation between gz and mx
+corr__gz__my,gyro_mag,axis_correlation,"gz,my",Correlation between gz and my
+corr__gz__mz,gyro_mag,axis_correlation,"gz,mz",Correlation between gz and mz
+corr__mx__my,mag,axis_correlation,"mx,my",Correlation between mx and my
+corr__mx__mz,mag,axis_correlation,"mx,mz",Correlation between mx and mz
+corr__my__mz,mag,axis_correlation,"my,mz",Correlation between my and mz
+gyro_norm__abs_mean,gyro,time,gyro_norm,abs_mean of gyro_norm
+gyro_norm__diff_abs_mean,gyro,time,gyro_norm,diff_abs_mean of gyro_norm
+gyro_norm__diff_rms,gyro,time,gyro_norm,diff_rms of gyro_norm
+gyro_norm__dominant_freq_ratio,gyro,time_frequency,gyro_norm,dominant_freq_ratio of gyro_norm
+gyro_norm__energy_mean,gyro,time,gyro_norm,energy_mean of gyro_norm
+gyro_norm__haar_l1_energy_ratio,gyro,wavelet,gyro_norm,haar_l1_energy_ratio of gyro_norm
+gyro_norm__haar_l2_energy_ratio,gyro,wavelet,gyro_norm,haar_l2_energy_ratio of gyro_norm
+gyro_norm__haar_l3_energy_ratio,gyro,wavelet,gyro_norm,haar_l3_energy_ratio of gyro_norm
+gyro_norm__haar_l4_energy_ratio,gyro,wavelet,gyro_norm,haar_l4_energy_ratio of gyro_norm
+gyro_norm__high_band_ratio,gyro,time_frequency,gyro_norm,high_band_ratio of gyro_norm
+gyro_norm__iqr,gyro,time,gyro_norm,iqr of gyro_norm
+gyro_norm__kurtosis,gyro,time,gyro_norm,kurtosis of gyro_norm
+gyro_norm__low_band_ratio,gyro,time_frequency,gyro_norm,low_band_ratio of gyro_norm
+gyro_norm__max,gyro,time,gyro_norm,max of gyro_norm
+gyro_norm__mean,gyro,time,gyro_norm,mean of gyro_norm
+gyro_norm__median,gyro,time,gyro_norm,median of gyro_norm
+gyro_norm__mid_band_ratio,gyro,time_frequency,gyro_norm,mid_band_ratio of gyro_norm
+gyro_norm__min,gyro,time,gyro_norm,min of gyro_norm
+gyro_norm__range,gyro,time,gyro_norm,range of gyro_norm
+gyro_norm__rms,gyro,time,gyro_norm,rms of gyro_norm
+gyro_norm__skewness,gyro,time,gyro_norm,skewness of gyro_norm
+gyro_norm__slope,gyro,time,gyro_norm,slope of gyro_norm
+gyro_norm__spectral_entropy,gyro,time_frequency,gyro_norm,spectral_entropy of gyro_norm
+gyro_norm__std,gyro,time,gyro_norm,std of gyro_norm
+gyro_norm__zero_crossing_rate,gyro,time,gyro_norm,zero_crossing_rate of gyro_norm
+gyro_pca__dominant_axis_var_share,gyro,pca,gyro_pca,Dominant axis variance share
+gyro_pca__pca1_var_ratio,gyro,pca,gyro_pca,PCA variance ratio
+gyro_pca__pca2_var_ratio,gyro,pca,gyro_pca,PCA variance ratio
+gyro_pca__pca3_var_ratio,gyro,pca,gyro_pca,PCA variance ratio
+mag_norm__abs_mean,mag,time,mag_norm,abs_mean of mag_norm
+mag_norm__diff_abs_mean,mag,time,mag_norm,diff_abs_mean of mag_norm
+mag_norm__diff_rms,mag,time,mag_norm,diff_rms of mag_norm
+mag_norm__dominant_freq_ratio,mag,time_frequency,mag_norm,dominant_freq_ratio of mag_norm
+mag_norm__energy_mean,mag,time,mag_norm,energy_mean of mag_norm
+mag_norm__haar_l1_energy_ratio,mag,wavelet,mag_norm,haar_l1_energy_ratio of mag_norm
+mag_norm__haar_l2_energy_ratio,mag,wavelet,mag_norm,haar_l2_energy_ratio of mag_norm
+mag_norm__haar_l3_energy_ratio,mag,wavelet,mag_norm,haar_l3_energy_ratio of mag_norm
+mag_norm__haar_l4_energy_ratio,mag,wavelet,mag_norm,haar_l4_energy_ratio of mag_norm
+mag_norm__high_band_ratio,mag,time_frequency,mag_norm,high_band_ratio of mag_norm
+mag_norm__iqr,mag,time,mag_norm,iqr of mag_norm
+mag_norm__kurtosis,mag,time,mag_norm,kurtosis of mag_norm
+mag_norm__low_band_ratio,mag,time_frequency,mag_norm,low_band_ratio of mag_norm
+mag_norm__max,mag,time,mag_norm,max of mag_norm
+mag_norm__mean,mag,time,mag_norm,mean of mag_norm
+mag_norm__median,mag,time,mag_norm,median of mag_norm
+mag_norm__mid_band_ratio,mag,time_frequency,mag_norm,mid_band_ratio of mag_norm
+mag_norm__min,mag,time,mag_norm,min of mag_norm
+mag_norm__range,mag,time,mag_norm,range of mag_norm
+mag_norm__rms,mag,time,mag_norm,rms of mag_norm
+mag_norm__skewness,mag,time,mag_norm,skewness of mag_norm
+mag_norm__slope,mag,time,mag_norm,slope of mag_norm
+mag_norm__spectral_entropy,mag,time_frequency,mag_norm,spectral_entropy of mag_norm
+mag_norm__std,mag,time,mag_norm,std of mag_norm
+mag_norm__zero_crossing_rate,mag,time,mag_norm,zero_crossing_rate of mag_norm
+mag_pca__dominant_axis_var_share,mag,pca,mag_pca,Dominant axis variance share
+mag_pca__pca1_var_ratio,mag,pca,mag_pca,PCA variance ratio
+mag_pca__pca2_var_ratio,mag,pca,mag_pca,PCA variance ratio
+mag_pca__pca3_var_ratio,mag,pca,mag_pca,PCA variance ratio
+rep_duration_samples,temporal,temporal,rep_duration,Ground-truth rep duration in samples

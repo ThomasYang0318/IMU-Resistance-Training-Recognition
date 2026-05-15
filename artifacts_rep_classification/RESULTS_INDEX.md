@@ -6,7 +6,7 @@
 001_<experiment_name>/
 002_<experiment_name>/
 ...
-006_<experiment_name>/
+007_<experiment_name>/
 ```
 
 ## 001_active_only_labels_8class_5fold
@@ -214,6 +214,82 @@ db_biceps_curl IoU@0.50 F1: 0.6853 -> 0.6608
 - `confusion_matrix_normalized.png`
 - `phase_split_metrics.csv`
 - `phase_split_iou_metrics.png`
+
+## 007_rep_feature_relevance_9axis_8class_5fold
+
+目的：
+
+分析每個 ground-truth rep 內的 9 軸 IMU 特徵，找出哪些 waveform / sensor 特徵和動作類別最穩定相關，並量化不同特徵家族是否真的有助於跨人泛化。
+
+設定：
+
+- input run：`003_active_only_pca_autocorr_refined_8class_5fold`
+- samples：2424 ground-truth reps
+- subjects：8
+- exercises：8
+- raw axes：`ax`, `ay`, `az`, `gx`, `gy`, `gz`, `mx`, `my`, `mz`
+- extracted features：378
+- validation：subject-wise 5-fold
+- scoring：ANOVA F、mutual information、Random Forest importance、fold-wise top-20 stability
+
+特徵類型：
+
+- 單軸 time-domain：mean、std、median、min、max、range、IQR、RMS、energy、diff、slope、zero crossing、skewness、kurtosis；
+- frequency：dominant frequency ratio、spectral entropy、low/mid/high band ratio；
+- wavelet：Haar detail energy ratio；
+- sensor norm：acc / gyro / mag / all-9 magnitude；
+- PCA：acc / gyro / mag / all-9 PCA variance ratio；
+- axis correlation：9 軸兩兩相關係數。
+
+主要數值：
+
+```text
+best ablation set: acc_gyro
+acc_gyro subject-wise accuracy: 0.8499 ± 0.0749
+acc_only subject-wise accuracy: 0.7837 ± 0.0226
+all_9_axis_features subject-wise accuracy: 0.7824 ± 0.0455
+correlations_only subject-wise accuracy: 0.7078 ± 0.0976
+wavelet_only subject-wise accuracy: 0.6711 ± 0.1151
+mag_only subject-wise accuracy: 0.6112 ± 0.2111
+gyro_only subject-wise accuracy: 0.5899 ± 0.0575
+pca_only subject-wise accuracy: 0.3771 ± 0.0532
+```
+
+Top 10 overall features：
+
+```text
+axis_ax__mean
+axis_ax__median
+axis_ax__rms
+axis_ax__energy_mean
+axis_ax__abs_mean
+axis_ax__max
+acc_norm__abs_mean
+axis_ay__median
+acc_norm__mean
+axis_ay__mean
+```
+
+解讀：
+
+跨人動作辨識目前不是「九軸全部放進去」最好，而是 accelerometer + gyroscope 最穩。magnetometer 和 PCA-only 在目前資料上會拉低泛化；PCA 可以作為降噪或 visualization，但不適合單獨當主要分類特徵。動作分類最穩的特徵多為 accelerometer orientation / magnitude 類 time-domain 特徵；gyroscope 對 rep boundary refinement 仍重要，但單獨用來辨識動作不夠。
+
+重點檔案：
+
+- `summary.json`
+- `rep_level_feature_table.csv`
+- `rep_level_feature_metadata.csv`
+- `rep_feature_relevance_scores.csv`
+- `top_features_by_exercise.csv`
+- `sensor_group_ablation_accuracy.csv`
+- `sensor_group_ablation_accuracy.png`
+- `top_rep_features_overall.png`
+- `feature_stability_across_subjects.png`
+- `feature_family_importance.png`
+- `feature_importance_by_exercise.png`
+- `dominant_axis_by_exercise.png`
+- `exercise_feature_embedding_pca.png`
+- `top20_feature_confusion_matrix.png`
 
 ## 004_waveform_rep_accuracy_003_active_only
 
