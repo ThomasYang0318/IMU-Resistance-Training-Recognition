@@ -44,7 +44,8 @@ artifacts_rep_classification/
   methods_comparison/               多方法 IoU 比較圖
   waveform_method_comparison/       波形切割圖與 set-level 結果圖
 artifacts_active_detection/
-  window_rf_action_5fold/           active / set detection window RF 結果
+  RESULTS_INDEX.md                  active / set detection 結果版本索引
+  001_window_rf_action_5fold/       第 001 版 active / set detection window RF 結果
 ```
 
 ## 環境
@@ -120,7 +121,7 @@ subject-wise supervised active / set detector：
 
 ```bash
 .venv311/bin/python tools/evaluate_active_set_window_classifier.py \
-  --output-dir artifacts_active_detection/window_rf_action_5fold \
+  --output-dir artifacts_active_detection/001_window_rf_action_5fold \
   --target action
 ```
 
@@ -136,6 +137,10 @@ subject-wise supervised active / set detector：
 - `timeline_examples/*.png`
 
 目前結論是 active/rest 的 window-level 特徵可以學到，但 set-level segment IoU 仍低，表示「辨識正在動」和「切準整組 set 邊界」是兩個不同問題；後續應優先改善 set boundary post-processing 與 action label 定義。
+
+目前正式結果版本：
+
+- `001_window_rf_action_5fold`：subject-wise 5-fold window RF active / set detector。
 
 ## 手動執行單一方法
 

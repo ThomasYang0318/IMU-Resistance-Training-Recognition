@@ -499,12 +499,12 @@ mean matched IoU = 0.8170
 
 輸出結果：
 
-- `artifacts_active_detection/window_rf_action_5fold/active_detection_metrics.csv`
-- `artifacts_active_detection/window_rf_action_5fold/active_detection_metrics_by_subject.csv`
-- `artifacts_active_detection/window_rf_action_5fold/fold_manifest.csv`
-- `artifacts_active_detection/window_rf_action_5fold/window_confusion_matrix.png`
-- `artifacts_active_detection/window_rf_action_5fold/window_rf_active_detection_f1.png`
-- `artifacts_active_detection/window_rf_action_5fold/timeline_examples/`
+- `artifacts_active_detection/001_window_rf_action_5fold/active_detection_metrics.csv`
+- `artifacts_active_detection/001_window_rf_action_5fold/active_detection_metrics_by_subject.csv`
+- `artifacts_active_detection/001_window_rf_action_5fold/fold_manifest.csv`
+- `artifacts_active_detection/001_window_rf_action_5fold/window_confusion_matrix.png`
+- `artifacts_active_detection/001_window_rf_action_5fold/window_rf_active_detection_f1.png`
+- `artifacts_active_detection/001_window_rf_action_5fold/timeline_examples/`
 
 結論：
 
@@ -518,3 +518,69 @@ mean matched IoU = 0.8170
 - 在 probability 上做 valley-based split，避免多組 set 被黏成一段；
 - 用 `set` / `rep` / `phase` 標註建立更乾淨的 set boundary target；
 - 分別回報 `movement-active` 與 `set-action` 兩種 IoU，不再混在同一個指標解讀。
+
+## 2026-05-15：Result Folder Versioning
+
+日期：2026-05-15
+
+狀態：implemented
+
+目的：
+
+讓每次正式輸出的結果資料夾前面都有版本編號，避免不知道哪一版實驗產生哪一批圖與數值。
+
+背景問題：
+
+使用者指出結果資料夾需要標號，才能知道這是哪一版方法改出來的結果。
+
+假設：
+
+- 已經正式保留的 active detection 結果先標為 `001`；
+- 後續每個正式實驗依序使用 `002_...`、`003_...`；
+- exploratory / 低分測參數輸出不列入正式版本。
+
+預計改動：
+
+- 將 `artifacts_active_detection/window_rf_action_5fold/` 改名為 `artifacts_active_detection/001_window_rf_action_5fold/`；
+- 新增 `artifacts_active_detection/RESULTS_INDEX.md`；
+- 更新 README 與工具預設 output dir。
+
+不做的事：
+
+- 不重跑模型；
+- 不改數值結果；
+- 不保留先前低分 exploratory 輸出。
+
+預期改善：
+
+- 可直接從資料夾名稱知道版本；
+- 文件與 artifact 路徑一致；
+- 後續比較不同方法時不會覆蓋前一版正式結果。
+
+評估指標：
+
+- `find artifacts_active_detection -maxdepth 2 -type d` 能看到版本化資料夾；
+- README、change log、summary path 不再指向舊資料夾；
+- git diff 只包含 rename、文件與 index。
+
+風險：
+
+- 如果外部腳本硬編碼舊路徑，需要同步改成新路徑。
+
+審核結果：
+
+使用者要求結果資料夾前面標號，因此直接執行。
+
+實際結果：
+
+正式結果資料夾：
+
+- `artifacts_active_detection/001_window_rf_action_5fold/`
+
+版本索引：
+
+- `artifacts_active_detection/RESULTS_INDEX.md`
+
+下一步：
+
+下一個正式結果建議使用 `002_boundary_aware_active_set/`，用來放 valley split / boundary-aware active set detector 的結果。

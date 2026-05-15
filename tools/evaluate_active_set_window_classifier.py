@@ -365,7 +365,7 @@ def save_confusion_matrix(y_true: np.ndarray, y_pred: np.ndarray, output_dir: Pa
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Evaluate subject-wise window classifier for active/set detection.")
     parser.add_argument("--data-dirs", type=Path, nargs="+", default=[Path("datasets/workout")])
-    parser.add_argument("--output-dir", type=Path, default=Path("artifacts_active_detection/window_rf_action_5fold"))
+    parser.add_argument("--output-dir", type=Path, default=Path("artifacts_active_detection/001_window_rf_action_5fold"))
     parser.add_argument("--target", choices=["action", "phase"], default="action")
     parser.add_argument("--folds", type=int, default=5)
     parser.add_argument("--window-samples", type=int, default=200)

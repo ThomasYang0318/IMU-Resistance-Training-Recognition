@@ -13,8 +13,8 @@
   "num_windows": 51420,
   "positive_windows": 39323,
   "figures": [
-    "artifacts_active_detection/window_rf_action_5fold/window_rf_active_detection_f1.png",
-    "artifacts_active_detection/window_rf_action_5fold/window_confusion_matrix.png"
+    "artifacts_active_detection/001_window_rf_action_5fold/window_rf_active_detection_f1.png",
+    "artifacts_active_detection/001_window_rf_action_5fold/window_confusion_matrix.png"
   ],
   "overall": [
     {
