@@ -53,7 +53,7 @@ datasets/workout
 
 ## Rep Segmentation
 
-目前支援兩種模式：
+目前支援五種模式：
 
 ```bash
 --segment-method labels
@@ -62,10 +62,28 @@ datasets/workout
 使用資料內的 `rep` + `phase` annotation 切出 reps。這是穩定 baseline，可用來評估「rep 切完後分類器能不能跨人泛化」。
 
 ```bash
+--segment-method dominant-axis
+```
+
+用 6-axis IMU 中變異最大的單軸訊號做 peak/extrema 切割，對應常見 dominant-axis repetition counting baseline。
+
+```bash
+--segment-method short-time-energy
+```
+
+用 acceleration magnitude 的 short-time energy 找 rep 邊界，對應能量谷值切割類方法。
+
+```bash
 --segment-method pca-extrema
 ```
 
-使用 PCA dominant motion signal + smoothing + local extrema 做 experimental rep segmentation。這個方法對資料品質與 set/rest 邊界較敏感，主要用來後續和 annotation baseline 比較。
+使用 PCA principal motion signal + smoothing + local extrema 做 experimental rep segmentation。這個方法比人工選軸更穩，但仍容易 over-segment。
+
+```bash
+--segment-method pca-extrema-fft
+```
+
+用 FFT 估計 set-level dominant period，再約束 PCA extrema 的 peak distance。這是目前 classical signal-processing 方法中最穩的版本。
 
 ## 分類器
 
@@ -122,6 +140,18 @@ StandardScaler + RandomForestClassifier
 `other` 會吸收不在前 N 類內，或和 ground-truth rep overlap 太低的 predicted segments。
 
 ## 執行方式
+
+建議使用統一入口重跑完整流程：
+
+```bash
+.venv311/bin/python tools/run_rep_project_pipeline.py
+```
+
+先檢查會跑哪些命令：
+
+```bash
+.venv311/bin/python tools/run_rep_project_pipeline.py --dry-run
+```
 
 8 類 baseline：
 
@@ -239,22 +269,22 @@ python tools/evaluate_rep_segmentation_classification.py \
 比較未使用 FFT 與使用 FFT：
 
 ```bash
-python tools/compare_rep_segmentation_iou.py \
-  --baseline-dir artifacts_rep_classification/pca_extrema_8class_5fold \
-  --baseline-name pca-extrema \
-  --candidate-dir artifacts_rep_classification/pca_extrema_fft_8class_5fold \
-  --candidate-name pca-extrema-fft \
-  --output-dir artifacts_rep_classification/pca_extrema_fft_comparison
+.venv311/bin/python tools/compare_rep_segmentation_iou.py \
+  --run dominant-axis=artifacts_rep_classification/dominant_axis_8class_5fold \
+  --run short-time-energy=artifacts_rep_classification/short_time_energy_8class_5fold \
+  --run pca-extrema=artifacts_rep_classification/pca_extrema_8class_5fold \
+  --run pca-extrema-fft=artifacts_rep_classification/pca_extrema_fft_8class_5fold \
+  --output-dir artifacts_rep_classification/methods_comparison
 ```
 
 比較輸出：
 
 ```text
-rep_segmentation_fft_comparison.csv
-rep_segmentation_fft_comparison_by_exercise.csv
-rep_segmentation_fft_comparison_f1.png
-rep_segmentation_fft_comparison_iou_0.50.png
-rep_segmentation_fft_exercise_delta_iou_0.50.png
+rep_segmentation_methods_comparison.csv
+rep_segmentation_methods_comparison_by_exercise.csv
+rep_segmentation_methods_f1.png
+rep_segmentation_methods_iou_0.50.png
+rep_segmentation_methods_error_breakdown_iou_0.50.png
 ```
 
 ## 輸出檔案
@@ -286,7 +316,39 @@ artifacts_rep_classification/<run_name>/
 - `confusion_matrix_normalized.png`：row-normalized 混淆矩陣；
 - `summary.json`：整體 accuracy、macro F1、weighted F1、類別表。
 
-## 目前 baseline 結果
+波形圖與 set-level 圖位於：
+
+```text
+artifacts_rep_classification/waveform_method_comparison/
+  waveform_method_all_sets_summary.csv
+  sets_all/*.png
+  set_level_results/set_level_method_average_comparison.png
+  set_level_results/set_level_matched_rate_heatmap.png
+  set_level_results/set_level_prediction_ratio_heatmap.png
+  set_level_results/set_level_best_method_counts.png
+```
+
+波形圖只畫切割線，不塗底色：
+
+- 綠線：ground truth rep boundary；
+- 橘線：predicted rep boundary；
+- 實線：start；
+- 虛線：end。
+
+## 目前方法比較結果
+
+目前 `methods_comparison` 的 boundary-level IoU 結果如下：
+
+| 方法 | Predicted reps | IoU@0.50 Precision | IoU@0.50 Recall | IoU@0.50 F1 | IoU@0.75 F1 |
+|---|---:|---:|---:|---:|---:|
+| dominant-axis | 22103 | 0.0362 | 0.3300 | 0.0652 | 0.0101 |
+| short-time-energy | 15391 | 0.0670 | 0.4253 | 0.1157 | 0.0231 |
+| pca-extrema | 11480 | 0.0841 | 0.3981 | 0.1388 | 0.0237 |
+| pca-extrema-fft | 5942 | 0.1439 | 0.3527 | 0.2044 | 0.0304 |
+
+`pca-extrema-fft` 的 precision、F1 與 over-segmentation 控制目前最好，但 boundary-level F1 還不高，不能宣稱已超越高品質文獻。
+
+## Oracle Label Baseline
 
 已執行：
 
@@ -314,16 +376,3 @@ rep segmentation IoU@0.50 F1: 1.0000
 此結果使用 annotation 切出的 reps 作為穩定 baseline，用來回答「rep 切完後，跨人動作分類能做到多少」。
 
 9 類模式也已執行，但目前資料中沒有實際 `other` reps，因此 accuracy 與 8 類相同，macro F1 會被空的 `other` 類拉低。
-
-Experimental `pca-extrema` 結果：
-
-```text
-truth reps: 2132
-predicted reps: 15337
-classified reps: 2730
-accuracy: 0.7652
-macro_f1: 0.7598
-weighted_f1: 0.7641
-```
-
-這代表目前 PCA-extrema 切 rep 會 over-segment，後續需要針對 active set detection、peak prominence、minimum rep duration 做更細調參；暫時不建議作為主要成績。

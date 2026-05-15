@@ -12,9 +12,9 @@
 
 ### 0. DS-MS-TCN 的結果呈現方式
 
-Shang et al. 提出 DS-MS-TCN，使用 sequence-to-sequence temporal convolutional network 同時學 micro labels 與 macro labels。該文的 Fig. 1 / Fig. 2 以 IMU acceleration waveform 搭配陰影區塊呈現 micro label/repetition annotation；結果段落則以 sample-wise F1、segment-wise edit score、IoU F1，以及混淆矩陣比較 DS-MS-TCN、CNN、Transformer、CNN-LSTM、MS-TCN 等方法。
+Shang et al. 提出 DS-MS-TCN，使用 sequence-to-sequence temporal convolutional network 同時學 micro labels 與 macro labels。該文的 Fig. 1 / Fig. 2 以 IMU acceleration waveform 搭配標註區間呈現 micro label/repetition annotation；結果段落則以 sample-wise F1、segment-wise edit score、IoU F1，以及混淆矩陣比較 DS-MS-TCN、CNN、Transformer、CNN-LSTM、MS-TCN 等方法。
 
-本專案目前尚未實作 DS-MS-TCN 深度模型，因為需要把現有 resistance-training labels 轉成 sample-wise micro/macro label sequence，再訓練 TCN。這次先參考該文「波形 + 標註陰影 + 多方法數值比較」的呈現方式，新增以下輸出：
+本專案目前尚未實作 DS-MS-TCN 深度模型，因為需要把現有 resistance-training labels 轉成 sample-wise micro/macro label sequence，再訓練 TCN。這次先參考該文「波形 + 標註邊界 + 多方法數值比較」的呈現方式，新增以下輸出：
 
 ```text
 artifacts_rep_classification/waveform_method_comparison/waveform_method_comparison_<session>.png
@@ -29,17 +29,17 @@ artifacts_rep_classification/waveform_method_comparison/set_level_results/set_le
 artifacts_rep_classification/methods_comparison/rep_segmentation_methods_error_breakdown_iou_0.50.png
 ```
 
-其中 waveform 圖會在同一段 IMU 波形上疊：
+其中 waveform 圖會在同一段 IMU 波形上疊 start/end 切割線：
 
 ```text
-ground truth rep intervals
-dominant-axis predicted intervals
-short-time-energy predicted intervals
-pca-extrema predicted intervals
-pca-extrema-fft predicted intervals
+ground truth rep boundaries
+dominant-axis predicted boundaries
+short-time-energy predicted boundaries
+pca-extrema predicted boundaries
+pca-extrema-fft predicted boundaries
 ```
 
-這可以直接看出各方法在同一段波形上的過切、漏切與 boundary 偏移。
+這可以直接看出各方法在同一段波形上的過切、漏切與 boundary 偏移。目前圖中綠線是真實切割、橘線是方法預測切割；實線為 start、虛線為 end，不再使用底色 shading。
 
 另外 `sets_all/` 會為每一組 `subject / exercise / set_id` 輸出一張圖。目前共有 `210` 組 set 圖；`waveform_method_all_sets_summary.csv` 則記錄每張圖中各方法的 predicted reps、IoU >= 0.50 的 predicted reps 數量與 mean best IoU。
 
@@ -175,7 +175,7 @@ Dominant-axis 方法對手錶/IMU 的配戴方向與動作平面很敏感。`pca
 
 ### 2. 比 short-time-energy 更能抑制過切
 
-STE baseline 在目前資料產生 `21185` 個 predicted reps，true reps 只有 `2424`，over-segmentation 明顯。FFT-guided 方法把 predicted reps 降到 `9618`，IoU@0.50 precision 從 `0.0362` 提升到 `0.1259`。
+STE baseline 在目前資料產生 `15391` 個 predicted reps，true reps 只有 `2424`，over-segmentation 明顯。FFT-guided 方法把 predicted reps 降到 `5942`，IoU@0.50 precision 從 `0.0670` 提升到 `0.1439`。
 
 ### 3. 比原始 PCA peak detection 更穩
 
