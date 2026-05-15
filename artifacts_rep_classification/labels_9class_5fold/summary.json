@@ -17,6 +17,44 @@
     "db_shoulder_press",
     "other"
   ],
+  "segmentation_metrics": [
+    {
+      "iou_threshold": 0.25,
+      "true_reps": 2132,
+      "predicted_reps": 2132,
+      "matched_reps": 2132,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "mean_matched_iou": 1.0
+    },
+    {
+      "iou_threshold": 0.5,
+      "true_reps": 2132,
+      "predicted_reps": 2132,
+      "matched_reps": 2132,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "mean_matched_iou": 1.0
+    },
+    {
+      "iou_threshold": 0.75,
+      "true_reps": 2132,
+      "predicted_reps": 2132,
+      "matched_reps": 2132,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "mean_matched_iou": 1.0
+    }
+  ],
   "folds": 5,
   "subjects": [
     "haoyu0512workout",

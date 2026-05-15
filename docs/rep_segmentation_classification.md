@@ -157,6 +157,55 @@ Experimental PCA-extrema rep segmentation：
   --num-classes 8
 ```
 
+## Rep 切割正確率呈現方式
+
+Rep segmentation 的正確率使用 IoU 呈現。每個 predicted rep segment 與 ground-truth rep segment 都是同一個 whole-session 時間軸上的 interval：
+
+```text
+IoU = overlap(predicted_rep, true_rep) / union(predicted_rep, true_rep)
+```
+
+輸出會使用 greedy one-to-one matching：先依 IoU 由高到低排序，讓每個 predicted rep 和每個 true rep 最多只被匹配一次。
+
+目前預設輸出三個 IoU 門檻：
+
+```text
+IoU >= 0.25
+IoU >= 0.50
+IoU >= 0.75
+```
+
+每個門檻會輸出：
+
+- `true_reps`
+- `predicted_reps`
+- `matched_reps`
+- `false_positives`
+- `false_negatives`
+- `precision`
+- `recall`
+- `f1`
+- `mean_matched_iou`
+
+其中 `IoU >= 0.50` 是常見的 segment detection 合格門檻；`IoU >= 0.75` 則比較嚴格，適合看切割邊界是否接近。
+
+另外也會輸出每個 true rep 的最佳匹配：
+
+```text
+rep_segmentation_truth_matches.csv
+```
+
+這可以用來檢查哪些 rep 沒有被切到、哪些 rep 切得偏移太多。
+
+同時會輸出兩張程式產生的圖：
+
+```text
+rep_segmentation_iou_metrics.png
+rep_segmentation_iou_f1_by_exercise.png
+```
+
+第一張呈現不同 IoU 門檻下的 precision / recall / F1；第二張呈現每個動作在不同 IoU 門檻下的 F1。
+
 ## 輸出檔案
 
 ```text
@@ -165,6 +214,11 @@ artifacts_rep_classification/<run_name>/
   fold_manifest.csv
   rep_segments_manifest.csv
   rep_segmentation_matches.csv
+  rep_segmentation_truth_matches.csv
+  rep_segmentation_metrics.csv
+  rep_segmentation_metrics_by_exercise.csv
+  rep_segmentation_iou_metrics.png
+  rep_segmentation_iou_f1_by_exercise.png
   confusion_matrix.csv
   confusion_matrix.png
   confusion_matrix_normalized.png
@@ -174,6 +228,8 @@ artifacts_rep_classification/<run_name>/
 其中：
 
 - `fold_manifest.csv`：每 fold 的 train / validation subjects；
+- `rep_segmentation_metrics.csv`：整體 rep segmentation IoU 正確率；
+- `rep_segmentation_metrics_by_exercise.csv`：每個動作的 rep segmentation IoU 正確率；
 - `confusion_matrix.csv`：矩陣原始數值；
 - `confusion_matrix.png`：sklearn/matplotlib 產生的混淆矩陣圖；
 - `confusion_matrix_normalized.png`：row-normalized 混淆矩陣；
@@ -201,6 +257,7 @@ folds: 5
 accuracy: 0.8269
 macro_f1: 0.8255
 weighted_f1: 0.8257
+rep segmentation IoU@0.50 F1: 1.0000
 ```
 
 此結果使用 annotation 切出的 reps 作為穩定 baseline，用來回答「rep 切完後，跨人動作分類能做到多少」。

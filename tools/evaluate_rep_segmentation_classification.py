@@ -478,6 +478,164 @@ def segmentation_summary(predicted: Sequence[RepSegment], truth: Sequence[RepSeg
     return rows
 
 
+def best_truth_match_rows(predicted: Sequence[RepSegment], truth: Sequence[RepSegment]) -> list[dict[str, object]]:
+    by_file_predicted: dict[Path, list[RepSegment]] = {}
+    for segment in predicted:
+        by_file_predicted.setdefault(segment.file_path, []).append(segment)
+
+    rows: list[dict[str, object]] = []
+    for true_segment in truth:
+        candidates = by_file_predicted.get(true_segment.file_path, [])
+        best = max(candidates, key=lambda pred_segment: segment_iou(pred_segment, true_segment), default=None)
+        best_iou = segment_iou(best, true_segment) if best is not None else 0.0
+        rows.append(
+            {
+                "file": str(true_segment.file_path),
+                "subject": true_segment.subject,
+                "exercise": true_segment.exercise,
+                "set_id": true_segment.set_id,
+                "rep_id": true_segment.rep_id,
+                "true_start": true_segment.start,
+                "true_end": true_segment.end,
+                "best_pred_start": best.start if best is not None else "",
+                "best_pred_end": best.end if best is not None else "",
+                "best_iou": round(best_iou, 4),
+            }
+        )
+    return rows
+
+
+def greedy_match_count(predicted: Sequence[RepSegment], truth: Sequence[RepSegment], threshold: float) -> tuple[int, list[float]]:
+    candidate_pairs: list[tuple[float, int, int]] = []
+    for pred_idx, pred_segment in enumerate(predicted):
+        for true_idx, true_segment in enumerate(truth):
+            if pred_segment.file_path != true_segment.file_path:
+                continue
+            iou = segment_iou(pred_segment, true_segment)
+            if iou >= threshold:
+                candidate_pairs.append((iou, pred_idx, true_idx))
+    candidate_pairs.sort(reverse=True)
+
+    matched_pred: set[int] = set()
+    matched_truth: set[int] = set()
+    matched_ious: list[float] = []
+    for iou, pred_idx, true_idx in candidate_pairs:
+        if pred_idx in matched_pred or true_idx in matched_truth:
+            continue
+        matched_pred.add(pred_idx)
+        matched_truth.add(true_idx)
+        matched_ious.append(iou)
+    return len(matched_ious), matched_ious
+
+
+def segmentation_metric_rows(
+    predicted: Sequence[RepSegment],
+    truth: Sequence[RepSegment],
+    thresholds: Sequence[float],
+) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for threshold in thresholds:
+        tp, matched_ious = greedy_match_count(predicted, truth, threshold)
+        fp = len(predicted) - tp
+        fn = len(truth) - tp
+        precision = tp / float(tp + fp) if tp + fp else 0.0
+        recall = tp / float(tp + fn) if tp + fn else 0.0
+        f1 = 2.0 * precision * recall / (precision + recall) if precision + recall else 0.0
+        rows.append(
+            {
+                "iou_threshold": threshold,
+                "true_reps": len(truth),
+                "predicted_reps": len(predicted),
+                "matched_reps": tp,
+                "false_positives": fp,
+                "false_negatives": fn,
+                "precision": round(precision, 4),
+                "recall": round(recall, 4),
+                "f1": round(f1, 4),
+                "mean_matched_iou": round(float(np.mean(matched_ious)), 4) if matched_ious else 0.0,
+            }
+        )
+    return rows
+
+
+def segmentation_metric_rows_by_exercise(
+    predicted: Sequence[RepSegment],
+    truth: Sequence[RepSegment],
+    thresholds: Sequence[float],
+) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    exercises = sorted({segment.exercise for segment in truth})
+    for exercise in exercises:
+        truth_subset = [segment for segment in truth if segment.exercise == exercise]
+        predicted_subset = [segment for segment in predicted if segment.exercise == exercise]
+        for row in segmentation_metric_rows(predicted_subset, truth_subset, thresholds):
+            rows.append({"exercise": exercise, **row})
+    return rows
+
+
+def plot_segmentation_metrics(rows: Sequence[dict[str, object]], output_dir: Path) -> None:
+    if not rows:
+        return
+    thresholds = [float(row["iou_threshold"]) for row in rows]
+    x = np.arange(len(thresholds))
+    width = 0.25
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.bar(x - width, [float(row["precision"]) for row in rows], width, label="Precision")
+    ax.bar(x, [float(row["recall"]) for row in rows], width, label="Recall")
+    ax.bar(x + width, [float(row["f1"]) for row in rows], width, label="F1")
+    ax.set_xticks(x)
+    ax.set_xticklabels([f"IoU >= {threshold:.2f}" for threshold in thresholds])
+    ax.set_ylim(0.0, 1.05)
+    ax.set_ylabel("Score")
+    ax.set_title("Rep Segmentation Accuracy by IoU Threshold")
+    ax.legend(loc="upper right")
+    ax.grid(axis="y", alpha=0.25)
+    fig.tight_layout()
+    fig.savefig(output_dir / "rep_segmentation_iou_metrics.png", dpi=180)
+    plt.close(fig)
+
+
+def plot_segmentation_metrics_by_exercise(rows: Sequence[dict[str, object]], output_dir: Path) -> None:
+    if not rows:
+        return
+    exercises = sorted({str(row["exercise"]) for row in rows})
+    thresholds = sorted({float(row["iou_threshold"]) for row in rows})
+    matrix = np.zeros((len(exercises), len(thresholds)), dtype=np.float64)
+    row_lookup = {
+        (str(row["exercise"]), float(row["iou_threshold"])): float(row["f1"])
+        for row in rows
+    }
+    for exercise_idx, exercise in enumerate(exercises):
+        for threshold_idx, threshold in enumerate(thresholds):
+            matrix[exercise_idx, threshold_idx] = row_lookup.get((exercise, threshold), 0.0)
+
+    fig, ax = plt.subplots(figsize=(max(7, len(thresholds) * 1.6), max(6, len(exercises) * 0.45)))
+    image = ax.imshow(matrix, cmap="Blues", vmin=0.0, vmax=1.0, aspect="auto")
+    ax.set_xticks(np.arange(len(thresholds)))
+    ax.set_xticklabels([f"{threshold:.2f}" for threshold in thresholds])
+    ax.set_yticks(np.arange(len(exercises)))
+    ax.set_yticklabels(exercises)
+    ax.set_xlabel("IoU Threshold")
+    ax.set_title("Rep Segmentation F1 by Exercise")
+    for exercise_idx in range(len(exercises)):
+        for threshold_idx in range(len(thresholds)):
+            value = matrix[exercise_idx, threshold_idx]
+            ax.text(
+                threshold_idx,
+                exercise_idx,
+                f"{value:.2f}",
+                ha="center",
+                va="center",
+                color="white" if value >= 0.5 else "black",
+                fontsize=8,
+            )
+    fig.colorbar(image, ax=ax, fraction=0.046, pad=0.04, label="F1")
+    fig.tight_layout()
+    fig.savefig(output_dir / "rep_segmentation_iou_f1_by_exercise.png", dpi=180)
+    plt.close(fig)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Rep segmentation followed by subject-wise K-fold exercise classification.")
     parser.add_argument("--data-dirs", type=Path, nargs="+", default=[Path("datasets/workout")])
@@ -490,6 +648,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--smooth-window", type=int, default=9)
     parser.add_argument("--peak-prominence-scale", type=float, default=0.35)
     parser.add_argument("--min-label-iou", type=float, default=0.25)
+    parser.add_argument("--segmentation-iou-thresholds", type=float, nargs="+", default=[0.25, 0.5, 0.75])
     parser.add_argument("--seed", type=int, default=42)
     return parser.parse_args()
 
@@ -547,6 +706,13 @@ def main() -> None:
 
     write_csv(args.output_dir / "rep_segments_manifest.csv", manifest_rows)
     write_csv(args.output_dir / "rep_segmentation_matches.csv", segmentation_summary(predicted, truth))
+    write_csv(args.output_dir / "rep_segmentation_truth_matches.csv", best_truth_match_rows(predicted, truth))
+    segmentation_rows = segmentation_metric_rows(predicted, truth, args.segmentation_iou_thresholds)
+    segmentation_by_exercise_rows = segmentation_metric_rows_by_exercise(predicted, truth, args.segmentation_iou_thresholds)
+    write_csv(args.output_dir / "rep_segmentation_metrics.csv", segmentation_rows)
+    write_csv(args.output_dir / "rep_segmentation_metrics_by_exercise.csv", segmentation_by_exercise_rows)
+    plot_segmentation_metrics(segmentation_rows, args.output_dir)
+    plot_segmentation_metrics_by_exercise(segmentation_by_exercise_rows, args.output_dir)
     summary = {
         "data_dirs": [str(path) for path in args.data_dirs],
         "segment_method": args.segment_method,
@@ -554,6 +720,7 @@ def main() -> None:
         "num_predicted_reps": len(predicted),
         "num_classified_reps": len(segments),
         "class_names": class_names,
+        "segmentation_metrics": segmentation_rows,
         **metrics,
     }
     (args.output_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
