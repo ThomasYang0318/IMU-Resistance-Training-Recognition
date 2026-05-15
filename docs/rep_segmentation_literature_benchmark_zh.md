@@ -10,6 +10,31 @@
 
 ## 參考文獻方法
 
+### 0. DS-MS-TCN 的結果呈現方式
+
+Shang et al. 提出 DS-MS-TCN，使用 sequence-to-sequence temporal convolutional network 同時學 micro labels 與 macro labels。該文的 Fig. 1 / Fig. 2 以 IMU acceleration waveform 搭配陰影區塊呈現 micro label/repetition annotation；結果段落則以 sample-wise F1、segment-wise edit score、IoU F1，以及混淆矩陣比較 DS-MS-TCN、CNN、Transformer、CNN-LSTM、MS-TCN 等方法。
+
+本專案目前尚未實作 DS-MS-TCN 深度模型，因為需要把現有 resistance-training labels 轉成 sample-wise micro/macro label sequence，再訓練 TCN。這次先參考該文「波形 + 標註陰影 + 多方法數值比較」的呈現方式，新增以下輸出：
+
+```text
+artifacts_rep_classification/waveform_method_comparison/waveform_method_comparison_<session>.png
+artifacts_rep_classification/waveform_method_comparison/waveform_method_count_difference.png
+artifacts_rep_classification/waveform_method_comparison/waveform_method_file_summary.csv
+artifacts_rep_classification/methods_comparison/rep_segmentation_methods_error_breakdown_iou_0.50.png
+```
+
+其中 waveform 圖會在同一段 IMU 波形上疊：
+
+```text
+ground truth rep intervals
+dominant-axis predicted intervals
+short-time-energy predicted intervals
+pca-extrema predicted intervals
+pca-extrema-fft predicted intervals
+```
+
+這可以直接看出各方法在同一段波形上的過切、漏切與 boundary 偏移。
+
 ### 1. Dominant-axis peak detection
 
 Prabhu et al. 在 IMU rehabilitation exercise repetition counting 中，先辨識 dominant sensor axis，再用平滑後的 dominant-axis signal 做 peak detection。文中提到 signal amplitude 反映不同運動平面的動作強度，並用 mean-square 方式選 dominant axis，再以 positive/negative peaks 做 rep counting。
@@ -119,6 +144,9 @@ validation: subject-wise 5-fold
 ```text
 artifacts_rep_classification/methods_comparison/rep_segmentation_methods_f1.png
 artifacts_rep_classification/methods_comparison/rep_segmentation_methods_iou_0.50.png
+artifacts_rep_classification/methods_comparison/rep_segmentation_methods_error_breakdown_iou_0.50.png
+artifacts_rep_classification/waveform_method_comparison/waveform_method_comparison_kevin0509workout_whole_session_20260509_173017.png
+artifacts_rep_classification/waveform_method_comparison/waveform_method_count_difference.png
 ```
 
 ## 我們方法的優點
@@ -181,6 +209,7 @@ minimum rest / reversal-point constraints
 ## 參考來源
 
 - Guo et al., FitCoach / When your wearables become your fitness mate, Smart Health, 2020. https://www.sciencedirect.com/science/article/abs/pii/S2352648317300545
+- Shang et al., DS-MS-TCN: Otago Exercises Recognition with a Dual-Scale Multi-Stage Temporal Convolutional Network, arXiv, 2024. https://arxiv.org/abs/2402.02910
 - Prabhu et al., Recognition and Repetition Counting for Local Muscular Endurance Exercises in Exercise-Based Rehabilitation, Sensors, 2020. https://www.mdpi.com/1424-8220/20/17/4791
 - Dorschky et al., LEAN: Real-Time Analysis of Resistance Training Using Wearable Computing, Sensors, 2023. https://www.mdpi.com/1424-8220/23/10/4602
 - Zelman et al., Accelerometer-Based Automated Counting of Ten Exercises without Exercise-Specific Training or Tuning, Journal of Healthcare Engineering, 2020. https://doi.org/10.1155/2020/8869134

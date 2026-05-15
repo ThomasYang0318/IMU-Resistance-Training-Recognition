@@ -101,6 +101,27 @@ def plot_precision_recall(
     plt.close(fig)
 
 
+def plot_error_breakdown(df: pd.DataFrame, output_dir: Path, threshold: float) -> None:
+    subset = df[np.isclose(df["iou_threshold"].astype(float), threshold)]
+    methods = subset["method"].drop_duplicates().tolist()
+    x = np.arange(len(methods))
+    width = 0.25
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(x - width, subset["matched_reps"].astype(float).to_numpy(), width, label="Matched reps")
+    ax.bar(x, subset["false_positives"].astype(float).to_numpy(), width, label="False positives")
+    ax.bar(x + width, subset["false_negatives"].astype(float).to_numpy(), width, label="False negatives")
+    ax.set_xticks(x)
+    ax.set_xticklabels(methods, rotation=15, ha="right")
+    ax.set_ylabel("Segments")
+    ax.set_title(f"Rep Segmentation Error Breakdown at IoU >= {threshold:.2f}")
+    ax.grid(axis="y", alpha=0.25)
+    ax.legend(loc="upper right")
+    fig.tight_layout()
+    fig.savefig(output_dir / f"rep_segmentation_methods_error_breakdown_iou_{threshold:.2f}.png", dpi=180)
+    plt.close(fig)
+
+
 def plot_exercise_delta(df: pd.DataFrame, output_dir: Path, baseline: str, candidate: str, threshold: float) -> None:
     subset = df[np.isclose(df["iou_threshold"].astype(float), threshold)]
     pivot = subset.pivot_table(index="exercise", columns="method", values="f1", aggfunc="first").fillna(0.0)
@@ -165,6 +186,7 @@ def main() -> None:
     write_csv(args.output_dir / "rep_segmentation_methods_comparison_by_exercise.csv", by_exercise.to_dict("records"))
     plot_overall(overall, args.output_dir)
     plot_precision_recall(overall, args.output_dir, args.focus_iou)
+    plot_error_breakdown(overall, args.output_dir, args.focus_iou)
     if len(runs) == 2:
         plot_exercise_delta(by_exercise, args.output_dir, runs[0][0], runs[1][0], args.focus_iou)
 

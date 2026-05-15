@@ -1,0 +1,6 @@
+method,file,window_start,window_end,true_reps,predicted_reps,predicted_with_best_iou_ge_0.50,mean_best_true_iou
+ground-truth-reference,datasets/workout/kevin0509workout/kevin0509workout_whole_session_20260509_173017.csv,154330,187369,15,15,15,1.0
+dominant-axis,datasets/workout/kevin0509workout/kevin0509workout_whole_session_20260509_173017.csv,154330,187369,15,95,3,0.1443
+short-time-energy,datasets/workout/kevin0509workout/kevin0509workout_whole_session_20260509_173017.csv,154330,187369,15,87,5,0.1495
+pca-extrema,datasets/workout/kevin0509workout/kevin0509workout_whole_session_20260509_173017.csv,154330,187369,15,88,4,0.1455
+pca-extrema-fft,datasets/workout/kevin0509workout/kevin0509workout_whole_session_20260509_173017.csv,154330,187369,15,21,12,0.4512
