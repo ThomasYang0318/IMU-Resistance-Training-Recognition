@@ -15,7 +15,6 @@ matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-from matplotlib.transforms import blended_transform_factory
 import numpy as np
 import pandas as pd
 
@@ -187,14 +186,18 @@ def draw_boundary_lines(
     ax: plt.Axes,
     intervals: list[tuple[int, int]],
     color: str,
-    y0: float,
-    y1: float,
     linewidth: float,
 ) -> None:
-    transform = blended_transform_factory(ax.transData, ax.transAxes)
     for start, end in intervals:
-        ax.plot([start, start], [y0, y1], color=color, linewidth=linewidth, linestyle="-", transform=transform)
-        ax.plot([end, end], [y0, y1], color=color, linewidth=linewidth, linestyle="--", transform=transform)
+        ax.axvline(start, color=color, linewidth=linewidth, linestyle="-", alpha=0.92)
+        ax.axvline(end, color=color, linewidth=linewidth, linestyle="--", alpha=0.92)
+
+
+def plot_waveform_background(ax: plt.Axes, x: np.ndarray, signal: np.ndarray, acc_norm: np.ndarray) -> None:
+    ax.plot(x, signal, color="#303030", linewidth=0.9, label="PCA motion")
+    ax.plot(x, acc_norm, color="#9a9a9a", linewidth=0.65, alpha=0.55, label="Acc magnitude")
+    ax.grid(axis="x", alpha=0.12)
+    ax.set_ylabel("Normalized signal")
 
 
 def plot_set_waveform(
@@ -212,32 +215,53 @@ def plot_set_waveform(
     window_start = max(0, meta.start - padding)
     window_end = min(len(signal), meta.end + padding)
     x = np.arange(window_start, window_end)
+    signal_window = signal[window_start:window_end]
+    acc_window = acc_norm[window_start:window_end]
 
-    fig, ax = plt.subplots(figsize=(14, 4.8))
-    ax.plot(x, signal[window_start:window_end], color="#333333", linewidth=0.9, label="PCA motion")
-    ax.plot(x, acc_norm[window_start:window_end], color="#9a9a9a", linewidth=0.65, alpha=0.55, label="Acc magnitude")
+    fig, axes = plt.subplots(2, 1, figsize=(14, 7.2), sharex=True)
+    for ax in axes:
+        plot_waveform_background(ax, x, signal_window, acc_window)
 
-    draw_boundary_lines(ax, truth_intervals, color="#0066cc", y0=0.04, y1=0.46, linewidth=2.0)
-    draw_boundary_lines(ax, predicted_intervals, color="#d62728", y0=0.54, y1=0.96, linewidth=2.0)
+    draw_boundary_lines(axes[0], truth_intervals, color="#0066cc", linewidth=1.8)
+    draw_boundary_lines(axes[1], predicted_intervals, color="#d62728", linewidth=1.8)
+    axes[0].set_title("Ground Truth")
+    axes[1].set_title("Prediction")
+    axes[1].set_xlabel("Sample index")
 
-    handles = [
-        Line2D([0], [0], color="#0066cc", linewidth=2.0, linestyle="-", label="GT start, bottom"),
-        Line2D([0], [0], color="#0066cc", linewidth=2.0, linestyle="--", label="GT end, bottom"),
-        Line2D([0], [0], color="#d62728", linewidth=2.0, linestyle="-", label="Pred start, top"),
-        Line2D([0], [0], color="#d62728", linewidth=2.0, linestyle="--", label="Pred end, top"),
+    waveform_handles = [
+        Line2D([0], [0], color="#303030", linewidth=0.9, label="PCA motion"),
+        Line2D([0], [0], color="#9a9a9a", linewidth=0.65, alpha=0.55, label="Acc magnitude"),
     ]
-    ax.legend(handles=handles, loc="upper right", ncol=2, fontsize=8)
-    ax.grid(axis="x", alpha=0.12)
-    ax.set_xlabel("Sample index")
-    ax.set_ylabel("Normalized signal")
-    ax.set_title(
+    axes[0].legend(
+        handles=[
+            *waveform_handles,
+            Line2D([0], [0], color="#0066cc", linewidth=1.8, linestyle="-", label="GT start"),
+            Line2D([0], [0], color="#0066cc", linewidth=1.8, linestyle="--", label="GT end"),
+        ],
+        loc="upper right",
+        ncol=4,
+        fontsize=8,
+    )
+    axes[1].legend(
+        handles=[
+            *waveform_handles,
+            Line2D([0], [0], color="#d62728", linewidth=1.8, linestyle="-", label="Pred start"),
+            Line2D([0], [0], color="#d62728", linewidth=1.8, linestyle="--", label="Pred end"),
+        ],
+        loc="upper right",
+        ncol=4,
+        fontsize=8,
+    )
+
+    fig.suptitle(
         f"{meta.subject} | {meta.exercise} | set {meta.set_id} | "
         f"IoU@{iou_threshold:.2f} F1={float(metrics['f1']):.2f}, "
         f"P={float(metrics['precision']):.2f}, R={float(metrics['recall']):.2f}, "
         f"TP/FP/FN={int(metrics['matched_reps'])}/{int(metrics['false_positives'])}/{int(metrics['false_negatives'])}, "
-        f"mean IoU={float(metrics['mean_matched_iou']):.2f}"
+        f"mean IoU={float(metrics['mean_matched_iou']):.2f}",
+        fontsize=13,
     )
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0, 1, 0.94))
     fig.savefig(output_path, dpi=180)
     plt.close(fig)
 

@@ -877,8 +877,11 @@ weak IoU@0.50 subjects = yoru0511workout, kevin0509workout, yanz0510workout
 呈現調整：
 
 - 不使用底色 shading；
-- ground truth 用藍色，畫在圖的下半段；
-- prediction 用紅色，畫在圖的上半段；
+- 上排與下排都呈現同一段 sample waveform；
+- 上排只畫 ground truth boundary；
+- 下排只畫 prediction boundary；
+- ground truth 用藍色；
+- prediction 用紅色；
 - start 用實線，end 用虛線；
 - 每張圖標題顯示 F1、precision、recall、TP/FP/FN、mean matched IoU；
 - 另外輸出 subject、exercise、subject × exercise 的準確率圖。

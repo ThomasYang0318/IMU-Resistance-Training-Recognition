@@ -104,8 +104,10 @@ phase IoU@0.75 F1: 0.1671
 
 - PCA motion waveform：深灰線；
 - acceleration magnitude：淺灰線；
-- ground truth rep boundary：藍色，下半段；
-- predicted rep boundary：紅色，上半段；
+- 上排：同一段 sample waveform + ground truth rep boundary；
+- 下排：同一段 sample waveform + predicted rep boundary；
+- ground truth rep boundary：藍色；
+- predicted rep boundary：紅色；
 - start：實線；
 - end：虛線；
 - 不使用底色 shading。
