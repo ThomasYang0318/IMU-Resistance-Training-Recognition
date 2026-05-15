@@ -231,8 +231,10 @@ artifacts_rep_classification/pca_extrema_fft_8class_5fold/
 - `rep_segments_manifest.csv`
 - `rep_segmentation_metrics.csv`
 - `rep_segmentation_metrics_by_exercise.csv`
+- `rep_segmentation_metrics_by_subject.csv`
 - `rep_segmentation_iou_metrics.png`
 - `rep_segmentation_iou_f1_by_exercise.png`
+- `rep_segmentation_iou_f1_by_subject.png`
 - `phase_split_metrics.csv`
 - `phase_split_metrics_by_phase.csv`
 - `phase_split_iou_metrics.png`

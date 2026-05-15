@@ -82,8 +82,10 @@ phase IoU@0.75 F1: 0.1671
 - `summary.json`
 - `rep_segmentation_metrics.csv`
 - `rep_segmentation_metrics_by_exercise.csv`
+- `rep_segmentation_metrics_by_subject.csv`
 - `rep_segmentation_iou_metrics.png`
 - `rep_segmentation_iou_f1_by_exercise.png`
+- `rep_segmentation_iou_f1_by_subject.png`
 - `classification_report.json`
 - `confusion_matrix.png`
 - `confusion_matrix_normalized.png`

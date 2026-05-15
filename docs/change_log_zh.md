@@ -828,3 +828,38 @@ classification accuracy: 0.8459 -> 0.8414
 - 每個動作從 training subjects 建立 rep template；
 - validation subject 只用 template score 微調 boundary；
 - 主指標看 IoU@0.75 和 phase IoU@0.50 是否繼續提升。
+
+## 2026-05-16：每位受試者 Rep Segmentation 準度輸出
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+讓第 003 版 active-only boundary refinement 可以直接回答「每個人 rep 切割準度是多少」，而不是只有 overall 或 per-exercise 結果。
+
+改動：
+
+- 在 `tools/evaluate_rep_segmentation_classification.py` 新增 subject-wise rep segmentation metric 輸出；
+- 每個 subject 分別計算 IoU@0.25 / 0.50 / 0.75 的 precision、recall、F1、matched reps、FP、FN、mean matched IoU；
+- 新增 subject-wise heatmap：`rep_segmentation_iou_f1_by_subject.png`；
+- 重跑 `003_active_only_pca_autocorr_refined_8class_5fold`，維持和第 002 版相同的 8 位 subject，不混入新增本機資料。
+
+主要觀察：
+
+```text
+overall rep IoU@0.50 F1 = 0.7182
+overall rep IoU@0.75 F1 = 0.3622
+best IoU@0.50 subjects = thomas0506, ziho0512workout, hsianshun0514workout
+weak IoU@0.50 subjects = yoru0511workout, kevin0509workout, yanz0510workout
+```
+
+結論：
+
+目前每個人的 rep count 大致可用，但嚴格 boundary 精度仍不足。IoU@0.50 已能看出人與人之間差異，IoU@0.75 則顯示 start/end 邊界還需要更強的 per-exercise 或 subject-adaptive refinement。
+
+輸出結果：
+
+- `artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold/rep_segmentation_metrics_by_subject.csv`
+- `artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold/rep_segmentation_iou_f1_by_subject.png`

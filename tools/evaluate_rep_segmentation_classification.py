@@ -1329,6 +1329,21 @@ def segmentation_metric_rows_by_exercise(
     return rows
 
 
+def segmentation_metric_rows_by_subject(
+    predicted: Sequence[RepSegment],
+    truth: Sequence[RepSegment],
+    thresholds: Sequence[float],
+) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    subjects = sorted({segment.subject for segment in truth} | {segment.subject for segment in predicted})
+    for subject in subjects:
+        truth_subset = [segment for segment in truth if segment.subject == subject]
+        predicted_subset = [segment for segment in predicted if segment.subject == subject]
+        for row in segmentation_metric_rows(predicted_subset, truth_subset, thresholds):
+            rows.append({"subject": subject, **row})
+    return rows
+
+
 def group_phase_segments_by_file(segments: Sequence[PhaseSegment]) -> dict[Path, list[PhaseSegment]]:
     grouped: dict[Path, list[PhaseSegment]] = {}
     for segment in segments:
@@ -1477,6 +1492,46 @@ def plot_segmentation_metrics_by_exercise(rows: Sequence[dict[str, object]], out
     fig.colorbar(image, ax=ax, fraction=0.046, pad=0.04, label="F1")
     fig.tight_layout()
     fig.savefig(output_dir / "rep_segmentation_iou_f1_by_exercise.png", dpi=180)
+    plt.close(fig)
+
+
+def plot_segmentation_metrics_by_subject(rows: Sequence[dict[str, object]], output_dir: Path) -> None:
+    if not rows:
+        return
+    subjects = sorted({str(row["subject"]) for row in rows})
+    thresholds = sorted({float(row["iou_threshold"]) for row in rows})
+    matrix = np.zeros((len(subjects), len(thresholds)), dtype=np.float64)
+    row_lookup = {
+        (str(row["subject"]), float(row["iou_threshold"])): float(row["f1"])
+        for row in rows
+    }
+    for subject_idx, subject in enumerate(subjects):
+        for threshold_idx, threshold in enumerate(thresholds):
+            matrix[subject_idx, threshold_idx] = row_lookup.get((subject, threshold), 0.0)
+
+    fig, ax = plt.subplots(figsize=(max(7, len(thresholds) * 1.6), max(5, len(subjects) * 0.48)))
+    image = ax.imshow(matrix, cmap="Blues", vmin=0.0, vmax=1.0, aspect="auto")
+    ax.set_xticks(np.arange(len(thresholds)))
+    ax.set_xticklabels([f"{threshold:.2f}" for threshold in thresholds])
+    ax.set_yticks(np.arange(len(subjects)))
+    ax.set_yticklabels(subjects)
+    ax.set_xlabel("IoU Threshold")
+    ax.set_title("Rep Segmentation F1 by Subject")
+    for subject_idx in range(len(subjects)):
+        for threshold_idx in range(len(thresholds)):
+            value = matrix[subject_idx, threshold_idx]
+            ax.text(
+                threshold_idx,
+                subject_idx,
+                f"{value:.2f}",
+                ha="center",
+                va="center",
+                color="white" if value >= 0.5 else "black",
+                fontsize=8,
+            )
+    fig.colorbar(image, ax=ax, fraction=0.046, pad=0.04, label="F1")
+    fig.tight_layout()
+    fig.savefig(output_dir / "rep_segmentation_iou_f1_by_subject.png", dpi=180)
     plt.close(fig)
 
 
@@ -1737,10 +1792,13 @@ def main() -> None:
     write_csv(args.output_dir / "rep_segmentation_truth_matches.csv", best_truth_match_rows(predicted, truth))
     segmentation_rows = segmentation_metric_rows(predicted, truth, args.segmentation_iou_thresholds)
     segmentation_by_exercise_rows = segmentation_metric_rows_by_exercise(predicted, truth, args.segmentation_iou_thresholds)
+    segmentation_by_subject_rows = segmentation_metric_rows_by_subject(predicted, truth, args.segmentation_iou_thresholds)
     write_csv(args.output_dir / "rep_segmentation_metrics.csv", segmentation_rows)
     write_csv(args.output_dir / "rep_segmentation_metrics_by_exercise.csv", segmentation_by_exercise_rows)
+    write_csv(args.output_dir / "rep_segmentation_metrics_by_subject.csv", segmentation_by_subject_rows)
     plot_segmentation_metrics(segmentation_rows, args.output_dir)
     plot_segmentation_metrics_by_exercise(segmentation_by_exercise_rows, args.output_dir)
+    plot_segmentation_metrics_by_subject(segmentation_by_subject_rows, args.output_dir)
     phase_rows: list[dict[str, object]] = []
     phase_by_phase_rows: list[dict[str, object]] = []
     predicted_phases: list[PhaseSegment] = []
