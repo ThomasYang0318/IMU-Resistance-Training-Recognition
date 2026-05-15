@@ -1,0 +1,6 @@
+fold,train_subjects,val_subjects,val_samples,accuracy
+1,"haoyu0512workout,hsianshun0514workout,kevin0509workout,thomas0506,yoru0511workout,yushuan0513workout,ziho0512workout",yanz0510workout,326,0.8742
+2,"haoyu0512workout,hsianshun0514workout,kevin0509workout,yanz0510workout,yoru0511workout,yushuan0513workout,ziho0512workout",thomas0506,322,0.8385
+3,"haoyu0512workout,hsianshun0514workout,kevin0509workout,thomas0506,yanz0510workout,ziho0512workout","yoru0511workout,yushuan0513workout",600,0.6667
+4,"hsianshun0514workout,thomas0506,yanz0510workout,yoru0511workout,yushuan0513workout,ziho0512workout","haoyu0512workout,kevin0509workout",590,0.9254
+5,"haoyu0512workout,kevin0509workout,thomas0506,yanz0510workout,yoru0511workout,yushuan0513workout","hsianshun0514workout,ziho0512workout",586,0.8294

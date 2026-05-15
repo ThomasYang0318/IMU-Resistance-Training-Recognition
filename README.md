@@ -40,6 +40,9 @@ docs/
   experiment_plan_zh.md
   change_log_zh.md
 artifacts_rep_classification/
+  RESULTS_INDEX.md                  rep segmentation / classification 結果版本索引
+  001_active_only_labels_8class_5fold/
+  002_active_only_pca_autocorr_8class_5fold/
   *_8class_5fold/                   各方法的 K-fold、IoU、混淆矩陣結果
   methods_comparison/               多方法 IoU 比較圖
   waveform_method_comparison/       波形切割圖與 set-level 結果圖
@@ -144,6 +147,38 @@ subject-wise supervised active / set detector：
 
 ## 手動執行單一方法
 
+若要先排除休息資料，只確認「已在運動時」的 rep 切割與動作分類，使用 `--block-source active-phase-span`。這個模式直接用 `phase in {concentric,eccentric}` 的標註建立每組 set 的處理範圍，不跑 active detection。
+
+目前正式 active-only 結果：
+
+```bash
+.venv311/bin/python tools/evaluate_rep_segmentation_classification.py \
+  --data-dirs datasets/workout \
+  --output-dir artifacts_rep_classification/001_active_only_labels_8class_5fold \
+  --segment-method labels \
+  --block-source active-phase-span \
+  --folds 5 \
+  --num-classes 8 \
+  --evaluate-phase-split
+
+.venv311/bin/python tools/evaluate_rep_segmentation_classification.py \
+  --data-dirs datasets/workout \
+  --output-dir artifacts_rep_classification/002_active_only_pca_autocorr_8class_5fold \
+  --segment-method pca-autocorr \
+  --block-source active-phase-span \
+  --folds 5 \
+  --num-classes 8 \
+  --evaluate-phase-split
+```
+
+`002_active_only_pca_autocorr_8class_5fold` 目前結果：
+
+```text
+rep IoU@0.50 F1: 0.7083
+exercise classification accuracy: 0.8459
+phase IoU@0.50 F1: 0.4063
+```
+
 以 FFT-guided PCA extrema 為例：
 
 ```bash
@@ -178,6 +213,10 @@ artifacts_rep_classification/pca_extrema_fft_8class_5fold/
 - `rep_segmentation_metrics_by_exercise.csv`
 - `rep_segmentation_iou_metrics.png`
 - `rep_segmentation_iou_f1_by_exercise.png`
+- `phase_split_metrics.csv`
+- `phase_split_metrics_by_phase.csv`
+- `phase_split_iou_metrics.png`
+- `phase_split_iou_f1_by_phase.png`
 
 方法比較輸出：
 

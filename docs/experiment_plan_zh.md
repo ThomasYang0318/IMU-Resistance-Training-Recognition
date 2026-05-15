@@ -220,6 +220,32 @@ IoU@0.75 F1: 0.0304 -> 0.0930
 
 自相關週期限制比目前 FFT 週期限制更適合這批資料，主要改善是降低 over-segmentation 並提升高 IoU 門檻下的匹配數。但 IoU@0.50 F1 仍只有 `0.2759`，下一步仍需要 active set detection、per-exercise prior 或 phase-aware refinement。
 
+### Active-only 檢查結果
+
+為了先排除 rest / preparation contamination，已新增 `--block-source active-phase-span`，只用 `phase in {concentric, eccentric}` 的標註形成每組 set 的運動中區段，再評估 rep segmentation、動作分類與 phase split。
+
+目前正式結果：
+
+```text
+001_active_only_labels_8class_5fold:
+rep IoU@0.50 F1 = 1.0000
+exercise classification accuracy = 0.8197
+phase IoU@0.50 F1 = 0.8333
+
+002_active_only_pca_autocorr_8class_5fold:
+rep IoU@0.25 F1 = 0.9247
+rep IoU@0.50 F1 = 0.7083
+rep IoU@0.75 F1 = 0.3308
+exercise classification accuracy = 0.8459
+phase IoU@0.50 F1 = 0.4063
+```
+
+解讀：
+
+- active-only 後，`pca-autocorr` rep IoU@0.50 F1 從 `0.2759` 提升到 `0.7083`；
+- 這表示前段 rest / preparation contamination 是主要瓶頸之一；
+- phase split 在真實 rep 邊界下可達 IoU@0.50 F1 `0.8333`，但在 predicted reps 上只有 `0.4063`，因此 phase split 目前應先依賴更好的 rep boundary refinement。
+
 ### 方向 B：Wavelet-Denoised PCA Boundary
 
 流程：

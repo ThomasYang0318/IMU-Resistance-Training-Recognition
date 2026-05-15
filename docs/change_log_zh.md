@@ -584,3 +584,130 @@ mean matched IoU = 0.8170
 下一步：
 
 下一個正式結果建議使用 `002_boundary_aware_active_set/`，用來放 valley split / boundary-aware active set detector 的結果。
+
+## 2026-05-15：Active-only Rep / Classification / Phase Evaluation
+
+日期：2026-05-15
+
+狀態：implemented
+
+目的：
+
+先不要處理休息資料，也先拔掉「有沒有在運動」這個第一步。直接使用標註中的運動區段，確認當資料已經在運動中時，rep 切割、動作分類、向心/離心切割能達到什麼程度。
+
+背景問題：
+
+前一版 active/set detection 結果顯示，active/rest window-level 可以學到，但 set-level boundary 很差。若繼續把休息、準備姿勢、拿放啞鈴一起丟進 rep segmentation，會無法判斷問題到底來自 active detection 還是 rep boundary 本身。
+
+假設：
+
+- `phase in {concentric, eccentric}` 可代表已經在運動中的資料；
+- 用每組 set 的 active phase span 作為候選 block，可以移除大量 rest / preparation contamination；
+- 若 active-only rep IoU 明顯提升，表示前段 active/set detection 是主要瓶頸之一；
+- phase split 可以先用 PCA reversal baseline，並用 IoU 呈現。
+
+預計改動：
+
+- 在 `tools/evaluate_rep_segmentation_classification.py` 新增 `--block-source active-phase-span`；
+- 新增 phase split evaluation：
+  - true phase：資料內 `phase` 標註；
+  - predicted phase：每個 predicted rep 內用 PCA reversal split；
+  - 指標：IoU@0.25 / 0.50 / 0.75 precision、recall、F1；
+- 輸出 `phase_split_metrics.csv`、`phase_split_metrics_by_phase.csv` 與結果圖；
+- 新增 `artifacts_rep_classification/RESULTS_INDEX.md`；
+- 只跑 active-only `labels` 與 `pca-autocorr`，不跑低分 active detection 或 threshold baseline。
+
+不做的事：
+
+- 不使用休息資料；
+- 不做 active/rest detector；
+- 不重跑 `dominant-axis`、`short-time-energy` 等低分方法；
+- 不把 phase split 做成 supervised model。
+
+預期改善：
+
+- rep segmentation IoU 應顯著高於舊的 action-block 結果；
+- 能判斷目前分類模型在已切好 rep 或近似 rep 上的實際能力；
+- 能初步量化向心/離心切割是否可用。
+
+評估指標：
+
+- rep IoU@0.25 / 0.50 / 0.75 F1；
+- subject-wise 5-fold exercise classification accuracy / macro F1；
+- phase IoU@0.25 / 0.50 / 0.75 F1；
+- confusion matrix；
+- per-exercise rep IoU heatmap；
+- per-phase split IoU heatmap。
+
+風險：
+
+- `active-phase-span` 使用標註來移除 rest，因此這不是完整即時系統，只是分離問題來源的實驗；
+- phase split 的 PCA reversal 仍是 rule-based baseline，會受到 rep boundary error 放大；
+- action classification 的訓練樣本來自 predicted reps，若 predicted rep 與真實 rep 對齊不好，分類結果會被 label matching 影響。
+
+審核結果：
+
+使用者要求「只先處理有在運動的部分，先不要使用休息時候的資料」，因此直接實作並跑正式結果。
+
+實際結果：
+
+`001_active_only_labels_8class_5fold`：
+
+```text
+segment method = labels
+block source = active-phase-span
+true reps = 2424
+predicted reps = 2424
+classified reps = 2424
+rep IoU@0.50 F1 = 1.0000
+exercise classification accuracy = 0.8197
+exercise macro F1 = 0.8198
+phase split method = pca-reversal
+phase IoU@0.50 F1 = 0.8333
+```
+
+`002_active_only_pca_autocorr_8class_5fold`：
+
+```text
+segment method = pca-autocorr
+block source = active-phase-span
+true reps = 2424
+predicted reps = 2328
+classified reps = 2290
+rep IoU@0.25 F1 = 0.9247
+rep IoU@0.50 F1 = 0.7083
+rep IoU@0.75 F1 = 0.3308
+exercise classification accuracy = 0.8459
+exercise macro F1 = 0.8457
+phase split method = pca-reversal
+phase IoU@0.25 F1 = 0.6860
+phase IoU@0.50 F1 = 0.4063
+phase IoU@0.75 F1 = 0.1671
+```
+
+與舊 `pca-autocorr` action-block 結果相比：
+
+```text
+rep IoU@0.50 F1: 0.2759 -> 0.7083
+predicted reps: 4846 -> 2328
+true reps: 2424
+```
+
+結論：
+
+只處理已在運動中的區段後，rep segmentation 明顯變好，證明 rest / preparation contamination 是主要問題之一。動作分類在 active-only predicted reps 上約 `0.8459`，已經比 oracle labels 的 `0.8197` 略高，可能是因為 predicted reps 中只保留 IoU 足夠可標註的樣本，較難的樣本被排除。phase split 在真實 rep 邊界下可達 IoU@0.50 F1 `0.8333`，但在 predicted reps 上掉到 `0.4063`，表示 phase split 目前主要受 rep boundary error 影響。
+
+輸出結果：
+
+- `artifacts_rep_classification/001_active_only_labels_8class_5fold/`
+- `artifacts_rep_classification/002_active_only_pca_autocorr_8class_5fold/`
+- `artifacts_rep_classification/RESULTS_INDEX.md`
+
+下一步：
+
+建議下一個正式實驗是 `003_active_only_boundary_refinement/`：
+
+- 不碰休息資料；
+- 只在 active-phase-span 內改善 rep boundary；
+- 針對 IoU@0.75 低的問題做 boundary refinement；
+- 比較 midpoint、PCA reversal、DTW template refinement 或 per-exercise duration prior。

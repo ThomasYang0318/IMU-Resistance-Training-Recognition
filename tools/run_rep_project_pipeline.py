@@ -59,6 +59,8 @@ def add_evaluation_args(command: list[str], args: argparse.Namespace) -> list[st
             str(args.folds),
             "--num-classes",
             str(args.num_classes),
+            "--block-source",
+            args.block_source,
             "--min-segment-samples",
             str(args.min_segment_samples),
             "--smooth-window",
@@ -176,6 +178,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--folds", type=int, default=5)
     parser.add_argument("--num-classes", type=int, default=8)
     parser.add_argument("--include-other", action="store_true")
+    parser.add_argument("--block-source", choices=["action-label", "active-phase-span"], default="action-label")
     parser.add_argument("--min-segment-samples", type=int, default=20)
     parser.add_argument("--smooth-window", type=int, default=9)
     parser.add_argument("--peak-prominence-scale", type=float, default=0.35)

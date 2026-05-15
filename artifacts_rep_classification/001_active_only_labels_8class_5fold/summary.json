@@ -1,0 +1,113 @@
+{
+  "data_dirs": [
+    "datasets/workout"
+  ],
+  "segment_method": "labels",
+  "block_source": "active-phase-span",
+  "num_truth_reps": 2424,
+  "num_predicted_reps": 2424,
+  "num_classified_reps": 2424,
+  "class_names": [
+    "db_bench_press",
+    "db_squat",
+    "one_arm_db_row",
+    "db_triceps_curl",
+    "db_weighted_crunch",
+    "db_rdl",
+    "db_biceps_curl",
+    "db_shoulder_press"
+  ],
+  "segmentation_metrics": [
+    {
+      "iou_threshold": 0.25,
+      "true_reps": 2424,
+      "predicted_reps": 2424,
+      "matched_reps": 2424,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "mean_matched_iou": 1.0
+    },
+    {
+      "iou_threshold": 0.5,
+      "true_reps": 2424,
+      "predicted_reps": 2424,
+      "matched_reps": 2424,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "mean_matched_iou": 1.0
+    },
+    {
+      "iou_threshold": 0.75,
+      "true_reps": 2424,
+      "predicted_reps": 2424,
+      "matched_reps": 2424,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "mean_matched_iou": 1.0
+    }
+  ],
+  "phase_split_method": "pca-reversal",
+  "num_truth_phase_segments": 4776,
+  "num_predicted_phase_segments": 4848,
+  "phase_split_metrics": [
+    {
+      "iou_threshold": 0.25,
+      "true_phase_segments": 4776,
+      "predicted_phase_segments": 4848,
+      "matched_phase_segments": 4275,
+      "false_positives": 573,
+      "false_negatives": 501,
+      "precision": 0.8818,
+      "recall": 0.8951,
+      "f1": 0.8884,
+      "mean_matched_iou": 0.7634
+    },
+    {
+      "iou_threshold": 0.5,
+      "true_phase_segments": 4776,
+      "predicted_phase_segments": 4848,
+      "matched_phase_segments": 4010,
+      "false_positives": 838,
+      "false_negatives": 766,
+      "precision": 0.8271,
+      "recall": 0.8396,
+      "f1": 0.8333,
+      "mean_matched_iou": 0.7858
+    },
+    {
+      "iou_threshold": 0.75,
+      "true_phase_segments": 4776,
+      "predicted_phase_segments": 4848,
+      "matched_phase_segments": 2421,
+      "false_positives": 2427,
+      "false_negatives": 2355,
+      "precision": 0.4994,
+      "recall": 0.5069,
+      "f1": 0.5031,
+      "mean_matched_iou": 0.8787
+    }
+  ],
+  "folds": 5,
+  "subjects": [
+    "haoyu0512workout",
+    "hsianshun0514workout",
+    "kevin0509workout",
+    "thomas0506",
+    "yanz0510workout",
+    "yoru0511workout",
+    "yushuan0513workout",
+    "ziho0512workout"
+  ],
+  "accuracy": 0.8197194719471947,
+  "macro_f1": 0.8198137634990001,
+  "weighted_f1": 0.8193649362741904
+}
