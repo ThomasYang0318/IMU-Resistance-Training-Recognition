@@ -47,6 +47,42 @@
 - exercise classifier confidence gate；
 - minimum active duration + rest hysteresis。
 
+目前驗證結果：
+
+```text
+target=action, method=oracle-action:
+sample F1 = 1.0000
+segment IoU@0.50 F1 = 1.0000
+true segments = 68
+predicted segments = 68
+
+target=action, method=imu-energy:
+sample F1 = 0.4301
+segment IoU@0.50 F1 = 0.0000
+true segments = 68
+predicted segments = 3956
+
+target=action, method=imu-hysteresis:
+sample F1 = 0.6357
+segment IoU@0.50 F1 = 0.1429
+true segments = 68
+predicted segments = 114
+
+target=action, method=window-rf:
+sample F1 = 0.8654
+segment IoU@0.50 F1 = 0.1978
+true segments = 68
+predicted segments = 23
+```
+
+解讀：
+
+- `oracle-action` 確認資料內的 action 標註可以形成 set-level active ground truth；
+- 單純 `imu-energy` / `imu-variance` 會嚴重 fragmentation，已不再作為預設實驗方法；
+- `imu-hysteresis` 能降低 fragmentation，但 segment IoU 仍低；
+- `window-rf` 的 sample F1 已到 `0.8654`，代表 active/rest window 特徵可學；但 segment F1 只有 `0.1978`，代表 set boundary post-processing 與 action label 定義仍是瓶頸；
+- 因此目前 rep segmentation 要接近 90% IoU，不能只調 peak detection，必須先建立更穩定的 active/set detector 與明確的 set boundary ground truth。
+
 ### P1. 動作辨識
 
 優先原因：

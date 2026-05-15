@@ -1,0 +1,10 @@
+target,method,subject,sample_tp,sample_fp,sample_fn,sample_tn,false_active_samples,missed_active_samples,true_segments,predicted_segments,matched_segments,false_positives,false_negatives,sum_matched_iou,sum_abs_start_error_samples,sum_abs_end_error_samples,sum_abs_start_error_sec,sum_abs_end_error_sec,sample_precision,sample_recall,sample_f1,sample_accuracy,segment_precision,segment_recall,segment_f1,mean_matched_iou,mean_abs_start_error_samples,mean_abs_end_error_samples,mean_abs_start_error_sec,mean_abs_end_error_sec
+action,window-rf,haoyu0512workout,784116,160309,0,0,160309,0,9,2,1,1,8,1.0,0,0,0.0,0.0,0.8303,1.0,0.9073,0.8303,0.5,0.1111,0.1818,1.0,0.0,0.0,0.0,0.0
+action,window-rf,hsianshun0514workout,350628,161755,0,0,161755,0,8,1,0,1,8,0.0,0,0,0.0,0.0,0.6843,1.0,0.8126,0.6843,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+action,window-rf,kevin0509workout,616915,106795,5876,6924,106795,5876,9,4,1,3,8,1.0,0,0,0.0,0.0,0.8524,0.9906,0.9163,0.847,0.25,0.1111,0.1538,1.0,0.0,0.0,0.0,0.0
+action,window-rf,thomas0506,190019,92081,0,74,92081,0,9,1,0,1,9,0.0,0,0,0.0,0.0,0.6736,1.0,0.805,0.6737,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+action,window-rf,thomas0506workout,300740,0,0,0,0,0,1,1,1,0,0,1.0,0,0,0.0,0.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0
+action,window-rf,yanz0510workout,690040,86173,0,4800,86173,0,9,3,2,1,7,1.5959,0,41788,0.0,383.9899,0.889,1.0,0.9412,0.8897,0.6667,0.2222,0.3333,0.7979,0.0,20894.0,0.0,191.9949
+action,window-rf,yoru0511workout,335897,189698,0,0,189698,0,9,2,1,1,8,1.0,0,0,0.0,0.0,0.6391,1.0,0.7798,0.6391,0.5,0.1111,0.1818,1.0,0.0,0.0,0.0,0.0
+action,window-rf,yushuan0513workout,334210,219069,5200,4700,219069,5200,8,3,1,2,7,0.5337,20235,19042,185.8382,174.8817,0.6041,0.9847,0.7488,0.6018,0.3333,0.125,0.1818,0.5337,20235.0,19042.0,185.8382,174.8817
+action,window-rf,ziho0512workout,299936,167907,19300,9700,167907,19300,6,6,2,4,4,1.2233,98015,23321,900.1698,214.1801,0.6411,0.9395,0.7621,0.6232,0.3333,0.3333,0.3333,0.6117,49007.5,11660.5,450.0849,107.0901

@@ -23,6 +23,9 @@ deploy/
   export_onnx.py                    checkpoint 轉 ONNX
   luckfox_infer.py                  ONNX sliding-window inference helper
 tools/
+  evaluate_active_set_detection.py  active / set detection 驗證，輸出 IoU、F1、timeline 切割圖
+  evaluate_active_set_window_classifier.py
+                                    subject-wise window classifier active / set detection
   evaluate_rep_segmentation_classification.py
                                     rep 切割、IoU 評估、K-fold 分類、混淆矩陣輸出
   compare_rep_segmentation_iou.py   多方法 IoU 數值與圖表比較
@@ -40,6 +43,8 @@ artifacts_rep_classification/
   *_8class_5fold/                   各方法的 K-fold、IoU、混淆矩陣結果
   methods_comparison/               多方法 IoU 比較圖
   waveform_method_comparison/       波形切割圖與 set-level 結果圖
+artifacts_active_detection/
+  window_rf_action_5fold/           active / set detection window RF 結果
 ```
 
 ## 環境
@@ -96,6 +101,41 @@ python3.11 -m venv .venv311
   --skip-method-comparison \
   --max-sets 10
 ```
+
+## 驗證 Active / Set Detection
+
+這一步只檢查「有沒有先把運動區段切出來」，不修改 rep segmentation。預設只跑可用來檢查方向的方法：
+
+- `oracle-action`：直接用 `action_type` 非 rest，確認標註本身可形成 active set；
+- `imu-hysteresis`：加速度與陀螺儀 envelope、雙閾值 hysteresis、gap merge 與最短 set 長度限制。
+
+`imu-energy` / `imu-variance` 已驗證 segment-level 分數很低，保留為手動 baseline，不再預設執行。
+
+```bash
+.venv311/bin/python tools/evaluate_active_set_detection.py \
+  --output-dir artifacts_active_detection
+```
+
+subject-wise supervised active / set detector：
+
+```bash
+.venv311/bin/python tools/evaluate_active_set_window_classifier.py \
+  --output-dir artifacts_active_detection/window_rf_action_5fold \
+  --target action
+```
+
+這個流程會用 `subject_id` 做 GroupKFold，同一個人不會同時出現在訓練與驗證。
+
+主要輸出：
+
+- `active_detection_metrics.csv`
+- `active_detection_metrics_by_subject.csv`
+- `fold_manifest.csv`
+- `window_confusion_matrix.png`
+- `window_rf_active_detection_f1.png`
+- `timeline_examples/*.png`
+
+目前結論是 active/rest 的 window-level 特徵可以學到，但 set-level segment IoU 仍低，表示「辨識正在動」和「切準整組 set 邊界」是兩個不同問題；後續應優先改善 set boundary post-processing 與 action label 定義。
 
 ## 手動執行單一方法
 

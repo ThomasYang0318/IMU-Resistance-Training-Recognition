@@ -1,0 +1,53 @@
+{
+  "data_dirs": [
+    "datasets/workout"
+  ],
+  "target": "action",
+  "method": "window-rf",
+  "folds": 5,
+  "window_samples": 200,
+  "stride_samples": 100,
+  "prob_threshold": 0.5,
+  "min_segment_samples": 8000,
+  "merge_gap_samples": 4500,
+  "num_windows": 51420,
+  "positive_windows": 39323,
+  "figures": [
+    "artifacts_active_detection/window_rf_action_5fold/window_rf_active_detection_f1.png",
+    "artifacts_active_detection/window_rf_action_5fold/window_confusion_matrix.png"
+  ],
+  "overall": [
+    {
+      "target": "action",
+      "method": "window-rf",
+      "sample_tp": 3902501,
+      "sample_fp": 1183787,
+      "sample_fn": 30376,
+      "sample_tn": 26198,
+      "false_active_samples": 1183787,
+      "missed_active_samples": 30376,
+      "true_segments": 68,
+      "predicted_segments": 23,
+      "matched_segments": 9,
+      "false_positives": 14,
+      "false_negatives": 59,
+      "sum_matched_iou": 7.3529,
+      "sum_abs_start_error_samples": 118250,
+      "sum_abs_end_error_samples": 84151,
+      "sum_abs_start_error_sec": 1086.008,
+      "sum_abs_end_error_sec": 773.0517,
+      "sample_precision": 0.7673,
+      "sample_recall": 0.9923,
+      "sample_f1": 0.8654,
+      "sample_accuracy": 0.7639,
+      "segment_precision": 0.3913,
+      "segment_recall": 0.1324,
+      "segment_f1": 0.1978,
+      "mean_matched_iou": 0.817,
+      "mean_abs_start_error_samples": 13138.89,
+      "mean_abs_end_error_samples": 9350.11,
+      "mean_abs_start_error_sec": 120.6676,
+      "mean_abs_end_error_sec": 85.8946
+    }
+  ]
+}
