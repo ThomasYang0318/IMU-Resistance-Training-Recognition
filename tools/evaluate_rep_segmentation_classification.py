@@ -243,6 +243,7 @@ def pca_extrema_segments(
     smooth_window: int,
     min_samples: int,
     peak_prominence_scale: float,
+    peak_distance_scale: float,
 ) -> list[RepSegment]:
     by_block: dict[tuple[str, str, str], list[RepSegment]] = {}
     for segment in true_segments:
@@ -257,7 +258,7 @@ def pca_extrema_segments(
         segment_df = df.iloc[block.start : block.end]
         signal = principal_motion_signal(segment_df, smooth_window)
         prominence = max(float(np.std(signal)) * peak_prominence_scale, 1e-6)
-        distance = max(min_samples // 2, 1)
+        distance = max(int(round(min_samples * peak_distance_scale)), 1)
 
         candidates: list[np.ndarray] = []
         for candidate_signal in (signal, -signal):
@@ -303,6 +304,7 @@ def extrema_segments_from_signal(
     smooth_window: int,
     min_samples: int,
     peak_prominence_scale: float,
+    peak_distance_scale: float,
 ) -> list[RepSegment]:
     predicted: list[RepSegment] = []
     for block in set_blocks_from_labels(df, path, min_samples=min_samples):
@@ -311,7 +313,7 @@ def extrema_segments_from_signal(
         if len(signal) < min_samples * 2:
             continue
         prominence = max(float(np.std(signal)) * peak_prominence_scale, 1e-6)
-        distance = max(min_samples, 1)
+        distance = max(int(round(min_samples * peak_distance_scale)), 1)
 
         candidates: list[np.ndarray] = []
         for candidate_signal in (signal, -signal):
@@ -351,6 +353,7 @@ def short_time_energy_segments(
     smooth_window: int,
     min_samples: int,
     peak_prominence_scale: float,
+    peak_distance_scale: float,
 ) -> list[RepSegment]:
     predicted: list[RepSegment] = []
     for block in set_blocks_from_labels(df, path, min_samples=min_samples):
@@ -360,7 +363,8 @@ def short_time_energy_segments(
         if len(energy) < min_samples * 2:
             continue
         prominence = max(float(np.std(energy)) * peak_prominence_scale, 1e-6)
-        peaks, _ = find_peaks(energy, distance=max(min_samples, 1), prominence=prominence)
+        distance = max(int(round(min_samples * peak_distance_scale)), 1)
+        peaks, _ = find_peaks(energy, distance=distance, prominence=prominence)
         if len(peaks) == 0:
             continue
 
@@ -420,9 +424,10 @@ def select_fft_guided_peaks(
     period: float,
     min_samples: int,
     peak_prominence_scale: float,
+    fft_peak_distance_scale: float,
 ) -> np.ndarray:
     expected_reps = max(1, int(round(len(signal) / max(period, 1.0))))
-    distance = max(int(round(period * 0.65)), min_samples, 1)
+    distance = max(int(round(period * fft_peak_distance_scale)), min_samples, 1)
     prominence = max(float(np.std(signal)) * peak_prominence_scale, 1e-6)
 
     candidates: list[tuple[np.ndarray, np.ndarray]] = []
@@ -449,6 +454,7 @@ def fft_guided_pca_extrema_segments(
     peak_prominence_scale: float,
     fft_min_period_samples: int,
     fft_max_period_fraction: float,
+    fft_peak_distance_scale: float,
 ) -> list[RepSegment]:
     predicted: list[RepSegment] = []
     for block in set_blocks_from_labels(df, path, min_samples=min_samples):
@@ -468,6 +474,7 @@ def fft_guided_pca_extrema_segments(
             period=period,
             min_samples=min_samples,
             peak_prominence_scale=peak_prominence_scale,
+            fft_peak_distance_scale=fft_peak_distance_scale,
         )
         if len(centers) == 0:
             continue
@@ -896,8 +903,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--min-segment-samples", type=int, default=20)
     parser.add_argument("--smooth-window", type=int, default=9)
     parser.add_argument("--peak-prominence-scale", type=float, default=0.35)
+    parser.add_argument("--peak-distance-scale", type=float, default=3.0)
     parser.add_argument("--fft-min-period-samples", type=int, default=25)
     parser.add_argument("--fft-max-period-fraction", type=float, default=0.8)
+    parser.add_argument("--fft-peak-distance-scale", type=float, default=1.2)
     parser.add_argument("--min-label-iou", type=float, default=0.25)
     parser.add_argument("--segmentation-iou-thresholds", type=float, nargs="+", default=[0.25, 0.5, 0.75])
     parser.add_argument("--seed", type=int, default=42)
@@ -939,6 +948,7 @@ def main() -> None:
                     smooth_window=args.smooth_window,
                     min_samples=args.min_segment_samples,
                     peak_prominence_scale=args.peak_prominence_scale,
+                    peak_distance_scale=args.peak_distance_scale,
                 )
             )
     elif args.segment_method == "dominant-axis":
@@ -953,6 +963,7 @@ def main() -> None:
                     smooth_window=args.smooth_window,
                     min_samples=args.min_segment_samples,
                     peak_prominence_scale=args.peak_prominence_scale,
+                    peak_distance_scale=args.peak_distance_scale,
                 )
             )
     elif args.segment_method == "short-time-energy":
@@ -965,6 +976,7 @@ def main() -> None:
                     smooth_window=args.smooth_window,
                     min_samples=args.min_segment_samples,
                     peak_prominence_scale=args.peak_prominence_scale,
+                    peak_distance_scale=args.peak_distance_scale,
                 )
             )
     else:
@@ -979,6 +991,7 @@ def main() -> None:
                     peak_prominence_scale=args.peak_prominence_scale,
                     fft_min_period_samples=args.fft_min_period_samples,
                     fft_max_period_fraction=args.fft_max_period_fraction,
+                    fft_peak_distance_scale=args.fft_peak_distance_scale,
                 )
             )
 

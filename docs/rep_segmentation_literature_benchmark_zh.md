@@ -149,10 +149,10 @@ validation: subject-wise 5-fold
 
 | 方法 | Predicted reps | IoU@0.50 Precision | IoU@0.50 Recall | IoU@0.50 F1 | IoU@0.75 F1 |
 |---|---:|---:|---:|---:|---:|
-| dominant-axis | 34780 | 0.0156 | 0.2244 | 0.0292 | 0.0057 |
-| short-time-energy | 21185 | 0.0362 | 0.3164 | 0.0650 | 0.0121 |
-| pca-extrema | 18505 | 0.0339 | 0.2587 | 0.0599 | 0.0092 |
-| pca-extrema-fft | 9618 | 0.1259 | 0.4996 | 0.2011 | 0.0593 |
+| dominant-axis | 22103 | 0.0362 | 0.3300 | 0.0652 | 0.0101 |
+| short-time-energy | 15391 | 0.0670 | 0.4253 | 0.1157 | 0.0231 |
+| pca-extrema | 11480 | 0.0841 | 0.3981 | 0.1388 | 0.0237 |
+| pca-extrema-fft | 5942 | 0.1439 | 0.3527 | 0.2044 | 0.0304 |
 
 比較圖：
 
@@ -179,7 +179,7 @@ STE baseline 在目前資料產生 `21185` 個 predicted reps，true reps 只有
 
 ### 3. 比原始 PCA peak detection 更穩
 
-原始 `pca-extrema` 的 IoU@0.50 F1 是 `0.0599`；加入 FFT dominant-period constraint 後提升到 `0.2011`。這代表週期先驗對 resistance training waveform 的切割有幫助。
+原始 `pca-extrema` 的 IoU@0.50 F1 是 `0.1388`；加入 FFT dominant-period constraint 後提升到 `0.2044`。這代表週期先驗對 resistance training waveform 的切割有幫助。
 
 ### 4. 評估比單純 rep counting 更嚴格
 

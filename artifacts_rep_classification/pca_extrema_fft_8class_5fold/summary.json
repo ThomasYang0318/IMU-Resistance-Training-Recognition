@@ -4,8 +4,8 @@
   ],
   "segment_method": "pca-extrema-fft",
   "num_truth_reps": 2424,
-  "num_predicted_reps": 9618,
-  "num_classified_reps": 2501,
+  "num_predicted_reps": 5942,
+  "num_classified_reps": 1610,
   "class_names": [
     "db_bench_press",
     "db_squat",
@@ -20,38 +20,38 @@
     {
       "iou_threshold": 0.25,
       "true_reps": 2424,
-      "predicted_reps": 9618,
-      "matched_reps": 1926,
-      "false_positives": 7692,
-      "false_negatives": 498,
-      "precision": 0.2002,
-      "recall": 0.7946,
-      "f1": 0.3199,
-      "mean_matched_iou": 0.5806
+      "predicted_reps": 5942,
+      "matched_reps": 1430,
+      "false_positives": 4512,
+      "false_negatives": 994,
+      "precision": 0.2407,
+      "recall": 0.5899,
+      "f1": 0.3419,
+      "mean_matched_iou": 0.5475
     },
     {
       "iou_threshold": 0.5,
       "true_reps": 2424,
-      "predicted_reps": 9618,
-      "matched_reps": 1211,
-      "false_positives": 8407,
-      "false_negatives": 1213,
-      "precision": 0.1259,
-      "recall": 0.4996,
-      "f1": 0.2011,
-      "mean_matched_iou": 0.6702
+      "predicted_reps": 5942,
+      "matched_reps": 855,
+      "false_positives": 5087,
+      "false_negatives": 1569,
+      "precision": 0.1439,
+      "recall": 0.3527,
+      "f1": 0.2044,
+      "mean_matched_iou": 0.6282
     },
     {
       "iou_threshold": 0.75,
       "true_reps": 2424,
-      "predicted_reps": 9618,
-      "matched_reps": 357,
-      "false_positives": 9261,
-      "false_negatives": 2067,
-      "precision": 0.0371,
-      "recall": 0.1473,
-      "f1": 0.0593,
-      "mean_matched_iou": 0.8559
+      "predicted_reps": 5942,
+      "matched_reps": 127,
+      "false_positives": 5815,
+      "false_negatives": 2297,
+      "precision": 0.0214,
+      "recall": 0.0524,
+      "f1": 0.0304,
+      "mean_matched_iou": 0.8337
     }
   ],
   "folds": 5,
@@ -65,7 +65,7 @@
     "yushuan0513workout",
     "ziho0512workout"
   ],
-  "accuracy": 0.8420631747301079,
-  "macro_f1": 0.8456051814180296,
-  "weighted_f1": 0.8435738988285323
+  "accuracy": 0.837888198757764,
+  "macro_f1": 0.8370015030028699,
+  "weighted_f1": 0.837255590093426
 }
