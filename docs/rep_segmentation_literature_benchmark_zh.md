@@ -20,6 +20,8 @@ Shang et al. 提出 DS-MS-TCN，使用 sequence-to-sequence temporal convolution
 artifacts_rep_classification/waveform_method_comparison/waveform_method_comparison_<session>.png
 artifacts_rep_classification/waveform_method_comparison/waveform_method_count_difference.png
 artifacts_rep_classification/waveform_method_comparison/waveform_method_file_summary.csv
+artifacts_rep_classification/waveform_method_comparison/sets_all/*.png
+artifacts_rep_classification/waveform_method_comparison/waveform_method_all_sets_summary.csv
 artifacts_rep_classification/methods_comparison/rep_segmentation_methods_error_breakdown_iou_0.50.png
 ```
 
@@ -34,6 +36,8 @@ pca-extrema-fft predicted intervals
 ```
 
 這可以直接看出各方法在同一段波形上的過切、漏切與 boundary 偏移。
+
+另外 `sets_all/` 會為每一組 `subject / exercise / set_id` 輸出一張圖。目前共有 `210` 組 set 圖；`waveform_method_all_sets_summary.csv` 則記錄每張圖中各方法的 predicted reps、IoU >= 0.50 的 predicted reps 數量與 mean best IoU。
 
 ### 1. Dominant-axis peak detection
 
@@ -147,6 +151,8 @@ artifacts_rep_classification/methods_comparison/rep_segmentation_methods_iou_0.5
 artifacts_rep_classification/methods_comparison/rep_segmentation_methods_error_breakdown_iou_0.50.png
 artifacts_rep_classification/waveform_method_comparison/waveform_method_comparison_kevin0509workout_whole_session_20260509_173017.png
 artifacts_rep_classification/waveform_method_comparison/waveform_method_count_difference.png
+artifacts_rep_classification/waveform_method_comparison/sets_all/
+artifacts_rep_classification/waveform_method_comparison/waveform_method_all_sets_summary.csv
 ```
 
 ## 我們方法的優點
