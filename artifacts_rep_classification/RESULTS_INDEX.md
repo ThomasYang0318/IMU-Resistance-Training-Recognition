@@ -94,6 +94,48 @@ phase IoU@0.75 F1: 0.1671
 - `phase_split_iou_metrics.png`
 - `phase_split_iou_f1_by_phase.png`
 
+## 004_waveform_rep_accuracy_003_active_only
+
+目的：
+
+針對第 003 版 active-only refined rep segmentation，輸出每一組 set 的波形切割圖，並在圖上直接標示該組 IoU@0.50 rep segmentation 準確率。
+
+呈現方式：
+
+- PCA motion waveform：深灰線；
+- acceleration magnitude：淺灰線；
+- ground truth rep boundary：藍色，下半段；
+- predicted rep boundary：紅色，上半段；
+- start：實線；
+- end：虛線；
+- 不使用底色 shading。
+
+主要數值：
+
+```text
+set count: 210
+true reps: 2424
+predicted reps: 2374
+matched reps at IoU@0.50: 1711
+set-assigned precision: 0.7207
+set-assigned recall: 0.7059
+set-assigned F1: 0.7132
+```
+
+說明：
+
+此處數值是為了 waveform set 圖而做的 set-assigned IoU@0.50 統計；第 003 版正式 global rep IoU@0.50 F1 仍以 `003_active_only_pca_autocorr_refined_8class_5fold/summary.json` 的 `0.7182` 為準。
+
+重點檔案：
+
+- `summary.json`
+- `waveform_rep_accuracy_set_summary.csv`
+- `waveform_rep_accuracy_by_subject.png`
+- `waveform_rep_accuracy_by_exercise.png`
+- `waveform_rep_accuracy_subject_exercise_heatmap.png`
+- `waveform_rep_accuracy_set_f1_distribution.png`
+- `sets_all/*.png`
+
 ## 003_active_only_pca_autocorr_refined_8class_5fold
 
 目的：

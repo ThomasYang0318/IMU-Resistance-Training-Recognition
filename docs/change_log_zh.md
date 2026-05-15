@@ -863,3 +863,37 @@ weak IoU@0.50 subjects = yoru0511workout, kevin0509workout, yanz0510workout
 
 - `artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold/rep_segmentation_metrics_by_subject.csv`
 - `artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold/rep_segmentation_iou_f1_by_subject.png`
+
+## 2026-05-16：Waveform Rep 切割準確率圖
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+補上使用者要求的「波形 rep 切割準確率圖」，讓每一組 set 都能同時看到 waveform、ground truth boundary、predicted boundary，以及該組 IoU@0.50 的 rep segmentation F1。
+
+呈現調整：
+
+- 不使用底色 shading；
+- ground truth 用藍色，畫在圖的下半段；
+- prediction 用紅色，畫在圖的上半段；
+- start 用實線，end 用虛線；
+- 每張圖標題顯示 F1、precision、recall、TP/FP/FN、mean matched IoU；
+- 另外輸出 subject、exercise、subject × exercise 的準確率圖。
+
+實際結果：
+
+```text
+output = artifacts_rep_classification/004_waveform_rep_accuracy_003_active_only/
+set plots = 210
+true reps = 2424
+predicted reps = 2374
+matched reps at IoU@0.50 = 1711
+set-assigned F1 = 0.7132
+```
+
+說明：
+
+第 004 版是 visualization / per-set diagnostic，不是新的模型。正式 overall rep segmentation 數值仍以第 003 版 `summary.json` 為主；第 004 版的 F1 是把 prediction 指派回每組 set 後，方便對照 waveform 圖的診斷數值。

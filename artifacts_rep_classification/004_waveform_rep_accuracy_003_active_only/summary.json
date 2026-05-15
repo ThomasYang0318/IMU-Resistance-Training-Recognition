@@ -1,0 +1,13 @@
+{
+  "run_dir": "artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold",
+  "iou_threshold": 0.5,
+  "set_count": 210,
+  "true_reps": 2424,
+  "predicted_reps": 2374,
+  "matched_reps": 1711,
+  "false_positives": 663,
+  "false_negatives": 713,
+  "precision": 0.7207,
+  "recall": 0.7059,
+  "f1": 0.7132
+}

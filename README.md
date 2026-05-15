@@ -266,6 +266,14 @@ set-level 比較圖：
 artifacts_rep_classification/waveform_method_comparison/set_level_results/
 ```
 
+第 003 版 active-only refined 方法的 waveform 準確率圖：
+
+```text
+artifacts_rep_classification/004_waveform_rep_accuracy_003_active_only/
+```
+
+其中 `sets_all/` 內每一張圖代表一組 set。圖上藍線是 ground truth、紅線是 prediction；藍線畫在下半段、紅線畫在上半段，用來避免兩者很接近時互相蓋住。
+
 ## 目前方法
 
 | 方法 | 說明 |
