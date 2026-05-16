@@ -1123,3 +1123,89 @@ acc_axis_time_top2         accuracy 0.6370  macro-F1 0.6321
 - `artifacts_rep_classification/008_feature_pair_scatter_8class/top_feature_pair_scatter_grid.png`
 - `artifacts_rep_classification/008_feature_pair_scatter_8class/scatter_pairs/`
 - `artifacts_rep_classification/008_feature_pair_scatter_8class/confusion_matrices/`
+
+## 2026-05-16：第 009 版 Universal Rep Boundary 訊號分析
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+回應「目前是否知道要如何切割，如果還不知道，先跑波形分析找要用什麼特徵切 rep」。這一版專門分析未知動作時可用的泛化切割訊號，不使用動作分類特徵當第一刀。
+
+改動：
+
+- 新增 `tools/analyze_universal_rep_boundary_signals.py`；
+- 讀取第 003 版 ground-truth rep boundary；
+- 針對 2214 個 internal rep boundary，比較多種 waveform 特徵的 local min / max 是否貼近真實切點；
+- 比較 smooth window `9 / 21 / 51` 與 energy window `21 / 51 / 81`；
+- 額外分析每個 active set 的週期估計：用 autocorrelation / FFT 比較 `pca_motion`、`acc_magnitude`、`gyro_magnitude`、`motion_energy` 等訊號和真實 rep period 的誤差；
+- 輸出 universal boundary ranking、跨動作 heatmap、period estimation summary、waveform example plots。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/
+input run = artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold/
+internal GT boundaries = 2214
+boundary feature rows = 119556
+period rows = 2898
+best universal boundary feature = gyro_magnitude_min_s9
+boundary median abs error = 36.5 samples
+boundary within 50 samples = 0.5930
+boundary within 100 samples = 0.8921
+best period signal = pca_motion
+best period method = autocorr
+period median abs error = 7.0 samples
+period median relative abs error = 0.0217
+period within 10% = 0.8696
+```
+
+Top universal boundary features：
+
+```text
+gyro_magnitude_min_s9        median 36.5  within50 0.5930
+gyro_magnitude_min_s21       median 39.0  within50 0.5786
+gyro_magnitude_min_s51       median 40.0  within50 0.5682
+pca_velocity_min_s21_e21     median 50.0  within50 0.5045
+pca_velocity_min_s9_e21      median 48.0  within50 0.5158
+gyro_jerk_max_s51_e21        median 53.0  within50 0.4846
+```
+
+每個動作在最佳 universal boundary feature 的 within-50 表現：
+
+```text
+db_biceps_curl      0.7824
+db_squat            0.6597
+db_triceps_curl     0.6452
+one_arm_db_row      0.6444
+db_weighted_crunch  0.5788
+db_bench_press      0.5243
+db_rdl              0.4888
+db_shoulder_press   0.4143
+```
+
+結論：
+
+目前已知道比較合理的切割方向：
+
+```text
+1. 用 pca_motion + autocorrelation 估週期 / rep count；
+2. 用 gyro_magnitude_min_s9 找週期候選附近的 boundary valley；
+3. 用 duration prior / monotonic constraint / dynamic programming 避免切太細或邊界跳動；
+4. 初切後再抽第 007 版分類特徵辨識動作；
+5. 知道動作後再做 second-pass exercise-aware boundary refinement 和 phase split。
+```
+
+但第 009 版也證明「只靠一個 universal 特徵」還不夠。最佳 boundary 特徵 within-50 只有 `0.5930`，因此下一步不應再單純找單一特徵，而應把 `pca_motion` 週期 prior 和 `gyro_magnitude` valley 整合成一個 sequence-level segmenter。
+
+輸出結果：
+
+- `artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/summary.json`
+- `artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/universal_boundary_feature_ranking.csv`
+- `artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/universal_boundary_feature_ranking.png`
+- `artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/universal_boundary_within_50_by_exercise.png`
+- `artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/period_estimation_summary.csv`
+- `artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/period_estimation_error_by_signal.png`
+- `artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/universal_feature_waveform_examples/`

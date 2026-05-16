@@ -1,0 +1,23 @@
+{
+  "run_dir": "artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold",
+  "num_boundary_rows": 119556,
+  "num_internal_boundaries": 2214,
+  "num_period_rows": 2898,
+  "smooth_windows": [
+    9,
+    21,
+    51
+  ],
+  "energy_windows": [
+    21,
+    51,
+    81
+  ],
+  "best_universal_boundary_feature": "gyro_magnitude_min_s9",
+  "best_universal_boundary_objective": "min",
+  "best_universal_boundary_median_abs_error": 36.5,
+  "best_universal_boundary_within_50": 0.593,
+  "best_period_signal": "pca_motion",
+  "best_period_method": "autocorr",
+  "best_period_median_relative_abs_error": 0.0217
+}

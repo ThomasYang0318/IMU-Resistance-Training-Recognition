@@ -198,6 +198,48 @@ best pair macro-F1 = 0.7122
 - `feature_pair_per_exercise_f1_dotplot.png`：每組 pair 對每個動作的 F1；
 - `confusion_matrices/*.png`：每組 pair 的混淆矩陣。
 
+## Universal Rep Boundary 訊號分析
+
+第 009 版新增的分析工具：
+
+```bash
+.venv311/bin/python tools/analyze_universal_rep_boundary_signals.py \
+  --run-dir artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold \
+  --output-dir artifacts_rep_classification/009_universal_rep_boundary_signal_analysis
+```
+
+這個工具回答「未知波形還不知道是哪個動作時，到底該用什麼共通特徵先切 rep」。它分成兩個問題：
+
+1. **週期估計**：哪個 waveform 最能估出 set 內 rep period；
+2. **切點定位**：哪個 waveform 的 local min / max 最接近 ground-truth rep boundary。
+
+目前第 009 版結論：
+
+```text
+best period signal = pca_motion
+best period method = autocorr
+period median relative abs error = 0.0217
+period within 10% = 0.8696
+
+best universal boundary feature = gyro_magnitude_min_s9
+boundary median abs error = 36.5 samples
+boundary within 50 samples = 0.5930
+boundary within 100 samples = 0.8921
+```
+
+因此未知波形的第一刀建議是：
+
+```text
+active waveform
+→ robust z-score acc+gyro
+→ PCA principal motion signal
+→ autocorrelation estimate period / expected rep count
+→ search gyro magnitude valleys near period-constrained candidate boundaries
+→ output preliminary rep segments
+```
+
+這裡仍不能說已經足夠準。`gyro_magnitude_min_s9` 是目前最好的 universal boundary feature，但 within-50-sample 只有 `0.5930`，代表它適合作為 candidate generator，不適合單獨當最終切割器。下一步應加上 duration prior、monotonic constraint、dynamic programming，或在初切後用分類結果做 second-pass exercise-aware refinement。
+
 ## Subject-wise K-fold
 
 使用 `GroupKFold`，group 是 `subject_id`。

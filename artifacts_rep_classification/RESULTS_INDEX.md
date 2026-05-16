@@ -6,7 +6,7 @@
 001_<experiment_name>/
 002_<experiment_name>/
 ...
-008_<experiment_name>/
+009_<experiment_name>/
 ```
 
 ## 001_active_only_labels_8class_5fold
@@ -349,6 +349,70 @@ acc_axis_time_top2: accuracy 0.6370, macro-F1 0.6321
 - `top_feature_pair_scatter_grid.png`
 - `scatter_pairs/*.png`
 - `confusion_matrices/*.png`
+
+## 009_universal_rep_boundary_signal_analysis
+
+目的：
+
+回答「未知波形一開始還不知道動作類別時，是否已有泛化切 rep 的依據」。這版不使用 exercise label 做切割，而是用 ground-truth boundary 反推哪些 waveform 訊號適合做全動作共通的週期估計與 boundary localization。
+
+設定：
+
+- input run：`003_active_only_pca_autocorr_refined_8class_5fold`
+- internal GT boundaries：2214
+- period-estimation set rows：2898
+- smooth windows：9、21、51
+- energy windows：21、51、81
+- boundary search radius：median rep duration × 0.35，限制在 20 到 160 samples
+- boundary candidates：PCA extreme、PCA velocity、acc magnitude、gyro magnitude、acc jerk、gyro jerk、motion energy、transition energy
+- period candidates：PCA motion、abs PCA motion、acc magnitude、gyro magnitude、PCA velocity、motion energy、transition energy
+- period methods：autocorrelation、FFT
+
+主要數值：
+
+```text
+best universal boundary feature: gyro_magnitude_min_s9
+boundary median abs error: 36.5 samples
+boundary within 50 samples: 0.5930
+boundary within 100 samples: 0.8921
+
+best period signal: pca_motion
+best period method: autocorr
+period median abs error: 7.0 samples
+period median relative abs error: 0.0217
+period within 10%: 0.8696
+```
+
+Top universal boundary features：
+
+```text
+gyro_magnitude_min_s9: median error 36.5, within50 0.5930
+gyro_magnitude_min_s21: median error 39.0, within50 0.5786
+gyro_magnitude_min_s51: median error 40.0, within50 0.5682
+pca_velocity_min_s21_e21: median error 50.0, within50 0.5045
+pca_velocity_min_s9_e21: median error 48.0, within50 0.5158
+```
+
+解讀：
+
+目前已知道第一刀切割的合理方向：先用 `pca_motion + autocorr` 估 set 內主要週期與大致 rep count，再用 `gyro_magnitude_min_s9` 當作 universal boundary valley 做切點定位。這比直接使用第 007/008 的分類特徵更合理，因為分類特徵需要先有 rep segment。
+
+但這還不足以達到 90% rep boundary：最佳 universal boundary feature 的 within-50-sample 比例只有 `0.5930`，弱項包含 `db_shoulder_press` within50 `0.4143`、`db_rdl` within50 `0.4888`。所以建議下一步做 `010_universal_periodic_boundary_segmenter`：用 PCA autocorr 提供週期 prior，用 gyro magnitude minima 提供 candidate boundary，再加 duration prior / dynamic programming 選出整組最合理切點。
+
+重點檔案：
+
+- `summary.json`
+- `universal_boundary_feature_ranking.csv`
+- `universal_boundary_feature_ranking.png`
+- `universal_boundary_alignment_overall.csv`
+- `universal_boundary_alignment_by_exercise.csv`
+- `universal_boundary_within_50_by_exercise.png`
+- `universal_boundary_median_error_by_exercise.png`
+- `period_estimation_summary.csv`
+- `period_estimation_by_exercise.csv`
+- `period_estimation_error_by_signal.png`
+- `period_estimation_error_by_exercise.png`
+- `universal_feature_waveform_examples/*.png`
 
 ## 004_waveform_rep_accuracy_003_active_only
 
