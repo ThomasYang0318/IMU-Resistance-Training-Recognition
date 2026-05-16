@@ -1209,3 +1209,72 @@ db_shoulder_press   0.4143
 - `artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/period_estimation_summary.csv`
 - `artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/period_estimation_error_by_signal.png`
 - `artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/universal_feature_waveform_examples/`
+
+## 2026-05-16：第 010 版 Universal Periodic Gyro-Valley Segmenter
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+回應「根據第 009 版方法試切 rep，輸出切割波形圖與切割正確率，並將每個動作的正確率做成一張表」。
+
+改動：
+
+- 在 `tools/evaluate_rep_segmentation_classification.py` 新增 `pca-autocorr-gyro-valley` segment method；
+- 用 `pca_motion + autocorrelation` 估 active set 的 dominant period 和 expected rep count；
+- 在 expected boundary 附近搜尋 `gyro_magnitude` valley；
+- 加入 duration prior、rep-count prior、max reps prior，避免錯誤週期造成 over-segmentation；
+- 新增 `--skip-classification`，可先只跑 rep segmentation / phase split；
+- 新增 `rep_segmentation_accuracy_by_exercise_table.csv` 與 `.png`，把每個動作的 IoU 正確率整理成表格；
+- 加速讀檔與標籤擷取：只讀必要欄位，並用 vectorized / numpy indexing 取代逐列 pandas `.iloc`；
+- 更新 `tools/plot_waveform_rep_accuracy.py`，產生第 010 版每組上下排波形切割圖。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/010_universal_periodic_gyro_valley_8class_5fold/
+waveform output = artifacts_rep_classification/010_waveform_rep_accuracy_universal_periodic_gyro_valley/
+
+truth reps = 2720
+predicted reps = 2740
+
+rep IoU@0.25 F1 = 0.9092
+rep IoU@0.50 F1 = 0.7278
+rep IoU@0.75 F1 = 0.3949
+
+phase IoU@0.50 F1 = 0.4552
+waveform set-level IoU@0.50 F1 = 0.7234
+waveform set plots = 236
+```
+
+每個動作 IoU@0.50 F1：
+
+```text
+db_squat            0.8413
+one_arm_db_row      0.8407
+db_weighted_crunch  0.7964
+db_rdl              0.7778
+db_triceps_curl     0.7720
+db_shoulder_press   0.6589
+db_biceps_curl      0.6133
+db_bench_press      0.5499
+```
+
+結論：
+
+第 010 版證明「PCA 估週期 + gyro valley 精修」可以形成可用的 universal active-only rep segmenter，IoU@0.50 F1 為 `0.7278`。這和第 006 版 exercise-aware refinement 的 `0.7353` 接近，但第 010 版第一刀不依賴動作類別，因此更適合未知 waveform 流程。
+
+目前仍未達 90% IoU@0.50。弱項集中在 `db_bench_press`、`db_biceps_curl`、`db_shoulder_press`，下一步應在初切後先做動作分類，再根據分類結果做 second-pass exercise-aware boundary refinement。
+
+輸出結果：
+
+- `artifacts_rep_classification/010_universal_periodic_gyro_valley_8class_5fold/summary.json`
+- `artifacts_rep_classification/010_universal_periodic_gyro_valley_8class_5fold/rep_segmentation_accuracy_by_exercise_table.png`
+- `artifacts_rep_classification/010_universal_periodic_gyro_valley_8class_5fold/rep_segmentation_iou_metrics.png`
+- `artifacts_rep_classification/010_universal_periodic_gyro_valley_8class_5fold/rep_segmentation_iou_f1_by_exercise.png`
+- `artifacts_rep_classification/010_waveform_rep_accuracy_universal_periodic_gyro_valley/summary.json`
+- `artifacts_rep_classification/010_waveform_rep_accuracy_universal_periodic_gyro_valley/waveform_rep_accuracy_by_subject.png`
+- `artifacts_rep_classification/010_waveform_rep_accuracy_universal_periodic_gyro_valley/waveform_rep_accuracy_by_exercise.png`
+- `artifacts_rep_classification/010_waveform_rep_accuracy_universal_periodic_gyro_valley/sets_all/`

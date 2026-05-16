@@ -414,6 +414,98 @@ pca_velocity_min_s9_e21: median error 48.0, within50 0.5158
 - `period_estimation_error_by_exercise.png`
 - `universal_feature_waveform_examples/*.png`
 
+## 010_universal_periodic_gyro_valley_8class_5fold
+
+目的：
+
+把第 009 版找到的泛化切割方向實作成真正的 active-only rep segmenter：先用 `pca_motion + autocorrelation` 估一組裡的主要週期 / rep count，再在每個預期切點附近找 `gyro_magnitude` valley，最後用 duration prior 和 rep-count prior 選出整組切割。
+
+設定：
+
+- segment method：`pca-autocorr-gyro-valley`
+- block source：`active-phase-contiguous`
+- PCA smooth window：9
+- gyro valley smooth window：9
+- autocorr min period：25 samples
+- autocorr max period fraction：0.8
+- boundary search fraction：0.35
+- rep count search radius：±2
+- max reps per set：30
+- classification：skipped，本版先只看 rep segmentation / phase split
+
+主要數值：
+
+```text
+truth reps: 2720
+predicted reps: 2740
+
+rep IoU@0.25 F1: 0.9092
+rep IoU@0.50 F1: 0.7278
+rep IoU@0.75 F1: 0.3949
+
+phase IoU@0.25 F1: 0.6876
+phase IoU@0.50 F1: 0.4552
+phase IoU@0.75 F1: 0.1785
+```
+
+每個動作 rep IoU@0.50 F1：
+
+```text
+one_arm_db_row      0.8407
+db_squat            0.8413
+db_weighted_crunch  0.7964
+db_rdl              0.7778
+db_triceps_curl     0.7720
+db_shoulder_press   0.6589
+db_biceps_curl      0.6133
+db_bench_press      0.5499
+```
+
+解讀：
+
+這版驗證了第 009 版的方向可以實作成可跑的切割器，整體 IoU@0.50 F1 為 `0.7278`，和第 006 版 exercise-aware feature refinement 的 `0.7353` 接近；但第 010 版第一刀不使用動作類別，因此更符合未知 waveform 的泛化流程。弱項仍是 `db_bench_press`、`db_biceps_curl` 和 `db_shoulder_press`，表示下一步需要在初切後加入分類結果，再做 second-pass exercise-aware refinement。
+
+重點檔案：
+
+- `summary.json`
+- `rep_segmentation_metrics.csv`
+- `rep_segmentation_metrics_by_exercise.csv`
+- `rep_segmentation_accuracy_by_exercise_table.csv`
+- `rep_segmentation_accuracy_by_exercise_table.png`
+- `rep_segmentation_iou_metrics.png`
+- `rep_segmentation_iou_f1_by_exercise.png`
+- `rep_segmentation_iou_f1_by_subject.png`
+- `phase_split_metrics.csv`
+- `phase_split_iou_metrics.png`
+
+## 010_waveform_rep_accuracy_universal_periodic_gyro_valley
+
+目的：
+
+針對第 010 版切割結果，輸出每一組 set 的上下排波形圖：上排顯示 ground truth rep boundary，下排顯示 predicted rep boundary，並在圖標題標示該組 IoU@0.50 precision、recall、F1 和 matched IoU。
+
+主要數值：
+
+```text
+set count: 236
+true reps: 2720
+predicted reps: 2740
+matched reps at IoU@0.50: 1975
+set-assigned precision: 0.7208
+set-assigned recall: 0.7261
+set-assigned F1: 0.7234
+```
+
+重點檔案：
+
+- `summary.json`
+- `waveform_rep_accuracy_set_summary.csv`
+- `waveform_rep_accuracy_by_subject.png`
+- `waveform_rep_accuracy_by_exercise.png`
+- `waveform_rep_accuracy_subject_exercise_heatmap.png`
+- `waveform_rep_accuracy_set_f1_distribution.png`
+- `sets_all/*.png`
+
 ## 004_waveform_rep_accuracy_003_active_only
 
 目的：

@@ -28,6 +28,7 @@ from sklearn.pipeline import make_pipeline
 
 
 IMU_COLUMNS = ("ax", "ay", "az", "gx", "gy", "gz")
+SESSION_COLUMNS = set(IMU_COLUMNS) | {"subject_id", "action_type", "set", "rep", "phase"}
 ACTIVE_PHASES = {"concentric", "eccentric"}
 REST_LABELS = {"big_rest", "rest", "none", "nan", ""}
 
@@ -98,8 +99,12 @@ def clean_label(value: object) -> str:
     return str(value).strip()
 
 
+def clean_label_series(values: pd.Series) -> pd.Series:
+    return values.fillna("").astype(str).str.strip()
+
+
 def read_session(path: Path, data_dirs: Sequence[Path]) -> pd.DataFrame:
-    df = pd.read_csv(path)
+    df = pd.read_csv(path, usecols=lambda column: column in SESSION_COLUMNS)
     if "subject_id" not in df.columns:
         df["subject_id"] = subject_from_path(path, data_dirs)
     if "action_type" not in df.columns:
@@ -184,15 +189,15 @@ def short_time_energy(signal: np.ndarray, window: int) -> np.ndarray:
 
 
 def true_rep_segments(df: pd.DataFrame, path: Path, min_samples: int) -> list[RepSegment]:
-    phases = df["phase"].map(clean_label).str.lower()
+    phases = clean_label_series(df["phase"]).str.lower()
     active = phases.isin(ACTIVE_PHASES).to_numpy()
     if not active.any():
         return []
 
-    subject_values = df["subject_id"].map(clean_label)
-    exercise_values = df["action_type"].map(clean_label)
-    set_values = df["set"].map(clean_label)
-    rep_values = df["rep"].map(clean_label)
+    subject_values = clean_label_series(df["subject_id"]).to_numpy(dtype=object)
+    exercise_values = clean_label_series(df["action_type"]).to_numpy(dtype=object)
+    set_values = clean_label_series(df["set"]).to_numpy(dtype=object)
+    rep_values = clean_label_series(df["rep"]).to_numpy(dtype=object)
 
     segments: list[RepSegment] = []
     start: int | None = None
@@ -200,10 +205,10 @@ def true_rep_segments(df: pd.DataFrame, path: Path, min_samples: int) -> list[Re
 
     for idx, is_active in enumerate(active):
         key = (
-            subject_values.iloc[idx],
-            exercise_values.iloc[idx],
-            set_values.iloc[idx],
-            rep_values.iloc[idx],
+            subject_values[idx],
+            exercise_values[idx],
+            set_values[idx],
+            rep_values[idx],
         )
         if is_active and start is None:
             start = idx
@@ -225,16 +230,17 @@ def true_rep_segments(df: pd.DataFrame, path: Path, min_samples: int) -> list[Re
 
 
 def set_blocks_from_labels(df: pd.DataFrame, path: Path, min_samples: int) -> list[RepSegment]:
-    actions = df["action_type"].map(clean_label)
-    sets = df["set"].map(clean_label)
-    subjects = df["subject_id"].map(clean_label)
+    actions = clean_label_series(df["action_type"])
+    action_values = actions.to_numpy(dtype=object)
+    sets = clean_label_series(df["set"]).to_numpy(dtype=object)
+    subjects = clean_label_series(df["subject_id"]).to_numpy(dtype=object)
     non_rest = ~actions.str.lower().isin(REST_LABELS)
 
     blocks: list[RepSegment] = []
     start: int | None = None
     last_key: tuple[str, str, str] | None = None
     for idx, active in enumerate(non_rest.to_numpy()):
-        key = (subjects.iloc[idx], actions.iloc[idx], sets.iloc[idx])
+        key = (subjects[idx], action_values[idx], sets[idx])
         if active and start is None:
             start = idx
             last_key = key
@@ -733,6 +739,202 @@ def refine_boundaries_by_feature_score(
     return monotonic
 
 
+def valley_cost_signal(values: np.ndarray) -> np.ndarray:
+    values = values.astype(np.float64)
+    low = float(np.percentile(values, 5))
+    high = float(np.percentile(values, 95))
+    scale = high - low
+    if scale < 1e-9:
+        scale = float(np.std(values))
+    if scale < 1e-9:
+        return np.zeros_like(values, dtype=np.float64)
+    return np.clip((values - low) / scale, 0.0, 1.0)
+
+
+def gyro_valley_candidate_points(
+    gyro_mag: np.ndarray,
+    length: int,
+    period: float,
+    min_samples: int,
+    count_options: Sequence[int],
+    search_fraction: float,
+) -> np.ndarray:
+    candidates: set[int] = {0, length}
+    if length <= 1:
+        return np.array(sorted(candidates), dtype=int)
+
+    radius = max(min_samples, int(round(period * search_fraction)))
+    radius = min(radius, max(min_samples, length // 2))
+    local_distance = max(3, min_samples // 3)
+    for count in count_options:
+        if count <= 1:
+            continue
+        for boundary_idx in range(1, count):
+            prior = int(round(boundary_idx * length / float(count)))
+            lo = max(min_samples, prior - radius)
+            hi = min(length - min_samples, prior + radius)
+            if hi <= lo:
+                continue
+            local = gyro_mag[lo : hi + 1]
+            if len(local):
+                candidates.add(int(lo + np.argmin(local)))
+                local_valleys, _ = find_peaks(-local, distance=local_distance)
+                if len(local_valleys):
+                    best_local = local_valleys[np.argsort(local[local_valleys])[:3]]
+                    for valley in best_local:
+                        candidates.add(int(lo + valley))
+            candidates.add(prior)
+
+    return np.array(sorted(candidates), dtype=int)
+
+
+def dynamic_program_gyro_valley_boundaries(
+    gyro_mag: np.ndarray,
+    period: float,
+    min_samples: int,
+    search_fraction: float,
+    count_search_radius: int,
+    min_duration_scale: float,
+    max_duration_scale: float,
+    boundary_cost_weight: float,
+    duration_cost_weight: float,
+    count_cost_weight: float,
+    max_reps: int,
+) -> list[int]:
+    length = int(len(gyro_mag))
+    if length < min_samples * 2:
+        return [0, length]
+
+    expected_count = int(round(length / max(period, 1.0)))
+    max_count = min(max(1, length // max(min_samples, 1)), max(1, max_reps))
+    expected_count = int(np.clip(expected_count, 1, max_count))
+    lo_count = max(1, expected_count - count_search_radius)
+    hi_count = min(max_count, expected_count + count_search_radius)
+    count_options = list(range(lo_count, hi_count + 1))
+    if expected_count not in count_options:
+        count_options.append(expected_count)
+        count_options = sorted(set(count_options))
+
+    valley_cost = valley_cost_signal(gyro_mag)
+    best_score = math.inf
+    best_path: list[int] | None = None
+
+    radius = max(min_samples, int(round(period * search_fraction)))
+    radius = min(radius, max(min_samples, length // 2))
+    for count in count_options:
+        if count <= 0:
+            continue
+        target_duration = length / float(count)
+        min_duration = max(min_samples, int(round(target_duration * min_duration_scale)))
+        max_duration = max(min_duration, int(round(target_duration * max_duration_scale)))
+        if min_duration * count > length or max_duration * count < length:
+            continue
+
+        boundaries = [0]
+        valid_path = True
+        for boundary_idx in range(1, count):
+            prior = int(round(boundary_idx * target_duration))
+            lo = max(boundaries[-1] + min_duration, prior - radius)
+            remaining = count - boundary_idx
+            hi = min(length - remaining * min_duration, prior + radius)
+            if hi <= lo:
+                valid_path = False
+                break
+            local = gyro_mag[lo : hi + 1]
+            if len(local) == 0:
+                valid_path = False
+                break
+            boundaries.append(int(lo + np.argmin(local)))
+        if not valid_path:
+            continue
+        boundaries.append(length)
+        durations = np.diff(np.asarray(boundaries, dtype=np.float64))
+        if np.any(durations < min_duration) or np.any(durations > max_duration):
+            continue
+
+        internal = boundaries[1:-1]
+        boundary_score = float(np.mean(valley_cost[internal])) if internal else 0.0
+        duration_error = float(np.mean(((durations - target_duration) / max(target_duration, 1.0)) ** 2))
+        count_cost = count_cost_weight * abs(count - expected_count) / max(expected_count, 1)
+        normalized_score = (
+            boundary_cost_weight * boundary_score
+            + duration_cost_weight * duration_error
+            + count_cost
+        )
+        if normalized_score < best_score:
+            best_score = normalized_score
+            best_path = boundaries
+
+    if best_path is None or len(best_path) < 2:
+        boundaries = [0]
+        for boundary_idx in range(1, expected_count):
+            prior = int(round(boundary_idx * length / float(expected_count)))
+            radius = max(min_samples, int(round(period * search_fraction)))
+            lo = max(min_samples, prior - radius)
+            hi = min(length - min_samples, prior + radius)
+            if hi > lo:
+                boundaries.append(int(lo + np.argmin(gyro_mag[lo : hi + 1])))
+        boundaries.append(length)
+        return sorted(set(boundaries))
+
+    return best_path
+
+
+def autocorr_gyro_valley_segments(
+    df: pd.DataFrame,
+    path: Path,
+    smooth_window: int,
+    gyro_valley_smooth_window: int,
+    min_samples: int,
+    autocorr_min_period_samples: int,
+    autocorr_max_period_fraction: float,
+    true_segments: Sequence[RepSegment],
+    block_source: str,
+    boundary_refine_search_fraction: float,
+    periodic_count_search_radius: int,
+    periodic_min_duration_scale: float,
+    periodic_max_duration_scale: float,
+    periodic_boundary_cost_weight: float,
+    periodic_duration_cost_weight: float,
+    periodic_count_cost_weight: float,
+    periodic_max_reps: int,
+) -> list[RepSegment]:
+    predicted: list[RepSegment] = []
+    for block in candidate_blocks(df, path, true_segments, min_samples=min_samples, block_source=block_source):
+        segment_df = df.iloc[block.start : block.end]
+        pca_signal = principal_motion_signal(segment_df, smooth_window)
+        if len(pca_signal) < min_samples * 2:
+            predicted.extend(segments_from_block_boundaries(path, block, [0, len(segment_df)], min_samples, "pca_autocorr_gyro_valley"))
+            continue
+
+        max_period = max(min_samples, int(round(len(pca_signal) * autocorr_max_period_fraction)))
+        period = estimate_autocorrelation_period(
+            pca_signal,
+            min_period=max(min_samples, autocorr_min_period_samples),
+            max_period=max_period,
+        )
+        if period is None:
+            predicted.extend(segments_from_block_boundaries(path, block, [0, len(segment_df)], min_samples, "pca_autocorr_gyro_valley"))
+            continue
+
+        gyro_mag = vector_magnitude_signal(segment_df, ("gx", "gy", "gz"), gyro_valley_smooth_window)
+        boundaries = dynamic_program_gyro_valley_boundaries(
+            gyro_mag,
+            period=period,
+            min_samples=min_samples,
+            search_fraction=boundary_refine_search_fraction,
+            count_search_radius=periodic_count_search_radius,
+            min_duration_scale=periodic_min_duration_scale,
+            max_duration_scale=periodic_max_duration_scale,
+            boundary_cost_weight=periodic_boundary_cost_weight,
+            duration_cost_weight=periodic_duration_cost_weight,
+            count_cost_weight=periodic_count_cost_weight,
+            max_reps=periodic_max_reps,
+        )
+        predicted.extend(segments_from_block_boundaries(path, block, boundaries, min_samples, "pca_autocorr_gyro_valley"))
+    return predicted
+
+
 def segments_from_block_boundaries(
     path: Path,
     block: RepSegment,
@@ -1016,26 +1218,27 @@ def phase_iou(a: PhaseSegment, b: PhaseSegment) -> float:
 
 
 def true_phase_segments(df: pd.DataFrame, path: Path, min_samples: int) -> list[PhaseSegment]:
-    phases = df["phase"].map(clean_label).str.lower()
+    phases = clean_label_series(df["phase"]).str.lower()
     active = phases.isin(ACTIVE_PHASES).to_numpy()
     if not active.any():
         return []
 
-    subject_values = df["subject_id"].map(clean_label)
-    exercise_values = df["action_type"].map(clean_label)
-    set_values = df["set"].map(clean_label)
-    rep_values = df["rep"].map(clean_label)
+    phase_values = phases.to_numpy(dtype=object)
+    subject_values = clean_label_series(df["subject_id"]).to_numpy(dtype=object)
+    exercise_values = clean_label_series(df["action_type"]).to_numpy(dtype=object)
+    set_values = clean_label_series(df["set"]).to_numpy(dtype=object)
+    rep_values = clean_label_series(df["rep"]).to_numpy(dtype=object)
 
     segments: list[PhaseSegment] = []
     start: int | None = None
     last_key: tuple[str, str, str, str, str] | None = None
     for idx, is_active in enumerate(active):
         key = (
-            subject_values.iloc[idx],
-            exercise_values.iloc[idx],
-            set_values.iloc[idx],
-            rep_values.iloc[idx],
-            phases.iloc[idx],
+            subject_values[idx],
+            exercise_values[idx],
+            set_values[idx],
+            rep_values[idx],
+            phase_values[idx],
         )
         if is_active and start is None:
             start = idx
@@ -1638,6 +1841,95 @@ def plot_segmentation_metrics_by_exercise(rows: Sequence[dict[str, object]], out
     plt.close(fig)
 
 
+def exercise_accuracy_table(rows: Sequence[dict[str, object]], thresholds: Sequence[float]) -> list[dict[str, object]]:
+    if not rows:
+        return []
+    threshold_values = sorted(float(threshold) for threshold in thresholds)
+    table_rows: list[dict[str, object]] = []
+    exercises = sorted({str(row["exercise"]) for row in rows})
+    lookup = {
+        (str(row["exercise"]), float(row["iou_threshold"])): row
+        for row in rows
+    }
+    for exercise in exercises:
+        row_050 = lookup.get((exercise, 0.5))
+        if row_050 is None:
+            nearest = min(threshold_values, key=lambda value: abs(value - 0.5))
+            row_050 = lookup.get((exercise, nearest), {})
+        table_row: dict[str, object] = {"exercise": exercise}
+        for threshold in threshold_values:
+            metric_row = lookup.get((exercise, threshold), {})
+            table_row[f"f1_iou_{threshold:.2f}"] = metric_row.get("f1", 0.0)
+        table_row.update(
+            {
+                "precision_iou_0.50": row_050.get("precision", 0.0),
+                "recall_iou_0.50": row_050.get("recall", 0.0),
+                "matched_reps_iou_0.50": row_050.get("matched_reps", 0),
+                "true_reps": row_050.get("true_reps", 0),
+                "predicted_reps": row_050.get("predicted_reps", 0),
+                "mean_matched_iou_0.50": row_050.get("mean_matched_iou", 0.0),
+            }
+        )
+        table_rows.append(table_row)
+    return table_rows
+
+
+def plot_exercise_accuracy_table(rows: Sequence[dict[str, object]], output_dir: Path, thresholds: Sequence[float]) -> None:
+    table_rows = exercise_accuracy_table(rows, thresholds)
+    if not table_rows:
+        return
+    output_dir.mkdir(parents=True, exist_ok=True)
+    write_csv(output_dir / "rep_segmentation_accuracy_by_exercise_table.csv", table_rows)
+
+    table = pd.DataFrame(table_rows)
+    threshold_values = sorted(float(threshold) for threshold in thresholds)
+    display_cols = ["exercise"]
+    display_labels = ["Exercise"]
+    for threshold in threshold_values:
+        col = f"f1_iou_{threshold:.2f}"
+        if col in table.columns:
+            display_cols.append(col)
+            display_labels.append(f"F1@{threshold:.2f}")
+    display_cols.extend(["precision_iou_0.50", "recall_iou_0.50", "mean_matched_iou_0.50", "matched_reps_iou_0.50", "true_reps", "predicted_reps"])
+    display_labels.extend(["P@0.50", "R@0.50", "Mean IoU", "Matched", "GT reps", "Pred reps"])
+
+    table = table.loc[:, display_cols].copy()
+    for col in table.columns:
+        if col == "exercise":
+            continue
+        if col in {"matched_reps_iou_0.50", "true_reps", "predicted_reps"}:
+            table[col] = table[col].astype(int).astype(str)
+        else:
+            table[col] = table[col].astype(float).map(lambda value: f"{value:.3f}")
+
+    fig_height = max(3.8, 0.42 * len(table) + 1.4)
+    fig_width = max(11.0, 1.15 * len(display_cols))
+    fig, ax = plt.subplots(figsize=(fig_width, fig_height))
+    ax.axis("off")
+    artists = ax.table(
+        cellText=table.to_numpy(),
+        colLabels=display_labels,
+        loc="center",
+        cellLoc="center",
+        colLoc="center",
+    )
+    artists.auto_set_font_size(False)
+    artists.set_fontsize(8)
+    artists.scale(1, 1.35)
+    for (row_idx, col_idx), cell in artists.get_celld().items():
+        if row_idx == 0:
+            cell.set_facecolor("#dbe8f6")
+            cell.set_text_props(weight="bold")
+        elif row_idx % 2 == 0:
+            cell.set_facecolor("#f5f7fa")
+        if col_idx == 0 and row_idx > 0:
+            cell.set_text_props(ha="left")
+    ax.set_title("Rep Segmentation Accuracy by Exercise", pad=18, fontsize=13)
+    fig.tight_layout()
+    fig.savefig(output_dir / "rep_segmentation_accuracy_by_exercise_table.png", dpi=180)
+    plt.close(fig)
+
+
 def plot_segmentation_metrics_by_subject(rows: Sequence[dict[str, object]], output_dir: Path) -> None:
     if not rows:
         return
@@ -1764,6 +2056,7 @@ def parse_args() -> argparse.Namespace:
             "pca-autocorr",
             "pca-autocorr-refined",
             "pca-autocorr-feature-refined",
+            "pca-autocorr-gyro-valley",
             "pca-extrema-fft",
         ],
         default="labels",
@@ -1780,12 +2073,21 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--autocorr-peak-distance-scale", type=float, default=0.75)
     parser.add_argument("--boundary-refine-search-fraction", type=float, default=0.35)
     parser.add_argument("--boundary-refine-energy-window", type=int, default=21)
+    parser.add_argument("--gyro-valley-smooth-window", type=int, default=9)
+    parser.add_argument("--periodic-count-search-radius", type=int, default=2)
+    parser.add_argument("--periodic-min-duration-scale", type=float, default=0.55)
+    parser.add_argument("--periodic-max-duration-scale", type=float, default=1.65)
+    parser.add_argument("--periodic-boundary-cost-weight", type=float, default=0.70)
+    parser.add_argument("--periodic-duration-cost-weight", type=float, default=0.30)
+    parser.add_argument("--periodic-count-cost-weight", type=float, default=0.20)
+    parser.add_argument("--periodic-max-reps", type=int, default=40)
     parser.add_argument("--min-label-iou", type=float, default=0.25)
     parser.add_argument("--segmentation-iou-thresholds", type=float, nargs="+", default=[0.25, 0.5, 0.75])
     parser.add_argument("--evaluate-phase-split", action="store_true")
     parser.add_argument("--phase-split-method", choices=["midpoint", "pca-reversal"], default="pca-reversal")
     parser.add_argument("--min-phase-segment-samples", type=int, default=10)
     parser.add_argument("--phase-iou-thresholds", type=float, nargs="+", default=[0.25, 0.5, 0.75])
+    parser.add_argument("--skip-classification", action="store_true", help="Only evaluate rep segmentation/phase split and skip K-fold exercise classification.")
     parser.add_argument("--seed", type=int, default=42)
     return parser.parse_args()
 
@@ -1919,6 +2221,30 @@ def main() -> None:
                     boundary_refine_energy_window=args.boundary_refine_energy_window,
                 )
             )
+    elif args.segment_method == "pca-autocorr-gyro-valley":
+        predicted = []
+        for path, df in session_cache.items():
+            predicted.extend(
+                autocorr_gyro_valley_segments(
+                    df,
+                    path,
+                    smooth_window=args.smooth_window,
+                    gyro_valley_smooth_window=args.gyro_valley_smooth_window,
+                    min_samples=args.min_segment_samples,
+                    autocorr_min_period_samples=args.autocorr_min_period_samples,
+                    autocorr_max_period_fraction=args.autocorr_max_period_fraction,
+                    true_segments=truth_by_file.get(path, []),
+                    block_source=args.block_source,
+                    boundary_refine_search_fraction=args.boundary_refine_search_fraction,
+                    periodic_count_search_radius=args.periodic_count_search_radius,
+                    periodic_min_duration_scale=args.periodic_min_duration_scale,
+                    periodic_max_duration_scale=args.periodic_max_duration_scale,
+                    periodic_boundary_cost_weight=args.periodic_boundary_cost_weight,
+                    periodic_duration_cost_weight=args.periodic_duration_cost_weight,
+                    periodic_count_cost_weight=args.periodic_count_cost_weight,
+                    periodic_max_reps=args.periodic_max_reps,
+                )
+            )
     else:
         predicted = []
         for path, df in session_cache.items():
@@ -1937,18 +2263,31 @@ def main() -> None:
                 )
             )
 
-    segments, labels, manifest_rows = label_predicted_segments(
-        predicted,
-        truth,
-        class_names=class_names,
-        include_other=args.include_other,
-        min_iou=args.min_label_iou,
-    )
-    if not segments:
-        raise RuntimeError("No predicted repetition segments could be labeled for classification.")
+    segments: list[RepSegment] = []
+    labels: list[str] = []
+    manifest_rows: list[dict[str, object]] = []
+    if args.skip_classification:
+        metrics = {
+            "classification_skipped": True,
+            "folds": 0,
+            "subjects": sorted({segment.subject for segment in truth}),
+            "accuracy": None,
+            "macro_f1": None,
+            "weighted_f1": None,
+        }
+    else:
+        segments, labels, manifest_rows = label_predicted_segments(
+            predicted,
+            truth,
+            class_names=class_names,
+            include_other=args.include_other,
+            min_iou=args.min_label_iou,
+        )
+        if not segments:
+            raise RuntimeError("No predicted repetition segments could be labeled for classification.")
 
-    x, y, groups = build_feature_table(segments, labels, session_cache)
-    metrics = run_group_kfold(x, y, groups, class_names, args.folds, args.seed, args.output_dir)
+        x, y, groups = build_feature_table(segments, labels, session_cache)
+        metrics = run_group_kfold(x, y, groups, class_names, args.folds, args.seed, args.output_dir)
 
     write_csv(args.output_dir / "rep_segments_manifest.csv", manifest_rows)
     write_csv(args.output_dir / "rep_segmentation_matches.csv", segmentation_summary(predicted, truth))
@@ -1961,6 +2300,7 @@ def main() -> None:
     write_csv(args.output_dir / "rep_segmentation_metrics_by_subject.csv", segmentation_by_subject_rows)
     plot_segmentation_metrics(segmentation_rows, args.output_dir)
     plot_segmentation_metrics_by_exercise(segmentation_by_exercise_rows, args.output_dir)
+    plot_exercise_accuracy_table(segmentation_by_exercise_rows, args.output_dir, args.segmentation_iou_thresholds)
     plot_segmentation_metrics_by_subject(segmentation_by_subject_rows, args.output_dir)
     phase_rows: list[dict[str, object]] = []
     phase_by_phase_rows: list[dict[str, object]] = []

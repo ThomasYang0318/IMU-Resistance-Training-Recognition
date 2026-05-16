@@ -20,6 +20,8 @@ import pandas as pd
 
 from evaluate_rep_segmentation_classification import principal_motion_signal
 
+IMU_COLUMNS = {"ax", "ay", "az", "gx", "gy", "gz"}
+
 
 @dataclass(frozen=True)
 class SetMeta:
@@ -172,7 +174,7 @@ def assign_predictions_to_sets(predictions: pd.DataFrame, metas: list[SetMeta]) 
 
 def load_waveform(file_path: str, cache: dict[str, tuple[np.ndarray, np.ndarray]]) -> tuple[np.ndarray, np.ndarray]:
     if file_path not in cache:
-        df = pd.read_csv(file_path)
+        df = pd.read_csv(file_path, usecols=lambda column: column in IMU_COLUMNS)
         signal = principal_motion_signal(df, smooth_window=9)
         if {"ax", "ay", "az"}.issubset(df.columns):
             acc_norm = normalize(np.linalg.norm(df.loc[:, ["ax", "ay", "az"]].to_numpy(dtype=np.float64), axis=1))

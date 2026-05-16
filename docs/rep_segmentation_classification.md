@@ -449,6 +449,7 @@ artifacts_rep_classification/<run_name>/
 - `fold_manifest.csv`：每 fold 的 train / validation subjects；
 - `rep_segmentation_metrics.csv`：整體 rep segmentation IoU 正確率；
 - `rep_segmentation_metrics_by_exercise.csv`：每個動作的 rep segmentation IoU 正確率；
+- `rep_segmentation_accuracy_by_exercise_table.csv` / `.png`：每個動作的 rep segmentation 正確率表；
 - `confusion_matrix.csv`：矩陣原始數值；
 - `confusion_matrix.png`：sklearn/matplotlib 產生的混淆矩陣圖；
 - `confusion_matrix_normalized.png`：row-normalized 混淆矩陣；
@@ -515,3 +516,67 @@ rep segmentation IoU@0.50 F1: 1.0000
 此結果使用 annotation 切出的 reps 作為穩定 baseline，用來回答「rep 切完後，跨人動作分類能做到多少」。
 
 9 類模式也已執行，但目前資料中沒有實際 `other` reps，因此 accuracy 與 8 類相同，macro F1 會被空的 `other` 類拉低。
+
+## 第 010 版：Universal Periodic Gyro-Valley Segmenter
+
+第 010 版把第 009 版的分析結果實作成可評估的切割器。流程是：
+
+```text
+active-only set span
+-> PCA motion signal
+-> autocorrelation 估主要 rep period / expected rep count
+-> 在 expected boundary 附近搜尋 gyro magnitude valley
+-> 用 duration prior + rep-count prior 選整組切點
+-> 用 IoU@0.25 / 0.50 / 0.75 評估 rep segmentation
+-> 額外輸出 phase split IoU 和每組波形切割圖
+```
+
+執行指令：
+
+```bash
+.venv311/bin/python tools/evaluate_rep_segmentation_classification.py \
+  --data-dirs datasets/workout \
+  --output-dir artifacts_rep_classification/010_universal_periodic_gyro_valley_8class_5fold \
+  --segment-method pca-autocorr-gyro-valley \
+  --block-source active-phase-contiguous \
+  --num-classes 8 \
+  --folds 5 \
+  --min-segment-samples 20 \
+  --smooth-window 9 \
+  --gyro-valley-smooth-window 9 \
+  --autocorr-min-period-samples 25 \
+  --autocorr-max-period-fraction 0.8 \
+  --boundary-refine-search-fraction 0.35 \
+  --periodic-count-search-radius 2 \
+  --periodic-max-reps 30 \
+  --evaluate-phase-split \
+  --phase-split-method pca-reversal \
+  --skip-classification
+```
+
+波形圖：
+
+```bash
+.venv311/bin/python tools/plot_waveform_rep_accuracy.py \
+  --run-dir artifacts_rep_classification/010_universal_periodic_gyro_valley_8class_5fold \
+  --output-dir artifacts_rep_classification/010_waveform_rep_accuracy_universal_periodic_gyro_valley \
+  --iou-threshold 0.5 \
+  --min-set-reps 1
+```
+
+主要結果：
+
+```text
+rep IoU@0.25 F1 = 0.9092
+rep IoU@0.50 F1 = 0.7278
+rep IoU@0.75 F1 = 0.3949
+
+phase IoU@0.50 F1 = 0.4552
+waveform set-level IoU@0.50 F1 = 0.7234
+```
+
+每個動作的正確率表在：
+
+```text
+artifacts_rep_classification/010_universal_periodic_gyro_valley_8class_5fold/rep_segmentation_accuracy_by_exercise_table.png
+```

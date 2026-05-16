@@ -50,6 +50,8 @@ artifacts_rep_classification/
   007_rep_feature_relevance_9axis_8class_5fold/
   008_feature_pair_scatter_8class/
   009_universal_rep_boundary_signal_analysis/
+  010_universal_periodic_gyro_valley_8class_5fold/
+  010_waveform_rep_accuracy_universal_periodic_gyro_valley/
   *_8class_5fold/                   各方法的 K-fold、IoU、混淆矩陣結果
   methods_comparison/               多方法 IoU 比較圖
   waveform_method_comparison/       波形切割圖與 set-level 結果圖

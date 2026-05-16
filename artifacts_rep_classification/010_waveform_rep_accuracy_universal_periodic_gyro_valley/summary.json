@@ -1,0 +1,13 @@
+{
+  "run_dir": "artifacts_rep_classification/010_universal_periodic_gyro_valley_8class_5fold",
+  "iou_threshold": 0.5,
+  "set_count": 236,
+  "true_reps": 2720,
+  "predicted_reps": 2740,
+  "matched_reps": 1975,
+  "false_positives": 765,
+  "false_negatives": 745,
+  "precision": 0.7208,
+  "recall": 0.7261,
+  "f1": 0.7234
+}
