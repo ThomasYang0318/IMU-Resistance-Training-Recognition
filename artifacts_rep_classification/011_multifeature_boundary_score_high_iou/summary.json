@@ -1,0 +1,136 @@
+{
+  "data_dirs": [
+    "datasets/workout"
+  ],
+  "method": "multifeature_boundary_score",
+  "block_source": "active-phase-contiguous",
+  "folds": 5,
+  "subjects": [
+    "haoyu0512workout",
+    "hsianshun0514workout",
+    "kevin0509workout",
+    "thomas0506",
+    "yanz0510workout",
+    "yentsen0515workout",
+    "yoru0511workout",
+    "yushuan0513workout",
+    "ziho0512workout"
+  ],
+  "num_truth_reps": 2720,
+  "num_predicted_reps": 2658,
+  "num_blocks": 235,
+  "feature_count": 100,
+  "segmentation_metrics": [
+    {
+      "iou_threshold": 0.5,
+      "true_reps": 2720,
+      "predicted_reps": 2658,
+      "matched_reps": 1985,
+      "false_positives": 673,
+      "false_negatives": 735,
+      "precision": 0.7468,
+      "recall": 0.7298,
+      "f1": 0.7382,
+      "mean_matched_iou": 0.7622
+    },
+    {
+      "iou_threshold": 0.75,
+      "true_reps": 2720,
+      "predicted_reps": 2658,
+      "matched_reps": 1104,
+      "false_positives": 1554,
+      "false_negatives": 1616,
+      "precision": 0.4153,
+      "recall": 0.4059,
+      "f1": 0.4106,
+      "mean_matched_iou": 0.8727
+    },
+    {
+      "iou_threshold": 0.85,
+      "true_reps": 2720,
+      "predicted_reps": 2658,
+      "matched_reps": 675,
+      "false_positives": 1983,
+      "false_negatives": 2045,
+      "precision": 0.254,
+      "recall": 0.2482,
+      "f1": 0.251,
+      "mean_matched_iou": 0.9184
+    },
+    {
+      "iou_threshold": 0.9,
+      "true_reps": 2720,
+      "predicted_reps": 2658,
+      "matched_reps": 436,
+      "false_positives": 2222,
+      "false_negatives": 2284,
+      "precision": 0.164,
+      "recall": 0.1603,
+      "f1": 0.1621,
+      "mean_matched_iou": 0.9425
+    },
+    {
+      "iou_threshold": 0.95,
+      "true_reps": 2720,
+      "predicted_reps": 2658,
+      "matched_reps": 167,
+      "false_positives": 2491,
+      "false_negatives": 2553,
+      "precision": 0.0628,
+      "recall": 0.0614,
+      "f1": 0.0621,
+      "mean_matched_iou": 0.9721
+    }
+  ],
+  "boundary_error_overall": [
+    {
+      "boundaries": 2484,
+      "mean_abs_error_samples": 105.161,
+      "median_abs_error_samples": 60.0,
+      "p80_abs_error_samples": 136.0,
+      "within_5_samples": 0.0709,
+      "within_10_samples": 0.1188,
+      "within_20_samples": 0.2246,
+      "median_abs_error_ms": 600.0
+    }
+  ],
+  "phase_split_method": "pca-reversal",
+  "phase_split_metrics": [
+    {
+      "iou_threshold": 0.5,
+      "true_phase_segments": 5364,
+      "predicted_phase_segments": 5316,
+      "matched_phase_segments": 2529,
+      "false_positives": 2787,
+      "false_negatives": 2835,
+      "precision": 0.4757,
+      "recall": 0.4715,
+      "f1": 0.4736,
+      "mean_matched_iou": 0.6951
+    },
+    {
+      "iou_threshold": 0.75,
+      "true_phase_segments": 5364,
+      "predicted_phase_segments": 5316,
+      "matched_phase_segments": 838,
+      "false_positives": 4478,
+      "false_negatives": 4526,
+      "precision": 0.1576,
+      "recall": 0.1562,
+      "f1": 0.1569,
+      "mean_matched_iou": 0.8457
+    },
+    {
+      "iou_threshold": 0.9,
+      "true_phase_segments": 5364,
+      "predicted_phase_segments": 5316,
+      "matched_phase_segments": 190,
+      "false_positives": 5126,
+      "false_negatives": 5174,
+      "precision": 0.0357,
+      "recall": 0.0354,
+      "f1": 0.0356,
+      "mean_matched_iou": 0.9425
+    }
+  ]
+}

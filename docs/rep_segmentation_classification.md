@@ -53,7 +53,7 @@ datasets/workout
 
 ## Rep Segmentation
 
-目前支援六種模式：
+目前 `tools/evaluate_rep_segmentation_classification.py` 支援多種 classical / hybrid rep segmentation 模式：
 
 ```bash
 --segment-method labels
@@ -90,6 +90,20 @@ datasets/workout
 ```
 
 用 FFT 估計 set-level dominant period，再約束 PCA extrema 的 peak distance。這個版本比原始 PCA peak 穩定，但目前已被 `pca-autocorr` 超越。
+
+```bash
+--segment-method pca-autocorr-gyro-valley
+```
+
+用 PCA principal motion signal + autocorrelation 估 set 內主要週期與 expected rep count，接著在每個預期切點附近搜尋 gyroscope magnitude valley。這是第 010 版 universal active-only segmenter，第一刀不需要先知道動作種類。
+
+另有獨立工具：
+
+```bash
+tools/evaluate_multifeature_boundary_score.py
+```
+
+這個工具不掛在 `--segment-method` 下，而是專門測試 supervised multi-feature boundary scoring。它會在 subject-wise folds 內訓練 boundary candidate scorer，再用 sequence-level duration / count prior 選整組切點。
 
 ## 分類器
 
@@ -570,8 +584,12 @@ active-only set span
 rep IoU@0.25 F1 = 0.9092
 rep IoU@0.50 F1 = 0.7278
 rep IoU@0.75 F1 = 0.3949
+rep IoU@0.85 F1 = 0.2564
+rep IoU@0.90 F1 = 0.1626
+rep IoU@0.95 F1 = 0.0670
 
 phase IoU@0.50 F1 = 0.4552
+phase IoU@0.90 F1 = 0.0432
 waveform set-level IoU@0.50 F1 = 0.7234
 ```
 
@@ -579,4 +597,121 @@ waveform set-level IoU@0.50 F1 = 0.7234
 
 ```text
 artifacts_rep_classification/010_universal_periodic_gyro_valley_8class_5fold/rep_segmentation_accuracy_by_exercise_table.png
+```
+
+## 第 011 版：Multi-feature Boundary Scoring
+
+第 011 版是針對 IoU@0.90 目標做的高精度 boundary 實驗。設計想法是：第 010 版只用 `gyro_magnitude` valley，容易漏掉不同動作的局部特徵；因此這版把 PCA extrema、acc / gyro magnitude、jerk、transition energy、motion energy、dominant-axis extrema 等候選點都放進來，讓模型在訓練 fold 中學哪一種候選點更像真實 rep boundary。
+
+執行指令：
+
+```bash
+.venv311/bin/python tools/evaluate_multifeature_boundary_score.py \
+  --data-dirs datasets/workout \
+  --output-dir artifacts_rep_classification/011_multifeature_boundary_score_high_iou \
+  --block-source active-phase-contiguous \
+  --folds 5 \
+  --min-segment-samples 20 \
+  --smooth-window 9 \
+  --feature-window-samples 10 \
+  --local-window-samples 21 \
+  --candidate-top-k 1 \
+  --candidate-search-fraction 0.35 \
+  --count-search-radius 2 \
+  --max-reps 30 \
+  --positive-radius-samples 10 \
+  --negative-radius-samples 25 \
+  --top-candidates-per-slot 12 \
+  --duration-weight 0.35 \
+  --prior-distance-weight 0.20 \
+  --count-weight 0.25 \
+  --model logistic \
+  --negative-sample-ratio 6 \
+  --segmentation-iou-thresholds 0.5 0.75 0.85 0.9 0.95 \
+  --evaluate-phase-split \
+  --phase-split-method pca-reversal \
+  --phase-iou-thresholds 0.5 0.75 0.9
+```
+
+波形圖：
+
+```bash
+.venv311/bin/python tools/plot_waveform_rep_accuracy.py \
+  --run-dir artifacts_rep_classification/011_multifeature_boundary_score_high_iou \
+  --output-dir artifacts_rep_classification/011_waveform_rep_accuracy_multifeature_boundary_score \
+  --iou-threshold 0.9 \
+  --min-set-reps 1
+```
+
+主要結果：
+
+```text
+rep IoU@0.50 F1 = 0.7382
+rep IoU@0.75 F1 = 0.4106
+rep IoU@0.85 F1 = 0.2510
+rep IoU@0.90 F1 = 0.1621
+rep IoU@0.95 F1 = 0.0621
+
+median internal boundary error = 60.0 samples = 600.0 ms
+internal boundary within 10 samples = 0.1188
+internal boundary within 20 samples = 0.2246
+
+phase IoU@0.50 F1 = 0.4736
+phase IoU@0.90 F1 = 0.0356
+```
+
+每個動作 IoU@0.90 F1：
+
+```text
+db_triceps_curl     0.2600
+db_biceps_curl      0.2143
+db_squat            0.2079
+one_arm_db_row      0.1802
+db_shoulder_press   0.1700
+db_rdl              0.1130
+db_weighted_crunch  0.0852
+db_bench_press      0.0790
+```
+
+結論：
+
+第 011 版是有價值的負結果。它的 IoU@0.50 F1 比第 010 版略高，但 IoU@0.90 F1 很低，代表模型能找到大致正確的 rep，但 boundary 還不夠貼近 ground truth。若目標是前段 rep segmentation 在 IoU@0.90 達 90% 以上，下一版不應只加更多候選特徵，而要優先處理：
+
+- candidate recall：確認真實 boundary 附近 5-10 samples 內是否真的有候選點；
+- label 定義：目前 positive radius 10 samples，可能比 IoU@0.90 所需的 segment-level 誤差仍太寬；
+- sequence alignment：用整組 rep 的相位一致性與 DTW / template alignment 修正 internal boundary；
+- subject adaptation：新人少量標註後校正 period、duration prior 和 boundary feature weight；
+- exercise-aware second pass：初切後先分類動作，再用每個動作自己的 boundary 特徵和 phase order 精修。
+
+第 011 版主要輸出：
+
+```text
+artifacts_rep_classification/011_multifeature_boundary_score_high_iou/
+artifacts_rep_classification/011_waveform_rep_accuracy_multifeature_boundary_score/
+```
+
+第 010 / 第 011 高 IoU 比較圖：
+
+```bash
+.venv311/bin/python tools/compare_rep_segmentation_iou.py \
+  --run universal-gyro-valley=artifacts_rep_classification/010_universal_periodic_gyro_valley_8class_5fold \
+  --run multifeature-score=artifacts_rep_classification/011_multifeature_boundary_score_high_iou \
+  --output-dir artifacts_rep_classification/011_method_comparison_high_iou \
+  --focus-iou 0.9
+```
+
+比較結果：
+
+```text
+universal-gyro-valley IoU@0.90 F1 = 0.1626
+multifeature-score    IoU@0.90 F1 = 0.1621
+```
+
+輸出圖：
+
+```text
+artifacts_rep_classification/011_method_comparison_high_iou/rep_segmentation_methods_f1.png
+artifacts_rep_classification/011_method_comparison_high_iou/rep_segmentation_methods_iou_0.90.png
+artifacts_rep_classification/011_method_comparison_high_iou/rep_segmentation_methods_error_breakdown_iou_0.90.png
+artifacts_rep_classification/011_method_comparison_high_iou/rep_segmentation_exercise_delta_iou_0.90.png
 ```

@@ -52,6 +52,9 @@ artifacts_rep_classification/
   009_universal_rep_boundary_signal_analysis/
   010_universal_periodic_gyro_valley_8class_5fold/
   010_waveform_rep_accuracy_universal_periodic_gyro_valley/
+  011_multifeature_boundary_score_high_iou/
+  011_method_comparison_high_iou/
+  011_waveform_rep_accuracy_multifeature_boundary_score/
   *_8class_5fold/                   各方法的 K-fold、IoU、混淆矩陣結果
   methods_comparison/               多方法 IoU 比較圖
   waveform_method_comparison/       波形切割圖與 set-level 結果圖
@@ -290,9 +293,14 @@ artifacts_rep_classification/006_active_only_pca_autocorr_feature_refined_8class
 artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/
 artifacts_rep_classification/008_feature_pair_scatter_8class/
 artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/
+artifacts_rep_classification/010_universal_periodic_gyro_valley_8class_5fold/
+artifacts_rep_classification/010_waveform_rep_accuracy_universal_periodic_gyro_valley/
+artifacts_rep_classification/011_multifeature_boundary_score_high_iou/
+artifacts_rep_classification/011_method_comparison_high_iou/
+artifacts_rep_classification/011_waveform_rep_accuracy_multifeature_boundary_score/
 ```
 
-第 005 版用 ground truth boundary 量化 PCA、acc magnitude、gyro magnitude、jerk、energy 等特徵的對齊誤差；第 006 版用第 005 版結果做 exercise-aware boundary refinement；第 007 版改看 ground-truth rep 內的九軸 waveform 特徵，輸出 sensor / feature group ablation、跨人穩定 feature ranking、動作別特徵關聯圖與 top-feature confusion matrix；第 008 版把兩個特徵當 x/y 軸畫 8 動作 feature-pair scatter，並對每組 pair 輸出 subject-wise 分類數值；第 009 版專門分析泛化 rep 切割訊號，結果顯示 `pca_motion + autocorr` 最適合估週期，`gyro_magnitude_min_s9` 最適合當跨動作 boundary valley。
+第 005 版用 ground truth boundary 量化 PCA、acc magnitude、gyro magnitude、jerk、energy 等特徵的對齊誤差；第 006 版用第 005 版結果做 exercise-aware boundary refinement；第 007 版改看 ground-truth rep 內的九軸 waveform 特徵，輸出 sensor / feature group ablation、跨人穩定 feature ranking、動作別特徵關聯圖與 top-feature confusion matrix；第 008 版把兩個特徵當 x/y 軸畫 8 動作 feature-pair scatter，並對每組 pair 輸出 subject-wise 分類數值；第 009 版專門分析泛化 rep 切割訊號，結果顯示 `pca_motion + autocorr` 最適合估週期，`gyro_magnitude_min_s9` 最適合當跨動作 boundary valley；第 010 版把這個方向做成 universal active-only segmenter；第 011 版嘗試 supervised multi-feature boundary scoring，但 IoU@0.90 F1 只有 `0.1621`，目前作為負結果與下一版改善依據。
 
 ## 目前方法
 
@@ -305,6 +313,8 @@ artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/
 | `pca-autocorr` | 用 PCA 主要運動訊號加上自相關週期估計，限制 peak distance |
 | `pca-autocorr-refined` | active-contiguous block + PCA/autocorr + motion-energy minima boundary refinement |
 | `pca-autocorr-feature-refined` | active-contiguous block + PCA/autocorr + exercise-aware feature boundary refinement |
+| `pca-autocorr-gyro-valley` | active-contiguous block + PCA/autocorr 估週期，再用 gyro magnitude valley 定位 rep boundary |
+| `multifeature_boundary_score` | subject-wise supervised multi-feature boundary candidate scorer，輸出高 IoU 指標與 boundary error |
 | `pca-extrema-fft` | 用 FFT 估計 set-level dominant period，約束 PCA extrema 切割 |
 
 詳細方法與文獻比較請看：

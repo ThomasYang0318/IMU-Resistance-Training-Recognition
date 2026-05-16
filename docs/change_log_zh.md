@@ -1243,8 +1243,12 @@ predicted reps = 2740
 rep IoU@0.25 F1 = 0.9092
 rep IoU@0.50 F1 = 0.7278
 rep IoU@0.75 F1 = 0.3949
+rep IoU@0.85 F1 = 0.2564
+rep IoU@0.90 F1 = 0.1626
+rep IoU@0.95 F1 = 0.0670
 
 phase IoU@0.50 F1 = 0.4552
+phase IoU@0.90 F1 = 0.0432
 waveform set-level IoU@0.50 F1 = 0.7234
 waveform set plots = 236
 ```
@@ -1266,7 +1270,7 @@ db_bench_press      0.5499
 
 第 010 版證明「PCA 估週期 + gyro valley 精修」可以形成可用的 universal active-only rep segmenter，IoU@0.50 F1 為 `0.7278`。這和第 006 版 exercise-aware refinement 的 `0.7353` 接近，但第 010 版第一刀不依賴動作類別，因此更適合未知 waveform 流程。
 
-目前仍未達 90% IoU@0.50。弱項集中在 `db_bench_press`、`db_biceps_curl`、`db_shoulder_press`，下一步應在初切後先做動作分類，再根據分類結果做 second-pass exercise-aware boundary refinement。
+目前仍未達 90% F1，也遠未達 IoU@0.90 的高精度切割目標。弱項集中在 `db_bench_press`、`db_biceps_curl`、`db_shoulder_press`，下一步應在初切後先做動作分類，再根據分類結果做 second-pass exercise-aware boundary refinement。
 
 輸出結果：
 
@@ -1278,3 +1282,103 @@ db_bench_press      0.5499
 - `artifacts_rep_classification/010_waveform_rep_accuracy_universal_periodic_gyro_valley/waveform_rep_accuracy_by_subject.png`
 - `artifacts_rep_classification/010_waveform_rep_accuracy_universal_periodic_gyro_valley/waveform_rep_accuracy_by_exercise.png`
 - `artifacts_rep_classification/010_waveform_rep_accuracy_universal_periodic_gyro_valley/sets_all/`
+
+## 2026-05-16：第 011 版 Multi-feature Boundary Scoring
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+回應「前面 rep IoU@0.90 必須很高，切 rep 時需要更多特徵進來」。這一版嘗試把第 010 版的單一 `gyro_magnitude` valley 規則改成 supervised boundary candidate scorer，目標是提高高 IoU 門檻下的 rep boundary 準確率。
+
+改動：
+
+- 新增 `tools/evaluate_multifeature_boundary_score.py`；
+- 使用 `active-phase-contiguous`，只處理已在運動中的區段，不納入 rest；
+- 先用 `pca_motion + autocorrelation` 估 set-level period / expected rep count；
+- 在每個預期切點附近收集多種候選 boundary：
+  - PCA min / max；
+  - abs PCA max；
+  - PCA velocity / acceleration；
+  - accelerometer magnitude min / max；
+  - gyroscope magnitude min / max；
+  - acc / gyro jerk；
+  - transition energy；
+  - motion energy；
+  - dominant-axis min / max；
+- 對候選點抽局部 value、mean、std、left/right mean、left-right difference 等特徵；
+- 用 subject-wise 5-fold 訓練 boundary classifier，validation subject 不出現在 training；
+- 以 duration prior、rep-count prior、prior-distance penalty 和 monotonic sequence constraint 選出整組 boundaries；
+- 輸出 IoU@0.50 / 0.75 / 0.85 / 0.90 / 0.95、每個動作的 IoU@0.90 表格、internal boundary error，以及上下排波形切割圖。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/011_multifeature_boundary_score_high_iou/
+waveform output = artifacts_rep_classification/011_waveform_rep_accuracy_multifeature_boundary_score/
+
+truth reps = 2720
+predicted reps = 2658
+
+rep IoU@0.50 F1 = 0.7382
+rep IoU@0.75 F1 = 0.4106
+rep IoU@0.85 F1 = 0.2510
+rep IoU@0.90 F1 = 0.1621
+rep IoU@0.95 F1 = 0.0621
+
+median internal boundary error = 60.0 samples = 600.0 ms
+internal boundary within 10 samples = 0.1188
+internal boundary within 20 samples = 0.2246
+
+phase IoU@0.50 F1 = 0.4736
+phase IoU@0.90 F1 = 0.0356
+waveform set plots = 236
+```
+
+每個動作 IoU@0.90 F1：
+
+```text
+db_triceps_curl     0.2600
+db_biceps_curl      0.2143
+db_squat            0.2079
+one_arm_db_row      0.1802
+db_shoulder_press   0.1700
+db_rdl              0.1130
+db_weighted_crunch  0.0852
+db_bench_press      0.0790
+```
+
+結論：
+
+第 011 版沒有達到 90% 高 IoU 目標，也不應取代第 010 版作為目前主方法。它的 IoU@0.50 F1 從第 010 版的 `0.7278` 小幅到 `0.7382`，但 IoU@0.90 F1 只有 `0.1621`，代表「大致分到同一個 rep」有改善，但「boundary 精準貼到 GT」沒有改善。
+
+主要問題推論：
+
+- 候選點雖多，但真實 boundary 附近 5-10 samples 的候選 recall 可能不足；
+- positive radius 10 samples 對 classifier 來說仍太寬，無法直接優化 IoU@0.90；
+- logistic scorer 只能做局部候選分類，沒有真正學到整段 rep 相位對齊；
+- 不同動作的 boundary cue 差異很大，單一跨動作 boundary scorer 會平均掉特徵；
+- 沒有使用新人少量標註做 subject-specific calibration。
+
+下一步：
+
+下一版建議不要再單純加特徵，而是做 `012_candidate_recall_and_template_alignment`：
+
+1. 先量化每個方法在 GT boundary ±5 / ±10 / ±20 samples 內是否有候選點，確定上限；
+2. 用第 010 版初切後的 reps 建立 per-exercise normalized template；
+3. 對每個 set 做 DTW / phase-normalized template alignment，修正 internal boundary；
+4. 加入 subject adaptation：新人少量標註後估計個人 duration scale、axis weight、boundary offset；
+5. 再用 IoU@0.90、boundary median error、within-10-sample rate 重新比較第 010 / 第 011 / 第 012。
+
+輸出結果：
+
+- `artifacts_rep_classification/011_multifeature_boundary_score_high_iou/summary.json`
+- `artifacts_rep_classification/011_multifeature_boundary_score_high_iou/rep_segmentation_iou_0.90_by_exercise_table.png`
+- `artifacts_rep_classification/011_multifeature_boundary_score_high_iou/boundary_error_by_exercise.png`
+- `artifacts_rep_classification/011_method_comparison_high_iou/rep_segmentation_methods_iou_0.90.png`
+- `artifacts_rep_classification/011_method_comparison_high_iou/rep_segmentation_exercise_delta_iou_0.90.png`
+- `artifacts_rep_classification/011_waveform_rep_accuracy_multifeature_boundary_score/waveform_rep_accuracy_by_subject.png`
+- `artifacts_rep_classification/011_waveform_rep_accuracy_multifeature_boundary_score/waveform_rep_accuracy_by_exercise.png`
+- `artifacts_rep_classification/011_waveform_rep_accuracy_multifeature_boundary_score/sets_all/`

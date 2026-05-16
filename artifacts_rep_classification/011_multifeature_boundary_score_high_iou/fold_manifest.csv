@@ -1,0 +1,6 @@
+fold,train_subjects,val_subjects,train_candidates,train_positive_candidates,train_negative_candidates
+1,"haoyu0512workout,hsianshun0514workout,kevin0509workout,thomas0506,yentsen0515workout,yoru0511workout,yushuan0513workout,ziho0512workout",yanz0510workout,50141,7163,42978
+2,"hsianshun0514workout,kevin0509workout,thomas0506,yanz0510workout,yentsen0515workout,yushuan0513workout,ziho0512workout","haoyu0512workout,yoru0511workout",47341,6763,40578
+3,"haoyu0512workout,hsianshun0514workout,thomas0506,yanz0510workout,yentsen0515workout,yoru0511workout,yushuan0513workout","kevin0509workout,ziho0512workout",43827,6261,37566
+4,"haoyu0512workout,kevin0509workout,thomas0506,yanz0510workout,yoru0511workout,yushuan0513workout,ziho0512workout","hsianshun0514workout,yentsen0515workout",48069,6867,41202
+5,"haoyu0512workout,hsianshun0514workout,kevin0509workout,yanz0510workout,yentsen0515workout,yoru0511workout,ziho0512workout","thomas0506,yushuan0513workout",45458,6494,38964

@@ -1,0 +1,4 @@
+iou_threshold,true_phase_segments,predicted_phase_segments,matched_phase_segments,false_positives,false_negatives,precision,recall,f1,mean_matched_iou
+0.5,5364,5316,2529,2787,2835,0.4757,0.4715,0.4736,0.6951
+0.75,5364,5316,838,4478,4526,0.1576,0.1562,0.1569,0.8457
+0.9,5364,5316,190,5126,5174,0.0357,0.0354,0.0356,0.9425

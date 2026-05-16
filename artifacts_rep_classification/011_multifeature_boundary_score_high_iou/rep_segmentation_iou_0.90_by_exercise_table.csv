@@ -1,0 +1,9 @@
+exercise,iou_threshold,true_reps,predicted_reps,matched_reps,false_positives,false_negatives,precision,recall,f1,mean_matched_iou
+db_triceps_curl,0.9,341,336,88,248,253,0.2619,0.2581,0.26,0.9467
+db_biceps_curl,0.9,323,321,69,252,254,0.215,0.2136,0.2143,0.9397
+db_squat,0.9,350,333,71,262,279,0.2132,0.2029,0.2079,0.9455
+one_arm_db_row,0.9,346,331,61,270,285,0.1843,0.1763,0.1802,0.9379
+db_shoulder_press,0.9,313,287,51,236,262,0.1777,0.1629,0.17,0.9447
+db_rdl,0.9,336,319,37,282,299,0.116,0.1101,0.113,0.9468
+db_weighted_crunch,0.9,335,322,28,294,307,0.087,0.0836,0.0852,0.9354
+db_bench_press,0.9,376,409,31,378,345,0.0758,0.0824,0.079,0.9367

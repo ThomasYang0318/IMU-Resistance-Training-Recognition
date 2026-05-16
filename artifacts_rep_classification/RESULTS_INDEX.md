@@ -6,7 +6,7 @@
 001_<experiment_name>/
 002_<experiment_name>/
 ...
-009_<experiment_name>/
+011_<experiment_name>/
 ```
 
 ## 001_active_only_labels_8class_5fold
@@ -442,10 +442,14 @@ predicted reps: 2740
 rep IoU@0.25 F1: 0.9092
 rep IoU@0.50 F1: 0.7278
 rep IoU@0.75 F1: 0.3949
+rep IoU@0.85 F1: 0.2564
+rep IoU@0.90 F1: 0.1626
+rep IoU@0.95 F1: 0.0670
 
 phase IoU@0.25 F1: 0.6876
 phase IoU@0.50 F1: 0.4552
 phase IoU@0.75 F1: 0.1785
+phase IoU@0.90 F1: 0.0432
 ```
 
 每個動作 rep IoU@0.50 F1：
@@ -494,6 +498,139 @@ matched reps at IoU@0.50: 1975
 set-assigned precision: 0.7208
 set-assigned recall: 0.7261
 set-assigned F1: 0.7234
+```
+
+重點檔案：
+
+- `summary.json`
+- `waveform_rep_accuracy_set_summary.csv`
+- `waveform_rep_accuracy_by_subject.png`
+- `waveform_rep_accuracy_by_exercise.png`
+- `waveform_rep_accuracy_subject_exercise_heatmap.png`
+- `waveform_rep_accuracy_set_f1_distribution.png`
+- `sets_all/*.png`
+
+## 011_multifeature_boundary_score_high_iou
+
+目的：
+
+嘗試把第 009 / 010 版的單一 `gyro_magnitude` valley 規則升級為 supervised boundary scorer。每個 active-only set 先用 `pca_motion + autocorrelation` 估主要週期與 expected rep count，再於每個預期切點附近收集多種候選點，包含 PCA extrema、acc / gyro magnitude extrema、jerk、transition energy、dominant axis extrema 等。候選點會抽局部統計特徵，使用 subject-wise GroupKFold 訓練 boundary classifier，最後以 duration prior、count prior 和 monotonic sequence constraint 選出整組 rep boundaries。
+
+設定：
+
+- method：`multifeature_boundary_score`
+- block source：`active-phase-contiguous`
+- folds：subject-wise 5-fold
+- model：`logistic` (`StandardScaler + SGDClassifier(loss="log_loss")`)
+- candidate top-k：1
+- positive boundary radius：10 samples
+- negative boundary radius：25 samples
+- negative sampling ratio：6
+- segmentation IoU thresholds：0.50 / 0.75 / 0.85 / 0.90 / 0.95
+- phase split：`pca-reversal`
+
+主要數值：
+
+```text
+truth reps: 2720
+predicted reps: 2658
+
+rep IoU@0.50 F1: 0.7382
+rep IoU@0.75 F1: 0.4106
+rep IoU@0.85 F1: 0.2510
+rep IoU@0.90 F1: 0.1621
+rep IoU@0.95 F1: 0.0621
+
+median internal boundary error: 60.0 samples
+median internal boundary error: 600.0 ms
+within 10 samples: 0.1188
+within 20 samples: 0.2246
+
+phase IoU@0.50 F1: 0.4736
+phase IoU@0.90 F1: 0.0356
+```
+
+每個動作 rep IoU@0.90 F1：
+
+```text
+db_triceps_curl     0.2600
+db_biceps_curl      0.2143
+db_squat            0.2079
+one_arm_db_row      0.1802
+db_shoulder_press   0.1700
+db_rdl              0.1130
+db_weighted_crunch  0.0852
+db_bench_press      0.0790
+```
+
+解讀：
+
+這版沒有達成高 IoU 目標，也沒有超過第 010 版作為下一步主方法。IoU@0.50 F1 雖然略高於第 010 版的 `0.7278`，但 IoU@0.90 F1 只有 `0.1621`，median boundary error 仍有 `60 samples / 600 ms`。這表示目前 supervised scorer 可以幫忙找「大致像 boundary」的位置，但不足以把 internal boundary 壓到 10-20 samples 內；若後續要達成 IoU@0.90 以上，需要重新處理候選點 recall、boundary label 定義、個人校正與 sequence-level alignment。
+
+重點檔案：
+
+- `summary.json`
+- `rep_segmentation_metrics.csv`
+- `rep_segmentation_metrics_by_exercise.csv`
+- `rep_segmentation_metrics_by_subject.csv`
+- `rep_segmentation_accuracy_by_exercise_table.csv`
+- `rep_segmentation_accuracy_by_exercise_table.png`
+- `rep_segmentation_iou_0.90_by_exercise_table.csv`
+- `rep_segmentation_iou_0.90_by_exercise_table.png`
+- `rep_segmentation_iou_metrics.png`
+- `rep_segmentation_iou_f1_by_exercise.png`
+- `rep_segmentation_iou_f1_by_subject.png`
+- `boundary_error_overall.csv`
+- `boundary_error_by_exercise.csv`
+- `boundary_error_by_exercise.png`
+- `phase_split_metrics.csv`
+- `phase_split_iou_metrics.png`
+
+## 011_method_comparison_high_iou
+
+目的：
+
+直接比較第 010 版 universal gyro-valley segmenter 和第 011 版 multi-feature boundary scorer，重點放在 IoU@0.90 高精度切割門檻。
+
+主要數值：
+
+```text
+universal-gyro-valley IoU@0.90 F1: 0.1626
+multifeature-score    IoU@0.90 F1: 0.1621
+
+universal-gyro-valley IoU@0.50 F1: 0.7278
+multifeature-score    IoU@0.50 F1: 0.7382
+```
+
+解讀：
+
+第 011 版在 IoU@0.50 有小幅提升，但在 IoU@0.90 沒有超過第 010 版。也就是說，多特徵 scorer 對「大致分到同一個 rep」有幫助，但沒有解決高精度 boundary 對齊問題。下一步應做 candidate recall 診斷與 template / DTW alignment，而不是繼續只加局部特徵。
+
+重點檔案：
+
+- `rep_segmentation_methods_comparison.csv`
+- `rep_segmentation_methods_comparison_by_exercise.csv`
+- `rep_segmentation_methods_f1.png`
+- `rep_segmentation_methods_iou_0.90.png`
+- `rep_segmentation_methods_error_breakdown_iou_0.90.png`
+- `rep_segmentation_exercise_delta_iou_0.90.png`
+
+## 011_waveform_rep_accuracy_multifeature_boundary_score
+
+目的：
+
+針對第 011 版切割結果，輸出每一組 set 的上下排波形圖。上排是同一段 sample waveform + ground truth boundary，下排是 predicted boundary。這版使用 IoU@0.90 做 set-level 統計，專門檢查高精度 rep boundary 是否達標。
+
+主要數值：
+
+```text
+set count: 236
+true reps: 2720
+predicted reps: 2658
+matched reps at IoU@0.90: 436
+set-assigned precision: 0.1640
+set-assigned recall: 0.1603
+set-assigned F1: 0.1621
 ```
 
 重點檔案：

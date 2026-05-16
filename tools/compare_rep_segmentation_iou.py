@@ -137,7 +137,7 @@ def plot_exercise_delta(df: pd.DataFrame, output_dir: Path, baseline: str, candi
     ax.set_title(f"Per-Exercise F1 Change at IoU >= {threshold:.2f}")
     ax.grid(axis="x", alpha=0.25)
     fig.tight_layout()
-    fig.savefig(output_dir / f"rep_segmentation_fft_exercise_delta_iou_{threshold:.2f}.png", dpi=180)
+    fig.savefig(output_dir / f"rep_segmentation_exercise_delta_iou_{threshold:.2f}.png", dpi=180)
     plt.close(fig)
 
 
