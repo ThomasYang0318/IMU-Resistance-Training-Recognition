@@ -1,0 +1,23 @@
+{
+  "active_threshold": 0.1,
+  "causal_majority_windows": 3,
+  "causal_majority_history_seconds": 1.5,
+  "accuracy": 0.7970924640929649,
+  "balanced_accuracy": 0.7772853473250698,
+  "macro_f1": 0.5605578684823153,
+  "weighted_f1": 0.8275031505498043,
+  "avg_active_to_other": 0.022854797546919863,
+  "max_active_to_other": 0.055978800927459424,
+  "other_recall": 0.802116140327507,
+  "predicted_other_rate": 0.673859996343722,
+  "active_to_other_by_class": {
+    "db_bench_press": 0.0062152437029767745,
+    "db_biceps_curl": 0.011182108626198083,
+    "db_rdl": 0.055978800927459424,
+    "db_shoulder_press": 0.00540091400083091,
+    "db_squat": 0.039512400168137875,
+    "db_triceps_curl": 0.006082725060827251,
+    "db_weighted_crunch": 0.0032336297493936943,
+    "one_arm_db_row": 0.055232558139534885
+  }
+}

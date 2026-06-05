@@ -1,0 +1,10 @@
+,db_bench_press,db_biceps_curl,db_rdl,db_shoulder_press,db_squat,db_triceps_curl,db_weighted_crunch,one_arm_db_row,Other
+db_bench_press,1018,354,0,1189,177,221,79,0,19
+db_biceps_curl,0,2321,157,0,0,0,0,0,26
+db_rdl,0,176,1978,0,93,0,0,603,169
+db_shoulder_press,446,46,0,1451,126,0,325,0,13
+db_squat,0,8,0,67,2027,0,183,0,94
+db_triceps_curl,0,0,0,0,91,2269,91,0,15
+db_weighted_crunch,602,0,0,100,519,69,1176,0,8
+one_arm_db_row,65,72,496,0,0,0,0,1644,131
+Other,1610,3561,3444,1584,4898,1807,2052,2060,84081

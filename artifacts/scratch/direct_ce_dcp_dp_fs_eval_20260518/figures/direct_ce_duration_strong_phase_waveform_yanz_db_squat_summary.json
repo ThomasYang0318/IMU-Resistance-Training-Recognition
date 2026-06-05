@@ -1,0 +1,12 @@
+{
+  "figure": "artifacts/scratch/direct_ce_dcp_dp_fs_eval_20260518/figures/direct_ce_duration_strong_phase_waveform_yanz_db_squat_seconds.png",
+  "phase_manifest": "artifacts/scratch/direct_ce_dcp_dp_fs_eval_20260518/direct_ce_duration_strong/phase_segments_manifest.csv",
+  "subject": "yanz0510workout",
+  "exercise": "db_squat",
+  "set_id": "2:active0",
+  "duration_sec": 26.859447,
+  "true_phases": 24,
+  "predicted_phases": 24,
+  "mean_best_iou": 0.42711806363808885,
+  "matched_iou_050": 6
+}

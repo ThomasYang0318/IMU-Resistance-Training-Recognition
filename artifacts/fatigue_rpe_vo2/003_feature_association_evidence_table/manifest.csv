@@ -1,0 +1,9 @@
+path,bytes
+figures/feature_spearman_evidence.png,82806
+figures/group_model_gain_evidence.png,79601
+manifest.csv,262
+metrics/feature_correlation_long.csv,12560
+run_config.yaml,805
+summary.json,6510
+tables/feature_association_evidence.csv,9413
+tables/group_model_evidence.csv,1266

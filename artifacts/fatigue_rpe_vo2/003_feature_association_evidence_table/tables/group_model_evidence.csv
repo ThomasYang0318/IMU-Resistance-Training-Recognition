@@ -1,0 +1,6 @@
+family,model_evidence_dataset,model_evidence_lag_sec,model_evidence_comparison,model_evidence_type,evidence_priority,model_interpretation,model_mae_reduction,model_spearman_gain,model_pm1_acc_gain
+set_order_diagnostic,rpe_lowdim_143_sets,,order_diagnostic_gain,random_forest,1,"Set order improves the workload model, but this is a protocol/progression proxy.",0.2878493403934834,0.3889433784822188,0.1258741258741259
+lowdim_set_trend,rpe_vo2_lowdim_96_sets,45.0,B_minus_A_lowdim_imu_gain,random_forest,1,Low-dimensional IMU trend improves the workload/dose model on the VO2-overlap subset.,0.2270621622301318,0.3483821886866761,0.1041666666666666
+lowdim_set_trend,rpe_lowdim_143_sets,,B_minus_A_lowdim_imu_gain,random_forest,2,"Full RPE-only evidence is weaker; the gain is relative to workload/dose, not to exercise mean.",0.0621758209738987,0.0525113398753639,0.0559440559440558
+delayed_vo2_45s,rpe_vo2_lowdim_96_sets,45.0,C_minus_B_vo2_gain,random_forest,1,45 s delayed VO2 gives the clearest additional gain after low-dimensional IMU trend.,0.0906296651843527,0.1087092884759823,0.0520833333333333
+workload_dose,rpe_lowdim_143_sets,,included_as_Model_A_controls,ridge/random_forest,1,"kg, n_reps, and total_tut_sec define the workload/dose control baseline.",,,

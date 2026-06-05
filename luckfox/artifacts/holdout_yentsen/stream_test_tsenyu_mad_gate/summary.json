@@ -1,0 +1,25 @@
+{
+  "csv": "datasets/workout/tsenyu0515workout/tsenyu0515workout_whole_session_20260515_200226.csv",
+  "model": "luckfox/artifacts/holdout_yentsen/luckfox_model_mad_gate.json",
+  "stream_seconds": 5843.048584,
+  "samples": 515727,
+  "emitted_predictions": 11672,
+  "wall_seconds": 115.29897283299943,
+  "inference_seconds": 114.82833302166546,
+  "inference_ms_per_sample": 0.2226533282563555,
+  "inference_ms_per_emitted_prediction": 9.837931204734874,
+  "accuracy": 0.9282899246058944,
+  "balanced_accuracy": 0.9010441681151029,
+  "macro_f1": 0.8729830291697637,
+  "per_class_recall": {
+    "db_bench_press": 0.9445983379501385,
+    "db_biceps_curl": 0.9136690647482014,
+    "db_rdl": 0.8440779610194903,
+    "db_shoulder_press": 0.8120104438642297,
+    "db_squat": 0.9056047197640118,
+    "db_triceps_curl": 0.9716088328075709,
+    "db_weighted_crunch": 0.8847583643122676,
+    "one_arm_db_row": 0.8907103825136612,
+    "Other": 0.9423594060563545
+  }
+}

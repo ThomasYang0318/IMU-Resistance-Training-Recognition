@@ -1,0 +1,278 @@
+{
+  "base_hgb": {
+    "window": {
+      "accuracy": 0.7974316887129478,
+      "balanced_accuracy": 0.8003771555890378,
+      "macro_f1": 0.7990902047637424,
+      "weighted_f1": 0.7970203175445943,
+      "min_recall": 0.6190278354798504,
+      "per_class_recall": {
+        "db_bench_press": 0.7222767419038273,
+        "db_biceps_curl": 0.9884185303514377,
+        "db_rdl": 0.7538920172242465,
+        "db_shoulder_press": 0.6190278354798504,
+        "db_squat": 0.9680538041193779,
+        "db_triceps_curl": 0.9878345498783455,
+        "db_weighted_crunch": 0.7069523039611965,
+        "one_arm_db_row": 0.65656146179402
+      }
+    },
+    "set_majority": {
+      "accuracy": 0.8212320169933378,
+      "balanced_accuracy": 0.8236037538451838,
+      "macro_f1": 0.82403490117351,
+      "weighted_f1": 0.8214230738668002,
+      "min_recall": 0.6285832987120897,
+      "per_class_recall": {
+        "db_bench_press": 0.7798495256787701,
+        "db_biceps_curl": 1.0,
+        "db_rdl": 0.757535607817158,
+        "db_shoulder_press": 0.6285832987120897,
+        "db_squat": 0.9688944934846574,
+        "db_triceps_curl": 1.0,
+        "db_weighted_crunch": 0.7704122877930477,
+        "one_arm_db_row": 0.6835548172757475
+      }
+    },
+    "warmup_1": {
+      "accuracy": 0.7251617263686395,
+      "balanced_accuracy": 0.7293386274187552,
+      "macro_f1": 0.7318755086732451,
+      "weighted_f1": 0.7271718795385635,
+      "min_recall": 0.41147938561034764,
+      "per_class_recall": {
+        "db_bench_press": 0.5688583578671901,
+        "db_biceps_curl": 0.887779552715655,
+        "db_rdl": 0.7661477310367671,
+        "db_shoulder_press": 0.5949314499376818,
+        "db_squat": 0.937368642286675,
+        "db_triceps_curl": 0.8467153284671532,
+        "db_weighted_crunch": 0.41147938561034764,
+        "one_arm_db_row": 0.8214285714285714
+      }
+    },
+    "warmup_2": {
+      "accuracy": 0.7251617263686395,
+      "balanced_accuracy": 0.7293386274187552,
+      "macro_f1": 0.7318755086732451,
+      "weighted_f1": 0.7271718795385635,
+      "min_recall": 0.41147938561034764,
+      "per_class_recall": {
+        "db_bench_press": 0.5688583578671901,
+        "db_biceps_curl": 0.887779552715655,
+        "db_rdl": 0.7661477310367671,
+        "db_shoulder_press": 0.5949314499376818,
+        "db_squat": 0.937368642286675,
+        "db_triceps_curl": 0.8467153284671532,
+        "db_weighted_crunch": 0.41147938561034764,
+        "one_arm_db_row": 0.8214285714285714
+      }
+    },
+    "warmup_3": {
+      "accuracy": 0.7584725306555953,
+      "balanced_accuracy": 0.7642017980144951,
+      "macro_f1": 0.7631805220067822,
+      "weighted_f1": 0.758439100258198,
+      "min_recall": 0.4987873888439774,
+      "per_class_recall": {
+        "db_bench_press": 0.5969905135754007,
+        "db_biceps_curl": 0.9109424920127795,
+        "db_rdl": 0.7426300099370653,
+        "db_shoulder_press": 0.5949314499376818,
+        "db_squat": 0.9655317360235393,
+        "db_triceps_curl": 0.9732360097323601,
+        "db_weighted_crunch": 0.4987873888439774,
+        "one_arm_db_row": 0.8305647840531561
+      }
+    },
+    "warmup_5": {
+      "accuracy": 0.7901902095201313,
+      "balanced_accuracy": 0.7964955720611863,
+      "macro_f1": 0.795805070539437,
+      "weighted_f1": 0.7923961710334584,
+      "min_recall": 0.4987873888439774,
+      "per_class_recall": {
+        "db_bench_press": 0.6211972522080471,
+        "db_biceps_curl": 1.0,
+        "db_rdl": 0.757535607817158,
+        "db_shoulder_press": 0.6215205650186955,
+        "db_squat": 0.9655317360235393,
+        "db_triceps_curl": 1.0,
+        "db_weighted_crunch": 0.4987873888439774,
+        "one_arm_db_row": 0.907392026578073
+      }
+    },
+    "warmup_7": {
+      "accuracy": 0.8058318045766149,
+      "balanced_accuracy": 0.8110039138555503,
+      "macro_f1": 0.8126041404482245,
+      "weighted_f1": 0.8089819675620823,
+      "min_recall": 0.5969905135754007,
+      "per_class_recall": {
+        "db_bench_press": 0.5969905135754007,
+        "db_biceps_curl": 1.0,
+        "db_rdl": 0.8433256045048029,
+        "db_shoulder_press": 0.6875778977980889,
+        "db_squat": 0.9655317360235393,
+        "db_triceps_curl": 1.0,
+        "db_weighted_crunch": 0.6180274858528698,
+        "one_arm_db_row": 0.776578073089701
+      }
+    },
+    "warmup_10": {
+      "accuracy": 0.8076180361108429,
+      "balanced_accuracy": 0.8137323035439579,
+      "macro_f1": 0.8144922642747929,
+      "weighted_f1": 0.8110227623023756,
+      "min_recall": 0.5969905135754007,
+      "per_class_recall": {
+        "db_bench_press": 0.5969905135754007,
+        "db_biceps_curl": 1.0,
+        "db_rdl": 0.8148393507784034,
+        "db_shoulder_press": 0.7095970087245533,
+        "db_squat": 0.9655317360235393,
+        "db_triceps_curl": 1.0,
+        "db_weighted_crunch": 0.6463217461600647,
+        "one_arm_db_row": 0.776578073089701
+      }
+    }
+  },
+  "posture_hgb": {
+    "window": {
+      "accuracy": 0.8104663512600174,
+      "balanced_accuracy": 0.8137823583103595,
+      "macro_f1": 0.8117328248037174,
+      "weighted_f1": 0.808775785672931,
+      "min_recall": 0.5899459908599917,
+      "per_class_recall": {
+        "db_bench_press": 0.7216225057245665,
+        "db_biceps_curl": 0.990814696485623,
+        "db_rdl": 0.7638290824776416,
+        "db_shoulder_press": 0.5899459908599917,
+        "db_squat": 0.9621689785624212,
+        "db_triceps_curl": 0.9874290348742903,
+        "db_weighted_crunch": 0.7934518997574778,
+        "one_arm_db_row": 0.7009966777408638
+      }
+    },
+    "set_majority": {
+      "accuracy": 0.8387081201120016,
+      "balanced_accuracy": 0.8404391820199264,
+      "macro_f1": 0.8398325009066852,
+      "weighted_f1": 0.8370617447146393,
+      "min_recall": 0.6285832987120897,
+      "per_class_recall": {
+        "db_bench_press": 0.8001308472358521,
+        "db_biceps_curl": 1.0,
+        "db_rdl": 0.7886717456111295,
+        "db_shoulder_press": 0.6285832987120897,
+        "db_squat": 0.9688944934846574,
+        "db_triceps_curl": 1.0,
+        "db_weighted_crunch": 0.8536782538399353,
+        "one_arm_db_row": 0.6835548172757475
+      }
+    },
+    "warmup_1": {
+      "accuracy": 0.7369411991889543,
+      "balanced_accuracy": 0.7397460072446436,
+      "macro_f1": 0.7411323453710833,
+      "weighted_f1": 0.7377498304725971,
+      "min_recall": 0.5024252223120452,
+      "per_class_recall": {
+        "db_bench_press": 0.5969905135754007,
+        "db_biceps_curl": 0.8730031948881789,
+        "db_rdl": 0.7972838688307387,
+        "db_shoulder_press": 0.5949314499376818,
+        "db_squat": 0.937368642286675,
+        "db_triceps_curl": 0.8751013787510138,
+        "db_weighted_crunch": 0.5024252223120452,
+        "one_arm_db_row": 0.7408637873754153
+      }
+    },
+    "warmup_2": {
+      "accuracy": 0.7369411991889543,
+      "balanced_accuracy": 0.7397460072446436,
+      "macro_f1": 0.7411323453710833,
+      "weighted_f1": 0.7377498304725971,
+      "min_recall": 0.5024252223120452,
+      "per_class_recall": {
+        "db_bench_press": 0.5969905135754007,
+        "db_biceps_curl": 0.8730031948881789,
+        "db_rdl": 0.7972838688307387,
+        "db_shoulder_press": 0.5949314499376818,
+        "db_squat": 0.937368642286675,
+        "db_triceps_curl": 0.8751013787510138,
+        "db_weighted_crunch": 0.5024252223120452,
+        "one_arm_db_row": 0.7408637873754153
+      }
+    },
+    "warmup_3": {
+      "accuracy": 0.7652795210968427,
+      "balanced_accuracy": 0.7696122743879197,
+      "macro_f1": 0.7701782697817319,
+      "weighted_f1": 0.7662038402693052,
+      "min_recall": 0.582053354890865,
+      "per_class_recall": {
+        "db_bench_press": 0.6228328426561989,
+        "db_biceps_curl": 0.9177316293929713,
+        "db_rdl": 0.7711162636634648,
+        "db_shoulder_press": 0.5949314499376818,
+        "db_squat": 0.9655317360235393,
+        "db_triceps_curl": 0.9120032441200324,
+        "db_weighted_crunch": 0.582053354890865,
+        "one_arm_db_row": 0.7906976744186046
+      }
+    },
+    "warmup_5": {
+      "accuracy": 0.8196871680988703,
+      "balanced_accuracy": 0.8239124240980791,
+      "macro_f1": 0.8219574176846465,
+      "weighted_f1": 0.819323231788503,
+      "min_recall": 0.6352305774823431,
+      "per_class_recall": {
+        "db_bench_press": 0.7163886162904809,
+        "db_biceps_curl": 1.0,
+        "db_rdl": 0.7711162636634648,
+        "db_shoulder_press": 0.6352305774823431,
+        "db_squat": 0.9655317360235393,
+        "db_triceps_curl": 1.0,
+        "db_weighted_crunch": 0.6924009700889249,
+        "one_arm_db_row": 0.8106312292358804
+      }
+    },
+    "warmup_7": {
+      "accuracy": 0.8429564545717873,
+      "balanced_accuracy": 0.8452631772618169,
+      "macro_f1": 0.8447544204915096,
+      "weighted_f1": 0.8425542967136231,
+      "min_recall": 0.6875778977980889,
+      "per_class_recall": {
+        "db_bench_press": 0.722930978083088,
+        "db_biceps_curl": 1.0,
+        "db_rdl": 0.8744617422987744,
+        "db_shoulder_press": 0.6875778977980889,
+        "db_squat": 0.9655317360235393,
+        "db_triceps_curl": 1.0,
+        "db_weighted_crunch": 0.7433306386418755,
+        "one_arm_db_row": 0.7682724252491694
+      }
+    },
+    "warmup_10": {
+      "accuracy": 0.8430530076276914,
+      "balanced_accuracy": 0.8447130188835894,
+      "macro_f1": 0.8442854996087503,
+      "weighted_f1": 0.8416785590607696,
+      "min_recall": 0.6835548172757475,
+      "per_class_recall": {
+        "db_bench_press": 0.7379784102060843,
+        "db_biceps_curl": 1.0,
+        "db_rdl": 0.8744617422987744,
+        "db_shoulder_press": 0.7095970087245533,
+        "db_squat": 0.9655317360235393,
+        "db_triceps_curl": 1.0,
+        "db_weighted_crunch": 0.7865804365400162,
+        "one_arm_db_row": 0.6835548172757475
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "active_threshold": 0.525,
+  "causal_majority_windows": 3,
+  "causal_majority_history_seconds": 1.5,
+  "accuracy": 0.9034822074381413,
+  "balanced_accuracy": 0.6226290251213923,
+  "macro_f1": 0.6443184337940155,
+  "weighted_f1": 0.9002515759318961
+}

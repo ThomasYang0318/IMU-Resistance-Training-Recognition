@@ -1,340 +1,90 @@
 # IMU Resistance Training Recognition
 
-本專案目前主軸是 resistance training IMU 資料的兩段式分析：
+本 repo 是「智慧穿戴阻力訓練成效評估系統」的開發工作區。系統目標是用腕戴式 IMU 完成動作辨識、repetition 切割、向心/離心 phase 切分，並計算 TUT、動作品質與疲勞相關特徵。
 
-1. 從 whole-session 波形切出每一下 repetition。
-2. 將切出的 rep 以 subject-wise K-fold 驗證分類成 8 類動作，必要時可加入第 9 類 `other`。
+## 快速入口
 
-目前分支重點不是單純訓練一個分類模型，而是比較多種 rep segmentation 方法在同一批 IMU 波形上的切割差異，並輸出 IoU、混淆矩陣、每組波形切割圖與 set-level 結果圖。
+- 專題設計：[proposal.md](proposal.md)
+- 目前任務：[todo.md](todo.md)
+- 文件索引：[docs/README.md](docs/README.md)
+- Agent 協作規範：[docs/agent_workflow_zh.md](docs/agent_workflow_zh.md)
+- 文件瘦身政策：[docs/documentation_policy_zh.md](docs/documentation_policy_zh.md)
+- Artifact 規範：[docs/artifact_organization_zh.md](docs/artifact_organization_zh.md)
+- IEEE 任務報告模板：[docs/task_report_template_ieee_zh.md](docs/task_report_template_ieee_zh.md)
 
-## 專案結構
+## 開發路線
 
 ```text
-datasets/
-  raw_data/                         早期 action classification CSV
-  workout/                          whole-session workout CSV，含 subject/action/set/rep/phase 標註
-models/
-  inertial_student.py               XTinyHAR-style student model
-preprocessing/
-  window_pipeline.py                resampling、z-score、subject-wise split、sliding windows
-train/
-  train_student.py                  早期 action classification training entrypoint
-deploy/
-  export_onnx.py                    checkpoint 轉 ONNX
-  luckfox_infer.py                  ONNX sliding-window inference helper
-tools/
-  evaluate_active_set_detection.py  active / set detection 驗證，輸出 IoU、F1、timeline 切割圖
-  evaluate_active_set_window_classifier.py
-                                    subject-wise window classifier active / set detection
-  evaluate_rep_segmentation_classification.py
-                                    rep 切割、IoU 評估、K-fold 分類、混淆矩陣輸出
-  compare_rep_segmentation_iou.py   多方法 IoU 數值與圖表比較
-  plot_rep_waveform_method_comparison.py
-                                    每個 set 的波形切割線比較圖
-  plot_set_level_method_results.py  set-level heatmap / 平均結果圖
-  run_rep_project_pipeline.py       一鍵重跑目前 rep segmentation 專案流程
-docs/
-  rep_segmentation_classification.md
-  rep_segmentation_literature_benchmark_zh.md
-  project_organization_zh.md
-  experiment_plan_zh.md
-  change_log_zh.md
-artifacts_rep_classification/
-  RESULTS_INDEX.md                  rep segmentation / classification 結果版本索引
-  001_active_only_labels_8class_5fold/
-  002_active_only_pca_autocorr_8class_5fold/
-  003_active_only_pca_autocorr_refined_8class_5fold/
-  004_waveform_rep_accuracy_003_active_only/
-  005_boundary_feature_diagnostics_003_active_only/
-  006_active_only_pca_autocorr_feature_refined_8class_5fold/
-  007_rep_feature_relevance_9axis_8class_5fold/
-  008_feature_pair_scatter_8class/
-  009_universal_rep_boundary_signal_analysis/
-  010_universal_periodic_gyro_valley_8class_5fold/
-  010_waveform_rep_accuracy_universal_periodic_gyro_valley/
-  011_multifeature_boundary_score_high_iou/
-  011_method_comparison_high_iou/
-  011_waveform_rep_accuracy_multifeature_boundary_score/
-  *_8class_5fold/                   各方法的 K-fold、IoU、混淆矩陣結果
-  methods_comparison/               多方法 IoU 比較圖
-  waveform_method_comparison/       波形切割圖與 set-level 結果圖
-artifacts_active_detection/
-  RESULTS_INDEX.md                  active / set detection 結果版本索引
-  001_window_rf_action_5fold/       第 001 版 active / set detection window RF 結果
+Raw IMU CSV
+  -> schema validation
+  -> preprocessing
+  -> active / set detection
+  -> exercise recognition
+  -> repetition segmentation
+  -> concentric / eccentric phase segmentation
+  -> TUT / quality / fatigue features
+  -> reports
+  -> App / embedded export
 ```
+
+## 目前保留的結果
+
+Artifacts 已於 2026-05-17 依「論文敘事鏈」瘦身。歷史保留集：
+
+- `artifacts_active_detection/001_window_rf_action_5fold`
+- `artifacts_rep_classification/014_literature_inspired_rep_methods`
+- `artifacts_rep_classification/015_boundary_candidate_recall_analysis`
+- `artifacts_rep_classification/016_dense_candidate_dp_decoder`
+- `artifacts_rep_classification/017_phase_split_dcp_dp_fs`
+- `artifacts_rep_classification/018_borg_gt_waveform_relation`
+- `artifacts_rep_classification/019_vo2_gt_waveform_relation`
+- `artifacts_rep_classification/021_rpe_feature_correlation_with_yushuan`
+- `artifacts_rep_classification/022_realtime_rpe_vo2_feature_correlation`
+- `artifacts_rep_classification/023_phase_aware_fatigue_ce_rpe_analysis`
+- `artifacts_rep_classification/024_imu_fatigue_component_relevance_figure`
+
+結果索引：
+
+- [artifacts_active_detection/RESULTS_INDEX.md](artifacts_active_detection/RESULTS_INDEX.md)
+- [artifacts_rep_classification/RESULTS_INDEX.md](artifacts_rep_classification/RESULTS_INDEX.md)
+- [artifacts/fatigue_rpe_vo2/RESULTS_INDEX.md](artifacts/fatigue_rpe_vo2/RESULTS_INDEX.md)
+- [artifacts/paper_figures/RESULTS_INDEX.md](artifacts/paper_figures/RESULTS_INDEX.md)
+
+後續新實驗統一輸出到：
+
+```text
+artifacts/<domain>/<experiment_id>_<short_slug>/
+```
+
+分類 root 已建立在 `artifacts/`，規則見 [docs/tasks/003_artifact_taxonomy_report.md](docs/tasks/003_artifact_taxonomy_report.md)。
 
 ## 環境
 
-建議使用專案內既有的 Python 3.11 virtualenv：
+建議使用專案既有 Python 3.11 virtualenv：
 
 ```bash
 .venv311/bin/python -m pip install -r requirements.txt
 ```
 
-若要重建環境：
+若要重建：
 
 ```bash
 python3.11 -m venv .venv311
 .venv311/bin/python -m pip install -r requirements.txt
 ```
 
-## 一鍵重跑 Rep 專案流程
-
-預設會重跑：
-
-- `labels`
-- `dominant-axis`
-- `short-time-energy`
-- `pca-extrema`
-- `pca-autocorr`
-- `pca-extrema-fft`
-
-接著輸出方法比較圖、每組波形切割圖、set-level 比較圖。
+## 常用檢查
 
 ```bash
-.venv311/bin/python tools/run_rep_project_pipeline.py
+git status --short
+find docs/tasks -maxdepth 1 -type f | sort
+find artifacts_active_detection artifacts_rep_classification artifacts -maxdepth 3 -type d | sort
+rg -n "TBD|UNRESOLVED|待處理" README.md proposal.md todo.md docs
 ```
 
-先看會執行哪些指令，不真正重跑：
+## 工作原則
 
-```bash
-.venv311/bin/python tools/run_rep_project_pipeline.py --dry-run
-```
-
-如果只想重畫圖，不重跑模型與 IoU 數值：
-
-```bash
-.venv311/bin/python tools/run_rep_project_pipeline.py \
-  --skip-evaluation \
-  --skip-method-comparison
-```
-
-如果只想產生部分 set 的波形圖做快速檢查：
-
-```bash
-.venv311/bin/python tools/run_rep_project_pipeline.py \
-  --skip-evaluation \
-  --skip-method-comparison \
-  --max-sets 10
-```
-
-## 驗證 Active / Set Detection
-
-這一步只檢查「有沒有先把運動區段切出來」，不修改 rep segmentation。預設只跑可用來檢查方向的方法：
-
-- `oracle-action`：直接用 `action_type` 非 rest，確認標註本身可形成 active set；
-- `imu-hysteresis`：加速度與陀螺儀 envelope、雙閾值 hysteresis、gap merge 與最短 set 長度限制。
-
-`imu-energy` / `imu-variance` 已驗證 segment-level 分數很低，保留為手動 baseline，不再預設執行。
-
-```bash
-.venv311/bin/python tools/evaluate_active_set_detection.py \
-  --output-dir artifacts_active_detection
-```
-
-subject-wise supervised active / set detector：
-
-```bash
-.venv311/bin/python tools/evaluate_active_set_window_classifier.py \
-  --output-dir artifacts_active_detection/001_window_rf_action_5fold \
-  --target action
-```
-
-這個流程會用 `subject_id` 做 GroupKFold，同一個人不會同時出現在訓練與驗證。
-
-主要輸出：
-
-- `active_detection_metrics.csv`
-- `active_detection_metrics_by_subject.csv`
-- `fold_manifest.csv`
-- `window_confusion_matrix.png`
-- `window_rf_active_detection_f1.png`
-- `timeline_examples/*.png`
-
-目前結論是 active/rest 的 window-level 特徵可以學到，但 set-level segment IoU 仍低，表示「辨識正在動」和「切準整組 set 邊界」是兩個不同問題；後續應優先改善 set boundary post-processing 與 action label 定義。
-
-目前正式結果版本：
-
-- `001_window_rf_action_5fold`：subject-wise 5-fold window RF active / set detector。
-
-## 手動執行單一方法
-
-若要先排除休息資料，只確認「已在運動時」的 rep 切割與動作分類，使用 `--block-source active-phase-span`。這個模式直接用 `phase in {concentric,eccentric}` 的標註建立每組 set 的處理範圍，不跑 active detection。
-
-目前正式 active-only 結果：
-
-```bash
-.venv311/bin/python tools/evaluate_rep_segmentation_classification.py \
-  --data-dirs datasets/workout \
-  --output-dir artifacts_rep_classification/001_active_only_labels_8class_5fold \
-  --segment-method labels \
-  --block-source active-phase-span \
-  --folds 5 \
-  --num-classes 8 \
-  --evaluate-phase-split
-
-.venv311/bin/python tools/evaluate_rep_segmentation_classification.py \
-  --data-dirs datasets/workout \
-  --output-dir artifacts_rep_classification/002_active_only_pca_autocorr_8class_5fold \
-  --segment-method pca-autocorr \
-  --block-source active-phase-span \
-  --folds 5 \
-  --num-classes 8 \
-  --evaluate-phase-split
-
-.venv311/bin/python tools/evaluate_rep_segmentation_classification.py \
-  --data-dirs datasets/workout/haoyu0512workout \
-    datasets/workout/hsianshun0514workout \
-    datasets/workout/kevin0509workout \
-    datasets/workout/thomas0506workout \
-    datasets/workout/yanz0510workout \
-    datasets/workout/yoru0511workout \
-    datasets/workout/yushuan0513workout \
-    datasets/workout/ziho0512workout \
-  --output-dir artifacts_rep_classification/003_active_only_pca_autocorr_refined_8class_5fold \
-  --segment-method pca-autocorr-refined \
-  --block-source active-phase-contiguous \
-  --boundary-refine-search-fraction 0.25 \
-  --boundary-refine-energy-window 51 \
-  --folds 5 \
-  --num-classes 8 \
-  --evaluate-phase-split
-```
-
-`003_active_only_pca_autocorr_refined_8class_5fold` 目前結果：
-
-```text
-rep IoU@0.50 F1: 0.7182
-rep IoU@0.75 F1: 0.3622
-exercise classification accuracy: 0.8414
-phase IoU@0.50 F1: 0.4383
-```
-
-以 FFT-guided PCA extrema 為例：
-
-```bash
-.venv311/bin/python tools/evaluate_rep_segmentation_classification.py \
-  --data-dirs datasets/workout \
-  --output-dir artifacts_rep_classification/pca_extrema_fft_8class_5fold \
-  --segment-method pca-extrema-fft \
-  --folds 5 \
-  --num-classes 8
-```
-
-subject-wise K-fold 使用 `subject_id` 作為 group，同一個人不會同時出現在 training 和 validation。
-
-## 主要輸出
-
-每個方法的輸出目錄，例如：
-
-```text
-artifacts_rep_classification/pca_extrema_fft_8class_5fold/
-```
-
-包含：
-
-- `summary.json`
-- `fold_manifest.csv`
-- `classification_report.json`
-- `confusion_matrix.csv`
-- `confusion_matrix.png`
-- `confusion_matrix_normalized.png`
-- `rep_segments_manifest.csv`
-- `rep_segmentation_metrics.csv`
-- `rep_segmentation_metrics_by_exercise.csv`
-- `rep_segmentation_metrics_by_subject.csv`
-- `rep_segmentation_iou_metrics.png`
-- `rep_segmentation_iou_f1_by_exercise.png`
-- `rep_segmentation_iou_f1_by_subject.png`
-- `phase_split_metrics.csv`
-- `phase_split_metrics_by_phase.csv`
-- `phase_split_iou_metrics.png`
-- `phase_split_iou_f1_by_phase.png`
-
-方法比較輸出：
-
-```text
-artifacts_rep_classification/methods_comparison/
-```
-
-波形切割圖輸出：
-
-```text
-artifacts_rep_classification/waveform_method_comparison/sets_all/
-```
-
-目前波形圖標示方式：
-
-- 綠線：ground truth rep boundary
-- 橘線：method predicted rep boundary
-- 實線：start
-- 虛線：end
-- 不使用底色 shading
-
-set-level 比較圖：
-
-```text
-artifacts_rep_classification/waveform_method_comparison/set_level_results/
-```
-
-第 003 版 active-only refined 方法的 waveform 準確率圖：
-
-```text
-artifacts_rep_classification/004_waveform_rep_accuracy_003_active_only/
-```
-
-其中 `sets_all/` 內每一張圖代表一組 set。每張圖用上下兩排呈現同一段 sample waveform：上排是 ground truth rep boundary，下排是 predicted rep boundary。藍線代表 ground truth，紅線代表 prediction；實線是 start，虛線是 end。
-
-boundary feature 診斷與 exercise-aware refinement：
-
-```text
-artifacts_rep_classification/005_boundary_feature_diagnostics_003_active_only/
-artifacts_rep_classification/006_active_only_pca_autocorr_feature_refined_8class_5fold/
-artifacts_rep_classification/007_rep_feature_relevance_9axis_8class_5fold/
-artifacts_rep_classification/008_feature_pair_scatter_8class/
-artifacts_rep_classification/009_universal_rep_boundary_signal_analysis/
-artifacts_rep_classification/010_universal_periodic_gyro_valley_8class_5fold/
-artifacts_rep_classification/010_waveform_rep_accuracy_universal_periodic_gyro_valley/
-artifacts_rep_classification/011_multifeature_boundary_score_high_iou/
-artifacts_rep_classification/011_method_comparison_high_iou/
-artifacts_rep_classification/011_waveform_rep_accuracy_multifeature_boundary_score/
-```
-
-第 005 版用 ground truth boundary 量化 PCA、acc magnitude、gyro magnitude、jerk、energy 等特徵的對齊誤差；第 006 版用第 005 版結果做 exercise-aware boundary refinement；第 007 版改看 ground-truth rep 內的九軸 waveform 特徵，輸出 sensor / feature group ablation、跨人穩定 feature ranking、動作別特徵關聯圖與 top-feature confusion matrix；第 008 版把兩個特徵當 x/y 軸畫 8 動作 feature-pair scatter，並對每組 pair 輸出 subject-wise 分類數值；第 009 版專門分析泛化 rep 切割訊號，結果顯示 `pca_motion + autocorr` 最適合估週期，`gyro_magnitude_min_s9` 最適合當跨動作 boundary valley；第 010 版把這個方向做成 universal active-only segmenter；第 011 版嘗試 supervised multi-feature boundary scoring，但 IoU@0.90 F1 只有 `0.1621`，目前作為負結果與下一版改善依據。
-
-## 目前方法
-
-| 方法 | 說明 |
-|---|---|
-| `labels` | 使用資料內 `rep` + `phase` 標註，作為 oracle baseline |
-| `dominant-axis` | 參考 dominant sensor axis + peak detection 類方法 |
-| `short-time-energy` | 參考 acceleration magnitude short-time energy 的 rep 切割方法 |
-| `pca-extrema` | 將 6-axis IMU 用 PCA 壓成主要運動訊號，再找 extrema |
-| `pca-autocorr` | 用 PCA 主要運動訊號加上自相關週期估計，限制 peak distance |
-| `pca-autocorr-refined` | active-contiguous block + PCA/autocorr + motion-energy minima boundary refinement |
-| `pca-autocorr-feature-refined` | active-contiguous block + PCA/autocorr + exercise-aware feature boundary refinement |
-| `pca-autocorr-gyro-valley` | active-contiguous block + PCA/autocorr 估週期，再用 gyro magnitude valley 定位 rep boundary |
-| `multifeature_boundary_score` | subject-wise supervised multi-feature boundary candidate scorer，輸出高 IoU 指標與 boundary error |
-| `pca-extrema-fft` | 用 FFT 估計 set-level dominant period，約束 PCA extrema 切割 |
-
-詳細方法與文獻比較請看：
-
-- [Rep 切割與動作分類架構](docs/rep_segmentation_classification.md)
-- [Rep 切割文獻比較與方法架構](docs/rep_segmentation_literature_benchmark_zh.md)
-- [專案整理說明](docs/project_organization_zh.md)
-- [實驗規劃](docs/experiment_plan_zh.md)
-- [變更想法紀錄](docs/change_log_zh.md)
-
-## 早期 Student Model 流程
-
-早期 action classification training 仍保留：
-
-```bash
-.venv311/bin/python -m train.train_student --config config.yaml
-```
-
-ONNX export：
-
-```bash
-.venv311/bin/python -m deploy.export_onnx --config config.yaml
-```
+- 每次任務先定義目標、輸入、輸出、限制與驗收標準。
+- 功能實作要有單元測試。
+- 主文件只放短摘要與連結；完整脈絡放 `docs/tasks/`。
+- 大決策需先詢問使用者，包含刪正式結果、改 artifact root、導入 RAG/MCP、改 schema、改核心指標。

@@ -1,0 +1,8 @@
+metric,value,notes
+literature_sources,17,Peer-reviewed or primary literature references in the task report.
+local_project_sources,6,Local docs/artifacts references in the task report.
+citation_trace_sentences,18,Core evidence sentences mapped to citations.
+figures,1,Framework diagram generated for paper_figures artifact.
+schema_changed,0,No schema change performed.
+artifact_root_changed,0,No artifact root change performed.
+formal_experiment_rerun,0,Design artifact only.

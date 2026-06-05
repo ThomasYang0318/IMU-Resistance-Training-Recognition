@@ -1,0 +1,9 @@
+{
+  "output_dir": "artifacts/scratch/dcp_dp_fs_waveform_rerun_20260518_124534",
+  "method": "DCP-DP-FS",
+  "active_blocks": 239,
+  "true_reps": 2720,
+  "predicted_reps": 2654,
+  "runtime_summary": "artifacts/scratch/dcp_dp_fs_waveform_rerun_20260518_124534/runtime_summary.json",
+  "waveform_examples": "artifacts/scratch/dcp_dp_fs_waveform_rerun_20260518_124534/waveform_all_sets"
+}

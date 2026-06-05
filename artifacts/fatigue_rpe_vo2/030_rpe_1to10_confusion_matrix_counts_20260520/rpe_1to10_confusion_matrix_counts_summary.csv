@@ -1,0 +1,6 @@
+metric,value
+total_reps,1945
+exact_accuracy,0.2796915167095116
+pm1_accuracy,0.6946015424164524
+source_model,"rep-level subject-wise ridge, progression control + kg"
+source_matrix,artifacts/fatigue_rpe_vo2/023_rep_level_rpe_subject_rotation_20260520/M4_add_one__kg_rpe_1to10_confusion_matrix.csv

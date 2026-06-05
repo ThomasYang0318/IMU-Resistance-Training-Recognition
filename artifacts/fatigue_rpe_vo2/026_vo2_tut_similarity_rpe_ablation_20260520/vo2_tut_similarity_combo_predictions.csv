@@ -1,0 +1,769 @@
+stage,fold,train_subjects,val_subject,test_subject,folder,exercise,set_id,borg_true,borg_pred
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,0,8.0,7.333333333333333
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,1,9.0,7.333333333333333
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,2,9.0,7.333333333333333
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,0,9.0,8.166666666666666
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,1,9.0,8.166666666666666
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,3,9.0,8.166666666666666
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,0,9.0,6.833333333333333
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,1,9.0,6.833333333333333
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,2,9.0,6.833333333333333
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,0,7.0,8.5
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,1,9.0,8.5
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,2,9.0,8.5
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,0,6.0,6.0
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,1,9.0,6.0
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,2,8.0,6.0
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,0,7.0,6.333333333333333
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,1,9.0,6.333333333333333
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,2,9.0,6.333333333333333
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,0,6.0,6.333333333333333
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,1,7.0,6.333333333333333
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,2,9.0,6.333333333333333
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,0,9.0,7.666666666666667
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,1,9.0,7.666666666666667
+Exercise only,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,2,9.0,7.666666666666667
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,2,5.0,9.166666666666666
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,3,7.0,9.166666666666666
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,4,8.0,9.166666666666666
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,0,7.0,8.833333333333334
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,1,9.0,8.833333333333334
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,2,10.0,8.833333333333334
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,0,5.0,8.166666666666666
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,1,8.0,8.166666666666666
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,2,9.0,8.166666666666666
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,1,7.0,8.666666666666666
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,2,10.0,8.666666666666666
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,3,10.0,8.666666666666666
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,0,7.0,7.333333333333333
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,1,8.0,7.333333333333333
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,2,9.0,7.333333333333333
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,0,7.0,7.833333333333333
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,2,8.0,7.833333333333333
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,4,9.0,7.833333333333333
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,0,6.0,6.666666666666667
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,2,7.0,6.666666666666667
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,3,8.0,6.666666666666667
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,0,6.0,8.833333333333334
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,1,7.0,8.833333333333334
+Exercise only,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,2,9.0,8.833333333333334
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,0,3.0,7.666666666666667
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,4,5.0,7.666666666666667
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,5,7.0,7.666666666666667
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,0,6.0,8.833333333333334
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,1,8.0,8.833333333333334
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,2,9.0,8.833333333333334
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,0,6.0,8.166666666666666
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,1,6.0,8.166666666666666
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,2,7.0,8.166666666666666
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,0,7.0,8.666666666666666
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,1,8.0,8.666666666666666
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,2,9.0,8.666666666666666
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,0,4.0,7.833333333333333
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,1,5.0,7.833333333333333
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,2,6.0,7.833333333333333
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,0,5.0,8.166666666666666
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,1,5.0,8.166666666666666
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,2,6.0,8.166666666666666
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,0,6.0,7.166666666666667
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,1,7.0,7.166666666666667
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,2,7.0,7.166666666666667
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,0,5.0,8.166666666666666
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,2,7.0,8.166666666666666
+Exercise only,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,3,8.0,8.166666666666666
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,0,9.0,5.833333333333333
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,1,10.0,5.833333333333333
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,3,10.0,5.833333333333333
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,0,7.0,8.166666666666666
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,1,9.0,8.166666666666666
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,2,10.0,8.166666666666666
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,0,6.0,6.833333333333333
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,1,8.0,6.833333333333333
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,2,8.0,6.833333333333333
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,0,8.0,8.5
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,1,9.0,8.5
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,2,10.0,8.5
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,0,6.0,6.5
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,1,7.0,6.5
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,2,8.0,6.5
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,0,6.0,6.666666666666667
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,1,7.0,6.666666666666667
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,2,9.0,6.666666666666667
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,0,5.0,6.833333333333333
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,1,6.0,6.833333333333333
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,2,7.0,6.833333333333333
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,0,9.0,7.0
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,1,8.0,7.0
+Exercise only,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,2,9.0,7.0
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,0,8.0,7.2502889767494425
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,1,9.0,8.738999692784748
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,2,9.0,10.2986427552667
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,0,9.0,7.653279004403701
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,1,9.0,8.95235426361226
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,3,9.0,10.250560963476577
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,0,9.0,5.746345560475578
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,1,9.0,7.192207348861482
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,2,9.0,8.872869679974851
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,0,7.0,7.525169949410292
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,1,9.0,8.79095043375614
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,2,9.0,10.291241941048042
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,0,6.0,5.168520683918719
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,1,9.0,6.270722491765162
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,2,8.0,7.250167912291696
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,0,7.0,5.834210933273314
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,1,9.0,7.191479668546265
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,2,9.0,8.440757525351465
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,0,6.0,5.284771364130898
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,1,7.0,6.531443542903364
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,2,9.0,7.695313064191177
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,0,9.0,7.012579315046108
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,1,9.0,8.304416579719296
+TUT,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,2,9.0,9.520978701224616
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,2,5.0,8.05139643340236
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,3,7.0,8.730742481667487
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,4,8.0,9.277429572627193
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,0,7.0,8.129196542471378
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,1,9.0,8.637958593442226
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,2,10.0,9.006193421549801
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,0,5.0,7.256514650811816
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,1,8.0,7.999121554162091
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,2,9.0,8.718753122083431
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,1,7.0,7.715541662153719
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,2,10.0,8.083147029016665
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,3,10.0,8.357120035741147
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,0,7.0,6.63774619538601
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,1,8.0,7.099298653009734
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,2,9.0,7.559277457521888
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,0,7.0,7.126339083711386
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,2,8.0,7.608349031785531
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,4,9.0,8.108928086576212
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,0,6.0,5.972813115896278
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,2,7.0,6.581030043518404
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,3,8.0,7.130707075390094
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,0,6.0,7.99010521260048
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,1,7.0,8.498709898260172
+TUT,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,2,9.0,9.001806798029365
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,0,3.0,6.530493782051443
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,4,5.0,7.232880566005305
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,5,7.0,7.92191120637265
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,0,6.0,7.767137151369337
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,1,8.0,8.334498812489661
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,2,9.0,8.922352091167378
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,0,6.0,7.109990098501944
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,1,6.0,7.869094752480732
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,2,7.0,8.566358632045246
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,0,7.0,7.676183914324984
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,1,8.0,8.240069318895392
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,2,9.0,8.781633497197927
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,0,4.0,7.093263567175633
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,1,5.0,7.728686672325869
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,2,6.0,8.358620951344662
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,0,5.0,7.291896239770274
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,1,5.0,7.817359861420571
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,2,6.0,8.33568800909999
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,0,6.0,6.438627162391608
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,1,7.0,7.043312841205756
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,2,7.0,7.600794615289479
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,0,5.0,7.209518679068276
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,2,7.0,7.7618775487626515
+TUT,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,3,8.0,8.331800662077649
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,0,9.0,5.218881302299873
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,1,10.0,6.526902122536881
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,3,10.0,7.483067981042346
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,0,7.0,7.185031095914556
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,1,9.0,8.141490166888131
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,2,10.0,9.155125669143082
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,0,6.0,5.972849775592444
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,1,8.0,7.3817356848591595
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,2,8.0,8.836949164087196
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,0,8.0,7.96803521249316
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,1,9.0,9.610318246375133
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,2,10.0,11.009528144194231
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,0,6.0,5.760215969301117
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,1,7.0,6.945967190336414
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,2,8.0,8.14022157294689
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,0,6.0,5.8658983266229185
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,1,7.0,6.767233453591885
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,2,9.0,7.766794757377574
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,0,5.0,6.005008944101033
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,1,6.0,7.358477696895031
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,2,7.0,8.664152817387162
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,0,9.0,6.429013241503332
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,1,8.0,7.656693845478305
+TUT,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,2,9.0,8.711379093268603
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,0,8.0,8.15863529262231
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,1,9.0,8.290005547543693
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,2,9.0,8.092635739312637
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,0,9.0,9.097675127541095
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,1,9.0,9.030830648683693
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,3,9.0,8.696993247722068
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,0,9.0,7.76816589052672
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,1,9.0,7.122166694201918
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,2,9.0,7.2849569498048234
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,0,7.0,9.646133210178194
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,1,9.0,9.385643532179799
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,2,9.0,9.293998811414424
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,0,6.0,6.533836802638294
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,1,9.0,6.161272464629168
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,2,8.0,6.364422878611808
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,0,7.0,6.592669112277186
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,1,9.0,6.786876193858822
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,2,9.0,7.369683695247785
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,0,6.0,6.441148560031569
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,1,7.0,6.370698301440532
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,2,9.0,6.690508045668809
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,0,9.0,7.812032009818419
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,1,9.0,7.456379066240489
+Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,2,9.0,7.673331901069168
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,2,5.0,8.534770490627098
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,3,7.0,8.536291862892963
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,4,8.0,8.536195441365999
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,0,7.0,8.418626373187903
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,1,9.0,8.418187153176644
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,2,10.0,8.41206191132142
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,0,5.0,8.183553114733
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,1,8.0,8.172396405810062
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,2,9.0,8.180635557385852
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,1,7.0,8.358021487188507
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,2,10.0,8.356077902699777
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,3,10.0,8.355414100929364
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,0,7.0,7.886633068959425
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,1,8.0,7.875819384247521
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,2,9.0,7.885580172719022
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,0,7.0,8.063071245449343
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,2,8.0,8.062632292347512
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,4,9.0,8.063712267157122
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,0,6.0,7.645557633116402
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,2,7.0,7.646681989813892
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,3,8.0,7.646674592477141
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,0,6.0,8.418106340941518
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,1,7.0,8.4182755076178
+Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,2,9.0,8.410828990443838
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,0,3.0,6.894034819351791
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,4,5.0,6.9040935918112005
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,5,7.0,6.9783354299122715
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,0,6.0,7.892165636710988
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,1,8.0,7.8708408753765795
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,2,9.0,7.99320064447179
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,0,6.0,7.718945746257164
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,1,6.0,7.181092590961654
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,2,7.0,7.247051650704213
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,0,7.0,8.248266036018263
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,1,8.0,7.831288014032155
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,2,9.0,7.738326932508047
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,0,4.0,6.924413537920766
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,1,5.0,6.949252707389055
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,2,6.0,7.032173300444436
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,0,5.0,7.752721124601768
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,1,5.0,7.496276774764097
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,2,6.0,7.631323364335399
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,0,6.0,6.281384511633824
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,1,7.0,6.139403663916563
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,2,7.0,6.126292172973116
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,0,5.0,7.741864135709153
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,2,7.0,7.6686145852312215
+Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,3,8.0,7.451625017524436
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,0,9.0,6.03286511671426
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,1,10.0,6.0989921633605295
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,3,10.0,6.945860137919803
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,0,7.0,8.553196379519887
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,1,9.0,8.548377841191384
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,2,10.0,8.637414356453245
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,0,6.0,7.023631274708903
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,1,8.0,7.688993232666377
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,2,8.0,7.196021964598444
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,0,8.0,8.576633261757529
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,1,9.0,8.4618667406951
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,2,10.0,8.682084984769347
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,0,6.0,6.828841229363284
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,1,7.0,6.932798629958525
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,2,8.0,6.662049456087314
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,0,6.0,6.836335390581533
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,1,7.0,6.915513438424809
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,2,9.0,7.111343877729196
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,0,5.0,8.081258967690811
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,1,6.0,7.412213987122458
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,2,7.0,7.510168034718736
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,0,9.0,7.248475236466842
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,1,8.0,8.009677389440391
+Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,2,9.0,8.15112028977256
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,0,8.0,7.413689745070198
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,1,9.0,7.189276668383347
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,2,9.0,7.289484162626441
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,0,9.0,7.64847540872057
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,1,9.0,7.719091053646892
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,3,9.0,7.6434548454530375
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,0,9.0,7.28142619674002
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,1,9.0,7.128836519197824
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,2,9.0,7.296655593933565
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,0,7.0,7.950850403778103
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,1,9.0,7.701299398738252
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,2,9.0,7.773997068181847
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,0,6.0,6.9544628965462305
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,1,9.0,7.076932255123412
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,2,8.0,6.267378858477329
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,0,7.0,6.887211154955685
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,1,9.0,6.904704593003275
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,2,9.0,6.991405450467609
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,0,6.0,6.885771735547145
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,1,7.0,6.957223154016953
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,2,9.0,7.169669040773869
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,0,9.0,7.67469009870307
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,1,9.0,7.488411875397944
+VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,2,9.0,7.610296935838905
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,2,5.0,8.936964973130083
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,3,7.0,9.00679820922771
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,4,8.0,9.306701204510347
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,0,7.0,8.82319366618991
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,1,9.0,8.766482104283597
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,2,10.0,8.614544255604907
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,0,5.0,7.944071636629936
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,1,8.0,8.112549585251461
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,2,9.0,7.66323196285947
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,1,7.0,8.684476474010982
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,2,10.0,9.151607717214386
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,3,10.0,7.199078813783378
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,0,7.0,6.970390495681193
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,1,8.0,7.689675390898518
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,2,9.0,7.748590002735289
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,0,7.0,7.769523734399365
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,2,8.0,7.85210479078384
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,4,9.0,7.710700985714325
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,0,6.0,6.631235528474045
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,2,7.0,6.653881136232794
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,3,8.0,6.83342107902196
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,0,6.0,8.458380691609069
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,1,7.0,8.89103165885913
+VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,2,9.0,8.485856712447406
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,0,3.0,7.593711916146052
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,4,5.0,7.659487514700795
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,5,7.0,7.645299289378804
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,0,6.0,8.820229665359415
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,1,8.0,8.829636331831717
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,2,9.0,8.778881792475463
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,0,6.0,8.151850893057267
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,1,6.0,8.059146190919778
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,2,7.0,8.171804447939
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,0,7.0,8.718592191397278
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,1,8.0,8.686716942304114
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,2,9.0,8.663599856569123
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,0,4.0,7.714562034558197
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,1,5.0,7.842826519812975
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,2,6.0,7.841793122466187
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,0,5.0,8.167191319252789
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,1,5.0,8.164602154712403
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,2,6.0,8.127853939525593
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,0,6.0,7.16865841078537
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,1,7.0,7.195826120525493
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,2,7.0,7.092249516350975
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,0,5.0,8.128141001651333
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,2,7.0,8.111048783040745
+VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,3,8.0,8.2140181232216
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,0,9.0,6.634884552827307
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,1,10.0,6.61819343510798
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,3,10.0,6.624154182041423
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,0,7.0,7.463118655730179
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,1,9.0,7.452442098044786
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,2,10.0,7.469594227089395
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,0,6.0,6.998350271237316
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,1,8.0,6.992444083575555
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,2,8.0,6.981769920241605
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,0,8.0,7.561884078032806
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,1,9.0,7.572110571670534
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,2,10.0,7.584600174153568
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,0,6.0,6.852699949612156
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,1,7.0,6.841643354393075
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,2,8.0,6.851887651828958
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,0,6.0,6.930651438121519
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,1,7.0,6.9227117102959745
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,2,9.0,6.937203896784136
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,0,5.0,6.9900400942768055
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,1,6.0,6.981511413190787
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,2,7.0,6.971545321787102
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,0,9.0,7.024034941410691
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,1,8.0,7.038593875597727
+VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,2,9.0,7.054290525121667
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,0,8.0,7.790563638425676
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,1,9.0,9.208257378850433
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,2,9.0,10.477727550060457
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,0,9.0,8.306709642901689
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,1,9.0,9.426923174409433
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,3,9.0,10.374389568739337
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,0,9.0,6.462073236541816
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,1,9.0,7.340696101405124
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,2,9.0,8.950512063033887
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,0,7.0,8.36543452370014
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,1,9.0,9.33110764938462
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,2,9.0,10.615528198013049
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,0,6.0,5.599174931528037
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,1,9.0,6.346183186880281
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,2,8.0,7.354084429621924
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,0,7.0,6.05334751560577
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,1,9.0,7.393813449140923
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,2,9.0,8.88787446235382
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,0,6.0,5.463753276382007
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,1,7.0,6.5347195562443225
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,2,9.0,7.782904852837754
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,0,9.0,7.174639265375248
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,1,9.0,8.102350766701605
+TUT + Rep similarity,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,2,9.0,9.33147025392654
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,2,5.0,8.229208187580277
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,3,7.0,8.467309639980789
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,4,8.0,8.650952050542141
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,0,7.0,8.144906194766378
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,1,9.0,8.313701458724605
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,2,10.0,8.40085471413806
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,0,5.0,7.942471124932278
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,1,8.0,8.125441264039383
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,2,9.0,8.417626571715667
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,1,7.0,8.071113812672367
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,2,10.0,8.18327043303967
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,3,10.0,8.271591728804818
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,0,7.0,7.620261119832778
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,1,8.0,7.710589348620611
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,2,9.0,7.9244517919590365
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,0,7.0,7.793519030644823
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,2,8.0,7.95330092081153
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,4,9.0,8.12849943732266
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,0,6.0,7.378154341894364
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,2,7.0,7.589892532423746
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,3,8.0,7.775079317684348
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,0,6.0,8.139715758762437
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,1,7.0,8.312126577978077
+TUT + Rep similarity,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,2,9.0,8.436758636821754
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,0,3.0,5.645520508898953
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,4,5.0,6.488669758429037
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,5,7.0,7.360308864552015
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,0,6.0,7.064745249786464
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,1,8.0,7.725441398505511
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,2,9.0,8.50990809930039
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,0,6.0,6.565761578588137
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,1,6.0,7.097486071346716
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,2,7.0,7.973198315201297
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,0,7.0,7.316425135491932
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,1,8.0,7.699340648921929
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,2,9.0,8.279779669131033
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,0,4.0,6.3170615922712905
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,1,5.0,7.090712928692377
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,2,6.0,7.898000149034215
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,0,5.0,6.864614123353169
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,1,5.0,7.3128169301984185
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,2,6.0,8.023288343952016
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,0,6.0,5.544520624613968
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,1,7.0,6.166202769101958
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,2,7.0,6.820817370493028
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,0,5.0,6.754929710821822
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,2,7.0,7.3618527363126365
+TUT + Rep similarity,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,3,8.0,7.890272386673811
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,0,9.0,5.395169865321503
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,1,10.0,6.673185912325504
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,3,10.0,8.176362893262594
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,0,7.0,7.4810728332664365
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,1,9.0,8.3777067982269
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,2,10.0,9.395017002236328
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,0,6.0,6.1786684879244715
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,1,8.0,7.978552168754124
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,2,8.0,8.996730037092115
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,0,8.0,8.062028754778414
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,1,9.0,9.525714193226818
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,2,10.0,10.999331479384827
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,0,6.0,6.037147251947705
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,1,7.0,7.227056387270804
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,2,8.0,8.15799229879976
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,0,6.0,6.028055198672825
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,1,7.0,6.932662084605932
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,2,9.0,8.012817597281705
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,0,5.0,6.944633792992489
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,1,6.0,7.741614781344869
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,2,7.0,9.040099879338946
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,0,9.0,6.656796139414734
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,1,8.0,8.354443484454611
+TUT + Rep similarity,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,2,9.0,9.447722254612001
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,0,8.0,7.4187101846663595
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,1,9.0,7.64571505925611
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,2,9.0,8.204287756330599
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,0,9.0,7.407521019222282
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,1,9.0,7.860481350549717
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,3,9.0,8.173283308879075
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,0,9.0,7.039804386889719
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,1,9.0,7.3228011688448715
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,2,9.0,7.981953477456539
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,0,7.0,7.683676095948416
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,1,9.0,7.820495470154691
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,2,9.0,8.335144497266182
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,0,6.0,6.679000816094613
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,1,9.0,7.123154390798439
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,2,8.0,6.639339919944757
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,0,7.0,6.677368386997751
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,1,9.0,7.096778320736845
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,2,9.0,7.550351389569689
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,0,6.0,6.5833508250378205
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,1,7.0,7.0215636246069515
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,2,9.0,7.5700820404488764
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,0,9.0,7.452146141398758
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,1,9.0,7.6572211573620255
+TUT + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,2,9.0,8.134744367302673
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,2,5.0,7.92928575044023
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,3,7.0,8.714687226427252
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,4,8.0,9.673790252275829
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,0,7.0,8.223459163413382
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,1,9.0,8.665347792650113
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,2,10.0,8.836357627128267
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,0,5.0,6.936179517396775
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,1,8.0,7.918378294569967
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,2,9.0,8.04806128873878
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,1,7.0,7.8126041019547525
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,2,10.0,8.813805494107715
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,3,10.0,6.472327487761556
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,0,7.0,5.986691468080519
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,1,8.0,7.421952894026059
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,2,9.0,7.969350664419792
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,0,7.0,6.95747532028516
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,2,8.0,7.559066205518658
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,4,9.0,7.878960565610153
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,0,6.0,5.602140626638594
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,2,7.0,6.251792551327309
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,3,8.0,7.052404475686144
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,0,6.0,7.591402823508978
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,1,7.0,8.689888728304144
+TUT + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,2,9.0,8.658347998177343
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,0,3.0,6.480170437620377
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,4,5.0,7.229476557882659
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,5,7.0,7.907448624071499
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,0,6.0,7.761244464911726
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,1,8.0,8.334795209060811
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,2,9.0,8.8851835103167
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,0,6.0,7.098867590840251
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,1,6.0,7.789892350641226
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,2,7.0,8.568082372072023
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,0,7.0,7.714532055090855
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,1,8.0,8.254671203110478
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,2,9.0,8.77886578178295
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,0,4.0,7.00639341678633
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,1,5.0,7.734129889151288
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,2,6.0,8.362611908610186
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,0,5.0,7.2923947064912955
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,1,5.0,7.815394321993593
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,2,6.0,8.306492979443371
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,0,6.0,6.439603339049575
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,1,7.0,7.063317444753048
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,2,7.0,7.5450595522279045
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,0,5.0,7.184575214342479
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,2,7.0,7.723921904241604
+TUT + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,3,8.0,8.367886458406744
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,0,9.0,5.246589756789412
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,1,10.0,6.521634024718764
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,3,10.0,7.486259080683775
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,0,7.0,7.207241185984699
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,1,9.0,8.142327461034254
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,2,10.0,9.184354776737843
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,0,6.0,6.056365686634809
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,1,8.0,7.451377729118115
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,2,8.0,8.884060201748703
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,0,8.0,7.968504710449402
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,1,9.0,9.625296373684733
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,2,10.0,11.04363929803747
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,0,6.0,5.778321101668514
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,1,7.0,6.941483667866827
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,2,8.0,8.151322874229932
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,0,6.0,5.909153655882944
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,1,7.0,6.794151708982391
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,2,9.0,7.817368253985368
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,0,5.0,6.058682627176754
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,1,6.0,7.393704451403593
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,2,7.0,8.678466710897672
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,0,9.0,6.413236571510662
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,1,8.0,7.66416039413138
+TUT + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,2,9.0,8.744532046779318
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,0,8.0,8.332976761645629
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,1,9.0,8.141119492504645
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,2,9.0,8.105372101863674
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,0,9.0,9.092102174031764
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,1,9.0,9.130146680141625
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,3,9.0,8.734503620958662
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,0,9.0,8.077794448775318
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,1,9.0,7.303680742080354
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,2,9.0,7.675645270551849
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,0,7.0,9.84731407667375
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,1,9.0,9.278073000332054
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,2,9.0,9.29725566833025
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,0,6.0,6.884028579048731
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,1,9.0,6.725365810003854
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,2,8.0,5.796249235638065
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,0,7.0,6.590086336293704
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,1,9.0,6.784003604684277
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,2,9.0,7.412709900917672
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,0,6.0,6.500513947350095
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,1,7.0,6.536544957717242
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,2,9.0,7.106975705020924
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,0,9.0,8.208619775326584
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,1,9.0,7.64259431860159
+Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,2,9.0,7.999161763805775
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,2,5.0,8.478048251110872
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,3,7.0,8.527303996125175
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,4,8.0,8.7228782677128
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,0,7.0,8.500484962633289
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,1,9.0,8.462400912410082
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,2,10.0,8.348458374594008
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,0,5.0,8.042136147359061
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,1,8.0,8.1252828001877
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,2,9.0,7.8517541315548245
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,1,7.0,8.432530637194281
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,2,10.0,8.732842225292984
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,3,10.0,7.456440540879977
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,0,7.0,7.526620529474853
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,1,8.0,7.970214049427919
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,2,9.0,8.032171996741573
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,0,7.0,7.9827106301895165
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,2,8.0,8.035571222929601
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,4,9.0,7.9458481578716
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,0,6.0,7.458334229680378
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,2,7.0,7.4758256698075085
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,3,8.0,7.593029300997867
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,0,6.0,8.26234551782023
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,1,7.0,8.545230025856963
+Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,2,9.0,8.262769160600167
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,0,3.0,6.8217029882060976
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,4,5.0,6.89708401222857
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,5,7.0,6.957215797875944
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,0,6.0,7.8795291156219305
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,1,8.0,7.867552030913958
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,2,9.0,7.939473671694546
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,0,6.0,7.704361529095779
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,1,6.0,7.074577065494227
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,2,7.0,7.252405394042072
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,0,7.0,8.300048688529463
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,1,8.0,7.85152091083794
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,2,9.0,7.735625032289747
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,0,4.0,6.806644291860371
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,1,5.0,6.95886256448261
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,2,6.0,7.040735554051233
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,0,5.0,7.753363533556305
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,1,5.0,7.494413599477988
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,2,6.0,7.592929141550177
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,0,6.0,6.283424000976126
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,1,7.0,6.168461131383844
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,2,7.0,6.052486219821185
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,0,5.0,7.7037266288240716
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,2,7.0,7.613520799112936
+Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,3,8.0,7.498850623158822
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,0,9.0,6.050512834767807
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,1,10.0,6.090008892828679
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,3,10.0,6.939632597946904
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,0,7.0,8.562251614224424
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,1,9.0,8.540764047106302
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,2,10.0,8.655948896502997
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,0,6.0,7.100543846218616
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,1,8.0,7.7515008874286515
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,2,8.0,7.245652290991482
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,0,8.0,8.573983425861767
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,1,9.0,8.476109637013778
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,2,10.0,8.714162466011306
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,0,6.0,6.843412124054427
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,1,7.0,6.9292617458422985
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,2,8.0,6.676643552932777
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,0,6.0,6.871600991259905
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,1,7.0,6.937740741220866
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,2,9.0,7.154728604322666
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,0,5.0,8.119922179827999
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,1,6.0,7.442723361515433
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,2,7.0,7.524322608980308
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,0,9.0,7.2283308017348435
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,1,8.0,8.006407668199838
+Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,2,9.0,8.171314741883423
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,0,8.0,7.9353831775964805
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,1,9.0,9.077719150281514
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_bench_press,2,9.0,10.460894791585147
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,0,9.0,8.311203505467612
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,1,9.0,9.502536992869764
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_biceps_curl,3,9.0,10.38558434388899
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,0,9.0,6.726685779313104
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,1,9.0,7.484634774436642
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_rdl,2,9.0,9.246740143292545
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,0,7.0,8.542276754964208
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,1,9.0,9.244953329456184
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_shoulder_press,2,9.0,10.603136089716296
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,0,6.0,5.892287332156279
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,1,9.0,6.7991199114538325
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_squat,2,8.0,6.884507103686749
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,0,7.0,6.057393510591709
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,1,9.0,7.384598305123132
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_triceps_curl,2,9.0,8.905328092775127
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,0,6.0,5.522749868865643
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,1,7.0,6.6666392756117165
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,db_weighted_crunch,2,9.0,8.106442406983584
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,0,9.0,7.501799511495994
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,1,9.0,8.245223841792725
+TUT + Rep similarity + VO2 delay45s,1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,haoyu0512workout,one_arm_db_row,2,9.0,9.575463130438974
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,2,5.0,8.041733918960187
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,3,7.0,8.817876296494951
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_bench_press,4,8.0,9.678461109830124
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,0,7.0,8.32937114860216
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,1,9.0,8.665315329026663
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_biceps_curl,2,10.0,8.3882696699304
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,0,5.0,7.372395582514521
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,1,8.0,7.5163806817134615
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_rdl,2,9.0,8.076052656510749
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,1,7.0,7.986850228161217
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,2,10.0,8.794255588213442
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_shoulder_press,3,10.0,6.415435102749553
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,0,7.0,6.23900989219884
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,1,8.0,6.888284578220627
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_squat,2,9.0,7.99154382101382
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,0,7.0,7.1406458985166985
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,2,8.0,7.637042689790531
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_triceps_curl,4,9.0,7.952209430338388
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,0,6.0,5.73483876356182
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,2,7.0,6.361867193929702
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,db_weighted_crunch,3,8.0,7.072189166477856
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,0,6.0,7.791703923607856
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,1,7.0,8.8114347272086
+TUT + Rep similarity + VO2 delay45s,2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,yanz0510workout,one_arm_db_row,2,9.0,8.231994543914661
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,0,3.0,5.595267795189074
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,4,5.0,6.484249716988258
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_bench_press,5,7.0,7.344905039271958
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,0,6.0,7.056855594535348
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,1,8.0,7.723484765977715
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_biceps_curl,2,9.0,8.471115490156391
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,0,6.0,6.556417103257958
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,1,6.0,7.021135573519755
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_rdl,2,7.0,7.976026214325985
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,0,7.0,7.354463159884201
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,1,8.0,7.713896399422042
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_shoulder_press,2,9.0,8.277168390600982
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,0,4.0,6.233240516133956
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,1,5.0,7.09723885501615
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_squat,2,6.0,7.902973737436009
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,0,5.0,6.8659499842689
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,1,5.0,7.311570191095131
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_triceps_curl,2,6.0,7.995256925855547
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,0,6.0,5.546646075099042
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,1,7.0,6.186815944477486
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,db_weighted_crunch,2,7.0,6.767058846862212
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,0,5.0,6.728932025953023
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,2,7.0,7.3229604248090805
+TUT + Rep similarity + VO2 delay45s,3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,yoru0511workout,one_arm_db_row,3,8.0,7.923787007182862
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,0,9.0,5.415403287192228
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,1,10.0,6.668049887333953
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_bench_press,3,10.0,8.173867935811952
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,0,7.0,7.496181797417464
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,1,9.0,8.376662793731953
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_biceps_curl,2,10.0,9.415974194334593
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,0,6.0,6.241987919461381
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,1,8.0,8.028304328050229
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_rdl,2,8.0,9.032135141393525
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,0,8.0,8.061719101414626
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,1,9.0,9.537941433036018
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_shoulder_press,2,10.0,11.025869430923988
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,0,6.0,6.0492084371179
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,1,7.0,7.221562548512416
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_squat,2,8.0,8.166477736029716
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,0,6.0,6.060451849615409
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,1,7.0,6.952360300223773
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_triceps_curl,2,9.0,8.050290687937238
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,0,5.0,6.979539190192819
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,1,6.0,7.766198161149225
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,db_weighted_crunch,2,7.0,9.048509747152146
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,0,9.0,6.642922802012855
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,1,8.0,8.355233657959205
+TUT + Rep similarity + VO2 delay45s,4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,yushuan0513workout,one_arm_db_row,2,9.0,9.468164297941303

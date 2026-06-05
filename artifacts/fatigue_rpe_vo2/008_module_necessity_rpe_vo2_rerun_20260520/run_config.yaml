@@ -1,0 +1,17 @@
+experiment_id: '005'
+domain: fatigue_rpe_vo2
+name: module_necessity_rpe_vo2
+created_at: '2026-05-17'
+split: leave-one-subject-out
+model: ridge_regression for RPE module ladder
+primary_vo2_lag_sec: 45
+inputs:
+  rpe_set_features: artifacts_rep_classification/021_rpe_feature_correlation_with_yushuan/020_rpe_set_level_feature_dataset.csv
+  vo2_merged_features: artifacts_rep_classification/022_realtime_rpe_vo2_feature_correlation/022_realtime_rpe_vo2_merged_set_dataset.csv
+  vo2_estimation_summary: artifacts_rep_classification/019_vo2_gt_waveform_relation/summary.json
+module_questions:
+  - Does exercise context improve RPE modeling?
+  - Does segmentation-derived cumulative TUT improve over ordinal set index?
+  - Do IMU trend features add beyond cumulative TUT?
+  - Does delayed VO2 add to RPE, and is VO2 estimable as its own physiological target?
+  - Which individual numeric features are most associated with RPE without assuming module importance?

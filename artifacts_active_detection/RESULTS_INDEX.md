@@ -1,14 +1,35 @@
 # Active / Set Detection Results Index
 
-正式結果資料夾採用遞增編號：
+最後更新：2026-05-17
+
+正式產物規範見 `docs/artifact_organization_zh.md`。短期保留既有資料夾；新實驗使用：
 
 ```text
-001_<method_or_experiment_name>/
-002_<method_or_experiment_name>/
-003_<method_or_experiment_name>/
+artifacts_active_detection/<experiment_id>_<short_slug>/
+  summary.json
+  run_config.yaml
+  manifest.csv
+  metrics/
+  tables/
+  figures/
+  diagnostics/
+  models/
+  logs/
 ```
 
-低分 threshold 測參數或臨時 exploratory output 不列入正式編號。
+本 root 目前只保留論文敘事鏈需要的 active / set detection baseline：
+
+```text
+001_window_rf_action_5fold/
+```
+
+後續新 active/set 實驗請輸出到：
+
+```text
+artifacts/active_set/<experiment_id>_<short_slug>/
+```
+
+低分 threshold 測參數或臨時 exploratory output 放 `artifacts/scratch/`，不列入正式編號。
 
 ## 001_window_rf_action_5fold
 

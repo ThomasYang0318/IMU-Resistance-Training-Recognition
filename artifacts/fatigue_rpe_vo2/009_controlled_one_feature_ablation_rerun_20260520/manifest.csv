@@ -1,0 +1,11 @@
+path,bytes
+figures/one_feature_coefficients.png,164516
+figures/one_feature_delta_mae.png,114188
+figures/one_feature_delta_vs_best_progression.png,125392
+figures/progression_baselines_mae.png,92346
+metrics/fold_metrics.csv,27362
+metrics/model_summary.csv,7021
+run_config.yaml,967
+summary.json,34607
+tables/controlled_one_feature_ablation.csv,12297
+tables/predictions.csv,387021

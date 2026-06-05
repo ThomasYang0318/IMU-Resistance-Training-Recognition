@@ -1,0 +1,84 @@
+{
+  "source_predictions": "artifacts/fatigue_rpe_vo2/007_gt_rep_rpe_model_rerun_20260520/018_borg_prediction_predictions.csv",
+  "test_set": "rep-level GT RPE predictions, LOSO over 6 folders, 1677 reps per selected model",
+  "selected_primary": "rep_combined_random_forest_rpe_1to10",
+  "combined_random_forest": {
+    "n": 1677,
+    "overall_accuracy": 0.19856887298747763,
+    "macro_f1": 0.08466634875279948,
+    "weighted_f1": 0.14628594443044268,
+    "true_distribution": {
+      "1": 115,
+      "2": 54,
+      "3": 149,
+      "4": 196,
+      "5": 353,
+      "6": 301,
+      "7": 237,
+      "8": 164,
+      "9": 96,
+      "10": 12
+    },
+    "pred_distribution": {
+      "3": 7,
+      "4": 341,
+      "5": 652,
+      "6": 587,
+      "7": 89,
+      "8": 1
+    }
+  },
+  "metadata_ridge_best_mae_reference": {
+    "n": 1677,
+    "overall_accuracy": 0.1967799642218247,
+    "macro_f1": 0.1213939314201851,
+    "weighted_f1": 0.1775455829074332,
+    "true_distribution": {
+      "1": 115,
+      "2": 54,
+      "3": 149,
+      "4": 196,
+      "5": 353,
+      "6": 301,
+      "7": 237,
+      "8": 164,
+      "9": 96,
+      "10": 12
+    },
+    "pred_distribution": {
+      "2": 17,
+      "3": 182,
+      "4": 341,
+      "5": 413,
+      "6": 422,
+      "7": 240,
+      "8": 62
+    }
+  },
+  "waveform_random_forest_reference": {
+    "n": 1677,
+    "overall_accuracy": 0.2003577817531306,
+    "macro_f1": 0.086925622636885,
+    "weighted_f1": 0.14874091482261428,
+    "true_distribution": {
+      "1": 115,
+      "2": 54,
+      "3": 149,
+      "4": 196,
+      "5": 353,
+      "6": 301,
+      "7": 237,
+      "8": 164,
+      "9": 96,
+      "10": 12
+    },
+    "pred_distribution": {
+      "3": 10,
+      "4": 309,
+      "5": 662,
+      "6": 589,
+      "7": 107
+    }
+  },
+  "note": "This test set has true RPE labels spanning 1-10. It is rep-level GT waveform/TUT RPE, not the VO2-overlap set-level dataset."
+}

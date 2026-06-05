@@ -1,2 +1,0 @@
-boundaries,mean_abs_error_samples,median_abs_error_samples,p80_abs_error_samples,within_5_samples,within_10_samples,within_20_samples,median_abs_error_ms
-2484,105.161,60.0,136.0,0.0709,0.1188,0.2246,600.0

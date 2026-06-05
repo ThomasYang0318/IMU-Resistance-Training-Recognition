@@ -1,7 +1,0 @@
-iou_threshold,true_reps,predicted_reps,matched_reps,false_positives,false_negatives,precision,recall,f1,mean_matched_iou,method
-0.25,2132,15337,1770,13567,362,0.1154,0.8302,0.2026,0.4554,pca-extrema
-0.5,2132,15337,563,14774,1569,0.0367,0.2641,0.0645,0.6208,pca-extrema
-0.75,2132,15337,92,15245,2040,0.006,0.0432,0.0105,0.8401,pca-extrema
-0.25,2132,8589,1679,6910,453,0.1955,0.7875,0.3132,0.577,pca-extrema-fft
-0.5,2132,8589,1033,7556,1099,0.1203,0.4845,0.1927,0.6701,pca-extrema-fft
-0.75,2132,8589,303,8286,1829,0.0353,0.1421,0.0565,0.854,pca-extrema-fft

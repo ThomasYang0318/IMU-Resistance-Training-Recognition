@@ -1,0 +1,16 @@
+experiment_id: '003'
+domain: fatigue_rpe_vo2
+name: feature_association_evidence_table
+created_at: '2026-05-17'
+primary_vo2_lag_sec: 45
+split_reference: leave-one-subject-out model deltas from experiment 002
+inputs:
+  rpe_set_features: artifacts_rep_classification/021_rpe_feature_correlation_with_yushuan/020_rpe_set_level_feature_dataset.csv
+  vo2_merged_features: artifacts_rep_classification/022_realtime_rpe_vo2_feature_correlation/022_realtime_rpe_vo2_merged_set_dataset.csv
+  model_delta_summary: artifacts/fatigue_rpe_vo2/002_lowdim_set_trend_vo2_eval/metrics/model_delta_summary.csv
+outputs:
+  - tables/feature_association_evidence.csv
+  - tables/group_model_evidence.csv
+  - metrics/feature_correlation_long.csv
+  - figures/feature_spearman_evidence.png
+  - figures/group_model_gain_evidence.png

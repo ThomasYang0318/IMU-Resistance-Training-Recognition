@@ -1,0 +1,101 @@
+{
+  "labels": [
+    "db_bench_press",
+    "db_biceps_curl",
+    "db_rdl",
+    "db_shoulder_press",
+    "db_squat",
+    "db_triceps_curl",
+    "db_weighted_crunch",
+    "one_arm_db_row"
+  ],
+  "total_active_windows": 20714,
+  "feature_extraction_seconds": 634.2975726250006,
+  "best_model_by_macro_f1": "hist_gradient_boosting",
+  "models": {
+    "extra_trees": {
+      "model": "extra_trees",
+      "accuracy": 0.7747417205754562,
+      "balanced_accuracy": 0.7773165835903324,
+      "macro_f1": 0.7734752809245783,
+      "weighted_f1": 0.7726598152190255,
+      "min_recall": 0.550477773161612,
+      "per_class_recall": {
+        "db_bench_press": 0.7333987569512594,
+        "db_biceps_curl": 0.994408945686901,
+        "db_rdl": 0.7138125207022192,
+        "db_shoulder_press": 0.550477773161612,
+        "db_squat": 0.9487179487179487,
+        "db_triceps_curl": 0.9927007299270073,
+        "db_weighted_crunch": 0.5557801131770412,
+        "one_arm_db_row": 0.729235880398671
+      },
+      "train_seconds": 36.54437791600503,
+      "predict_seconds": 0.9063904169888701,
+      "predict_ms_per_window": 0.04375738230128754
+    },
+    "random_forest_deep": {
+      "model": "random_forest_deep",
+      "accuracy": 0.7807280100415178,
+      "balanced_accuracy": 0.7829593803191672,
+      "macro_f1": 0.7815502661584304,
+      "weighted_f1": 0.7802977644603749,
+      "min_recall": 0.5974241794765268,
+      "per_class_recall": {
+        "db_bench_press": 0.7127903173045469,
+        "db_biceps_curl": 0.9932108626198083,
+        "db_rdl": 0.7558794302749254,
+        "db_shoulder_press": 0.5974241794765268,
+        "db_squat": 0.9365279529213956,
+        "db_triceps_curl": 0.9922952149229521,
+        "db_weighted_crunch": 0.5982215036378334,
+        "one_arm_db_row": 0.6773255813953488
+      },
+      "train_seconds": 149.37257928999315,
+      "predict_seconds": 0.5599286679935176,
+      "predict_ms_per_window": 0.027031411991576597
+    },
+    "random_forest_leaf2": {
+      "model": "random_forest_leaf2",
+      "accuracy": 0.7827073476875543,
+      "balanced_accuracy": 0.7852135347912892,
+      "macro_f1": 0.7836921120830852,
+      "weighted_f1": 0.7822958608973575,
+      "min_recall": 0.5886996260905691,
+      "per_class_recall": {
+        "db_bench_press": 0.7118089630356559,
+        "db_biceps_curl": 0.9940095846645367,
+        "db_rdl": 0.7522358396820139,
+        "db_shoulder_press": 0.5886996260905691,
+        "db_squat": 0.9390500210172341,
+        "db_triceps_curl": 0.9922952149229521,
+        "db_weighted_crunch": 0.6046887631366209,
+        "one_arm_db_row": 0.6989202657807309
+      },
+      "train_seconds": 147.8185125410091,
+      "predict_seconds": 0.4510069179959828,
+      "predict_ms_per_window": 0.021773048083227903
+    },
+    "hist_gradient_boosting": {
+      "model": "hist_gradient_boosting",
+      "accuracy": 0.7974316887129478,
+      "balanced_accuracy": 0.8003771555890378,
+      "macro_f1": 0.7990902047637424,
+      "weighted_f1": 0.7970203175445943,
+      "min_recall": 0.6190278354798504,
+      "per_class_recall": {
+        "db_bench_press": 0.7222767419038273,
+        "db_biceps_curl": 0.9884185303514377,
+        "db_rdl": 0.7538920172242465,
+        "db_shoulder_press": 0.6190278354798504,
+        "db_squat": 0.9680538041193779,
+        "db_triceps_curl": 0.9878345498783455,
+        "db_weighted_crunch": 0.7069523039611965,
+        "one_arm_db_row": 0.65656146179402
+      },
+      "train_seconds": 176.35984883399942,
+      "predict_seconds": 1.476538001006702,
+      "predict_ms_per_window": 0.0712821280779522
+    }
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "source": "artifacts/fatigue_rpe_vo2/009_controlled_one_feature_ablation_rerun_20260520/tables/predictions.csv",
+  "split": "LOSO predictions; test subject excluded from training in each fold",
+  "evaluation": "Only samples with true RPE >= 5 are included because set-level low-RPE support is insufficient.",
+  "bins": {
+    "5-6": "moderate",
+    "7-8": "hard",
+    "9-10": "very hard"
+  },
+  "results": [
+    {
+      "dataset": "rpe_only_143_sets",
+      "model_stage": "M0_exercise_mean",
+      "n": 133,
+      "overall_accuracy": 0.39097744360902253,
+      "macro_f1": 0.3727116402116402,
+      "weighted_f1": 0.3839124597207304,
+      "true_distribution": {
+        "5-6": 36,
+        "7-8": 49,
+        "9-10": 48
+      },
+      "pred_distribution": {
+        "5-6": 27,
+        "7-8": 79,
+        "9-10": 27
+      }
+    },
+    {
+      "dataset": "rpe_only_143_sets",
+      "model_stage": "M1_exercise_plus_set_index",
+      "n": 133,
+      "overall_accuracy": 0.5037593984962406,
+      "macro_f1": 0.489615861708885,
+      "weighted_f1": 0.4969544270121294,
+      "true_distribution": {
+        "5-6": 36,
+        "7-8": 49,
+        "9-10": 48
+      },
+      "pred_distribution": {
+        "5-6": 27,
+        "7-8": 80,
+        "9-10": 26
+      }
+    },
+    {
+      "dataset": "rpe_only_143_sets",
+      "model_stage": "M2_exercise_plus_cumulative_tut",
+      "n": 133,
+      "overall_accuracy": 0.5263157894736842,
+      "macro_f1": 0.515959595959596,
+      "weighted_f1": 0.5218318523581682,
+      "true_distribution": {
+        "5-6": 36,
+        "7-8": 49,
+        "9-10": 48
+      },
+      "pred_distribution": {
+        "5-6": 30,
+        "7-8": 76,
+        "9-10": 27
+      }
+    },
+    {
+      "dataset": "rpe_only_143_sets",
+      "model_stage": "M3_progression_control",
+      "n": 133,
+      "overall_accuracy": 0.518796992481203,
+      "macro_f1": 0.5107435064935065,
+      "weighted_f1": 0.514782443120789,
+      "true_distribution": {
+        "5-6": 36,
+        "7-8": 49,
+        "9-10": 48
+      },
+      "pred_distribution": {
+        "5-6": 28,
+        "7-8": 76,
+        "9-10": 29
+      }
+    },
+    {
+      "dataset": "vo2_lag45_96_sets",
+      "model_stage": "M0_exercise_mean",
+      "n": 94,
+      "overall_accuracy": 0.3829787234042553,
+      "macro_f1": 0.2525728240013954,
+      "weighted_f1": 0.2873398131756794,
+      "true_distribution": {
+        "5-6": 22,
+        "7-8": 35,
+        "9-10": 37
+      },
+      "pred_distribution": {
+        "5-6": 0,
+        "7-8": 82,
+        "9-10": 12
+      }
+    },
+    {
+      "dataset": "vo2_lag45_96_sets",
+      "model_stage": "M1_exercise_plus_set_index",
+      "n": 94,
+      "overall_accuracy": 0.44680851063829785,
+      "macro_f1": 0.4214042220915073,
+      "weighted_f1": 0.4262687781003201,
+      "true_distribution": {
+        "5-6": 22,
+        "7-8": 35,
+        "9-10": 37
+      },
+      "pred_distribution": {
+        "5-6": 15,
+        "7-8": 62,
+        "9-10": 17
+      }
+    },
+    {
+      "dataset": "vo2_lag45_96_sets",
+      "model_stage": "M2_exercise_plus_cumulative_tut",
+      "n": 94,
+      "overall_accuracy": 0.574468085106383,
+      "macro_f1": 0.566922594041238,
+      "weighted_f1": 0.5753249435182359,
+      "true_distribution": {
+        "5-6": 22,
+        "7-8": 35,
+        "9-10": 37
+      },
+      "pred_distribution": {
+        "5-6": 17,
+        "7-8": 55,
+        "9-10": 22
+      }
+    },
+    {
+      "dataset": "vo2_lag45_96_sets",
+      "model_stage": "M3_progression_control",
+      "n": 94,
+      "overall_accuracy": 0.5425531914893617,
+      "macro_f1": 0.5359506393989153,
+      "weighted_f1": 0.54528462488844,
+      "true_distribution": {
+        "5-6": 22,
+        "7-8": 35,
+        "9-10": 37
+      },
+      "pred_distribution": {
+        "5-6": 20,
+        "7-8": 53,
+        "9-10": 21
+      }
+    }
+  ]
+}

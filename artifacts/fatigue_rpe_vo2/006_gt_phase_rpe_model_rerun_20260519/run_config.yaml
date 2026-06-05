@@ -1,0 +1,21 @@
+schema_version: "1.0"
+created_at: "2026-05-17"
+domain: "fatigue_rpe_vo2"
+experiment_id: "001"
+name: "gt_phase_imu_vo2_rpe_framework_eval"
+split: "leave-one-subject-out"
+phase_set_features: "artifacts_rep_classification/023_phase_aware_fatigue_ce_rpe_analysis/023_phase_aware_set_feature_dataset.csv"
+vo2_merged_features: "artifacts_rep_classification/022_realtime_rpe_vo2_feature_correlation/022_realtime_rpe_vo2_merged_set_dataset.csv"
+output_dir: "artifacts/fatigue_rpe_vo2/006_gt_phase_rpe_model_rerun_20260519"
+seed: 42
+n_estimators: 400
+models:
+  - baseline_exercise_mean
+  - A_metadata_progress
+  - B_metadata_imu_phase
+  - C_metadata_imu_phase_vo2
+  - D_subject_calibration
+constraints:
+  uses_ground_truth_phase_features: true
+  predicted_segmentation_evaluated: false
+  schema_changed: false

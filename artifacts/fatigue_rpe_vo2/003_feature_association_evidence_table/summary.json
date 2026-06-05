@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "003",
+  "domain": "fatigue_rpe_vo2",
+  "name": "feature_association_evidence_table",
+  "created_at": "2026-05-17",
+  "status": "formal",
+  "task": "feature-level and group-level evidence table for Borg/RPE associations",
+  "question": "Which candidate workload, IMU trend, and delayed VO2 features can be cited as associated with Borg/RPE, and what are the limits of that claim?",
+  "input_data": [
+    "artifacts_rep_classification/021_rpe_feature_correlation_with_yushuan/020_rpe_set_level_feature_dataset.csv",
+    "artifacts_rep_classification/022_realtime_rpe_vo2_feature_correlation/022_realtime_rpe_vo2_merged_set_dataset.csv",
+    "artifacts/fatigue_rpe_vo2/002_lowdim_set_trend_vo2_eval/metrics/model_delta_summary.csv"
+  ],
+  "output_dir": "artifacts/fatigue_rpe_vo2/003_feature_association_evidence_table",
+  "command": ".venv311/bin/python tools/build_feature_association_evidence_table.py --output-dir artifacts/fatigue_rpe_vo2/003_feature_association_evidence_table",
+  "primary_metrics": {
+    "rpe_only_rows": 143,
+    "rpe_only_subjects": 6,
+    "vo2_lag45_rows": 96,
+    "vo2_lag45_subjects": 4,
+    "candidate_features": 14
+  },
+  "top_raw_associations_by_abs_spearman": [
+    {
+      "feature": "cumulative_tut_exercise_sec",
+      "family": "cumulative_dose",
+      "spearman_rho_raw": 0.4986533399567895,
+      "spearman_qvalue_bh_raw": 3.2570090462792475e-09,
+      "claim_strength": "feature-level association evidence"
+    },
+    {
+      "feature": "set_index_numeric",
+      "family": "set_order_diagnostic",
+      "spearman_rho_raw": 0.4396565277174376,
+      "spearman_qvalue_bh_raw": 2.753939364816687e-07,
+      "claim_strength": "strong diagnostic proxy, not a physiological or IMU claim"
+    },
+    {
+      "feature": "vo2_slope",
+      "family": "delayed_vo2_45s",
+      "spearman_rho_raw": 0.36385793608956896,
+      "spearman_qvalue_bh_raw": 0.0012521635602146715,
+      "claim_strength": "promising delayed auxiliary evidence"
+    },
+    {
+      "feature": "n_reps",
+      "family": "workload_dose",
+      "spearman_rho_raw": -0.292661641766913,
+      "spearman_qvalue_bh_raw": 0.0013637830807035755,
+      "claim_strength": "control/dose evidence, not sufficient alone"
+    },
+    {
+      "feature": "pca_diff_rms_mean",
+      "family": "lowdim_set_trend",
+      "spearman_rho_raw": -0.2861385551605403,
+      "spearman_qvalue_bh_raw": 0.0014878778850082825,
+      "claim_strength": "promising group-level IMU evidence"
+    },
+    {
+      "feature": "gyro_diff_gain_last2_vs_first2",
+      "family": "lowdim_set_trend",
+      "spearman_rho_raw": 0.1957787919012138,
+      "spearman_qvalue_bh_raw": 0.036799797729849364,
+      "claim_strength": "promising group-level IMU evidence"
+    },
+    {
+      "feature": "kg",
+      "family": "workload_dose",
+      "spearman_rho_raw": -0.1930663376703001,
+      "spearman_qvalue_bh_raw": 0.036799797729849364,
+      "claim_strength": "control/dose evidence, not sufficient alone"
+    },
+    {
+      "feature": "gyro_mag_diff_rms_slope",
+      "family": "lowdim_set_trend",
+      "spearman_rho_raw": 0.1928382623084412,
+      "spearman_qvalue_bh_raw": 0.036799797729849364,
+      "claim_strength": "promising group-level IMU evidence"
+    }
+  ],
+  "key_group_model_evidence": [
+    {
+      "family": "set_order_diagnostic",
+      "model_evidence_dataset": "rpe_lowdim_143_sets",
+      "model_evidence_lag_sec": null,
+      "model_evidence_comparison": "order_diagnostic_gain",
+      "model_evidence_type": "random_forest",
+      "evidence_priority": 1,
+      "model_interpretation": "Set order improves the workload model, but this is a protocol/progression proxy.",
+      "model_mae_reduction": 0.2878493403934834,
+      "model_spearman_gain": 0.3889433784822188,
+      "model_pm1_acc_gain": 0.1258741258741259
+    },
+    {
+      "family": "lowdim_set_trend",
+      "model_evidence_dataset": "rpe_vo2_lowdim_96_sets",
+      "model_evidence_lag_sec": 45.0,
+      "model_evidence_comparison": "B_minus_A_lowdim_imu_gain",
+      "model_evidence_type": "random_forest",
+      "evidence_priority": 1,
+      "model_interpretation": "Low-dimensional IMU trend improves the workload/dose model on the VO2-overlap subset.",
+      "model_mae_reduction": 0.2270621622301318,
+      "model_spearman_gain": 0.3483821886866761,
+      "model_pm1_acc_gain": 0.1041666666666666
+    },
+    {
+      "family": "lowdim_set_trend",
+      "model_evidence_dataset": "rpe_lowdim_143_sets",
+      "model_evidence_lag_sec": null,
+      "model_evidence_comparison": "B_minus_A_lowdim_imu_gain",
+      "model_evidence_type": "random_forest",
+      "evidence_priority": 2,
+      "model_interpretation": "Full RPE-only evidence is weaker; the gain is relative to workload/dose, not to exercise mean.",
+      "model_mae_reduction": 0.0621758209738987,
+      "model_spearman_gain": 0.0525113398753639,
+      "model_pm1_acc_gain": 0.0559440559440558
+    },
+    {
+      "family": "delayed_vo2_45s",
+      "model_evidence_dataset": "rpe_vo2_lowdim_96_sets",
+      "model_evidence_lag_sec": 45.0,
+      "model_evidence_comparison": "C_minus_B_vo2_gain",
+      "model_evidence_type": "random_forest",
+      "evidence_priority": 1,
+      "model_interpretation": "45 s delayed VO2 gives the clearest additional gain after low-dimensional IMU trend.",
+      "model_mae_reduction": 0.0906296651843527,
+      "model_spearman_gain": 0.1087092884759823,
+      "model_pm1_acc_gain": 0.0520833333333333
+    },
+    {
+      "family": "workload_dose",
+      "model_evidence_dataset": "rpe_lowdim_143_sets",
+      "model_evidence_lag_sec": null,
+      "model_evidence_comparison": "included_as_Model_A_controls",
+      "model_evidence_type": "ridge/random_forest",
+      "evidence_priority": 1,
+      "model_interpretation": "kg, n_reps, and total_tut_sec define the workload/dose control baseline.",
+      "model_mae_reduction": null,
+      "model_spearman_gain": null,
+      "model_pm1_acc_gain": null
+    }
+  ],
+  "key_files": {
+    "feature_table": "tables/feature_association_evidence.csv",
+    "group_model_table": "tables/group_model_evidence.csv",
+    "long_correlation_table": "metrics/feature_correlation_long.csv",
+    "feature_figure": "figures/feature_spearman_evidence.png",
+    "group_gain_figure": "figures/group_model_gain_evidence.png"
+  },
+  "notes": "This artifact supports association claims only. set_index_numeric is a diagnostic proxy; delayed VO2 is not real-time; IMU trend features are post-set summaries."
+}

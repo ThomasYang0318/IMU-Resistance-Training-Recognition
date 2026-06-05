@@ -1,0 +1,5 @@
+{
+  "output_dir": "artifacts/scratch/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940",
+  "comparison_csv": "artifacts/scratch/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940/comparison_summary.csv",
+  "calibration_reps": 3
+}

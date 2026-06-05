@@ -1,0 +1,101 @@
+{
+  "source": "artifacts/fatigue_rpe_vo2/009_controlled_one_feature_ablation_rerun_20260520/tables/predictions.csv",
+  "split": "LOSO predictions from controlled one-feature ablation; test subject excluded from training in each fold",
+  "binning": {
+    "1-2": "RPE 1-2",
+    "3-4": "RPE 3-4",
+    "5-6": "RPE 5-6",
+    "7-8": "RPE 7-8",
+    "9-10": "RPE 9-10"
+  },
+  "results": {
+    "rpe_only_143_sets_M2_exercise_plus_cumulative_tut_5class": {
+      "dataset": "rpe_only_143_sets",
+      "model_stage": "M2_exercise_plus_cumulative_tut",
+      "n": 143,
+      "overall_accuracy": 0.48951048951048953,
+      "macro_f1": 0.29761403508771933,
+      "weighted_f1": 0.4702834008097166,
+      "true_distribution": {
+        "1-2": 0,
+        "3-4": 10,
+        "5-6": 36,
+        "7-8": 49,
+        "9-10": 48
+      },
+      "pred_distribution": {
+        "1-2": 0,
+        "3-4": 0,
+        "5-6": 40,
+        "7-8": 76,
+        "9-10": 27
+      }
+    },
+    "rpe_only_143_sets_M3_progression_control_5class": {
+      "dataset": "rpe_only_143_sets",
+      "model_stage": "M3_progression_control",
+      "n": 143,
+      "overall_accuracy": 0.4825174825174825,
+      "macro_f1": 0.29377718497718497,
+      "weighted_f1": 0.462836779927689,
+      "true_distribution": {
+        "1-2": 0,
+        "3-4": 10,
+        "5-6": 36,
+        "7-8": 49,
+        "9-10": 48
+      },
+      "pred_distribution": {
+        "1-2": 0,
+        "3-4": 0,
+        "5-6": 38,
+        "7-8": 76,
+        "9-10": 29
+      }
+    },
+    "vo2_lag45_96_sets_M2_exercise_plus_cumulative_tut_5class": {
+      "dataset": "vo2_lag45_96_sets",
+      "model_stage": "M2_exercise_plus_cumulative_tut",
+      "n": 96,
+      "overall_accuracy": 0.5625,
+      "macro_f1": 0.3376414791300569,
+      "weighted_f1": 0.5587596996265014,
+      "true_distribution": {
+        "1-2": 0,
+        "3-4": 2,
+        "5-6": 22,
+        "7-8": 35,
+        "9-10": 37
+      },
+      "pred_distribution": {
+        "1-2": 0,
+        "3-4": 0,
+        "5-6": 17,
+        "7-8": 57,
+        "9-10": 22
+      }
+    },
+    "vo2_lag45_96_sets_M3_progression_control_5class": {
+      "dataset": "vo2_lag45_96_sets",
+      "model_stage": "M3_progression_control",
+      "n": 96,
+      "overall_accuracy": 0.53125,
+      "macro_f1": 0.31914614121510676,
+      "weighted_f1": 0.5295053366174055,
+      "true_distribution": {
+        "1-2": 0,
+        "3-4": 2,
+        "5-6": 22,
+        "7-8": 35,
+        "9-10": 37
+      },
+      "pred_distribution": {
+        "1-2": 0,
+        "3-4": 0,
+        "5-6": 20,
+        "7-8": 55,
+        "9-10": 21
+      }
+    }
+  }
+}

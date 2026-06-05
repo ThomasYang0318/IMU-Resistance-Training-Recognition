@@ -1,0 +1,26 @@
+{
+  "active_only_8class_accuracy": 0.7858453220044415,
+  "active_only_8class_balanced_accuracy": 0.7880489326564689,
+  "active_only_8class_macro_f1": 0.7857994698541579,
+  "support": 20714,
+  "per_class_recall": {
+    "db_bench_press": 0.6947988223748773,
+    "db_biceps_curl": 0.9940095846645367,
+    "db_rdl": 0.7833719774759854,
+    "db_shoulder_press": 0.5508932280847528,
+    "db_squat": 0.9348465741908365,
+    "db_triceps_curl": 0.9931062449310625,
+    "db_weighted_crunch": 0.6378334680679062,
+    "one_arm_db_row": 0.715531561461794
+  },
+  "per_class_f1": {
+    "db_bench_press": 0.7170830519918974,
+    "db_biceps_curl": 0.9876984126984127,
+    "db_rdl": 0.7778325933234665,
+    "db_shoulder_press": 0.5710594315245479,
+    "db_squat": 0.8915614351573462,
+    "db_triceps_curl": 0.99532615322089,
+    "db_weighted_crunch": 0.6258179654967282,
+    "one_arm_db_row": 0.7200167154199749
+  }
+}

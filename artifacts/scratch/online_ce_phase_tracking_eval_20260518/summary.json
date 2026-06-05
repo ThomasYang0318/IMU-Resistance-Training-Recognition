@@ -1,0 +1,69 @@
+{
+  "output_dir": "/Users/thomas/ESA/IMU/artifacts/scratch/online_ce_phase_tracking_eval_20260518",
+  "active_blocks": 239,
+  "true_reps": 2720,
+  "true_phase_segments": 5364,
+  "variants": {
+    "online_balanced": {
+      "ema_alpha": 0.1,
+      "min_scale": 0.36,
+      "target_scale": 1.0,
+      "max_scale": 1.85,
+      "delay_scale": 0.18,
+      "max_delay": 42,
+      "prominence": 0.42,
+      "duration_penalty": 0.55,
+      "confirm_after_target": 0.78,
+      "left_window_scale": 0.28
+    },
+    "online_duration_strong": {
+      "ema_alpha": 0.1,
+      "min_scale": 0.42,
+      "target_scale": 1.0,
+      "max_scale": 1.55,
+      "delay_scale": 0.16,
+      "max_delay": 38,
+      "prominence": 0.36,
+      "duration_penalty": 0.85,
+      "confirm_after_target": 0.7,
+      "left_window_scale": 0.24
+    },
+    "online_reversal_strong": {
+      "ema_alpha": 0.08,
+      "min_scale": 0.3,
+      "target_scale": 1.0,
+      "max_scale": 2.2,
+      "delay_scale": 0.22,
+      "max_delay": 52,
+      "prominence": 0.52,
+      "duration_penalty": 0.35,
+      "confirm_after_target": 0.88,
+      "left_window_scale": 0.34
+    },
+    "online_fast_confirm": {
+      "ema_alpha": 0.14,
+      "min_scale": 0.34,
+      "target_scale": 0.95,
+      "max_scale": 1.75,
+      "delay_scale": 0.12,
+      "max_delay": 30,
+      "prominence": 0.34,
+      "duration_penalty": 0.65,
+      "confirm_after_target": 0.58,
+      "left_window_scale": 0.22
+    },
+    "online_tut_stable": {
+      "ema_alpha": 0.11,
+      "min_scale": 0.44,
+      "target_scale": 1.0,
+      "max_scale": 1.45,
+      "delay_scale": 0.15,
+      "max_delay": 34,
+      "prominence": 0.3,
+      "duration_penalty": 1.05,
+      "confirm_after_target": 0.62,
+      "left_window_scale": 0.22
+    }
+  },
+  "runtime_total_sec": 158.7347
+}

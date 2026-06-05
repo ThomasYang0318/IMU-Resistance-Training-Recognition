@@ -1,0 +1,33 @@
+schema_version: "1.0"
+created_at: "2026-05-17"
+domain: "fatigue_rpe_vo2"
+experiment_id: "002"
+name: "lowdim_set_trend_vo2_eval"
+split: "leave-one-subject-out"
+rpe_set_features: "artifacts_rep_classification/021_rpe_feature_correlation_with_yushuan/020_rpe_set_level_feature_dataset.csv"
+vo2_merged_features: "artifacts_rep_classification/022_realtime_rpe_vo2_feature_correlation/022_realtime_rpe_vo2_merged_set_dataset.csv"
+output_dir: "artifacts/fatigue_rpe_vo2/002_lowdim_set_trend_vo2_eval"
+seed: 42
+n_estimators: 400
+feature_groups:
+  workload_dose:
+    - kg
+    - n_reps
+    - total_tut_sec
+  set_order_diagnostic:
+    - set_index_numeric
+  lowdim_set_trend:
+    - rep_duration_cv
+    - movement_rate_cv
+    - gyro_diff_gain_last2_vs_first2
+    - gyro_mag_diff_rms_slope
+    - sim_to_first_slope
+    - pca_diff_rms_mean
+  delayed_vo2:
+    - vo2_mean
+    - vo2_peak
+    - vo2_slope
+constraints:
+  uses_ce_phase_specific_features: false
+  uses_subject_normalized_vo2_features: false
+  schema_changed: false

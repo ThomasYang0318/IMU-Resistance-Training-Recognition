@@ -32,6 +32,742 @@
 - `rejected`：不做；
 - `superseded`：被後續方案取代。
 
+## 2026-05-17：024 圖論文撰寫版
+
+日期：2026-05-17
+
+狀態：implemented
+
+目的：
+
+將第 024 版 IMU fatigue component relevance 圖整理成可直接放入論文的章節，詳細說明為什麼要跑這張圖、方法如何設計、結果如何解讀，以及引用哪些文獻支撐。
+
+實際改動：
+
+- 新增 `docs/imu_fatigue_component_relevance_024_paper_zh.md`；
+- 在第 024 版簡短文件與結果索引中加入論文撰寫版連結；
+- 補上 Introduction、Methods、Results、Discussion、Limitations、figure caption 與 IEEE 格式引用。
+
+結論：
+
+第 024 圖應定位成「建模前的特徵合理性驗證」，用來支撐 IMU 可量化 fatigue-related movement changes，而不是宣稱 IMU 可直接量測肌肉疲勞。後續模型應採用 exercise-aware、phase-aware 與 subject calibration 設計。
+
+## 2026-05-16：024 IMU 疲勞相關成分結果圖
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+產生一張可放入論文或簡報的結果圖，用數據說明哪些 IMU / VO2 成分和 Borg/RPE 有關。這張圖用來支撐「IMU 不能直接量測肌肉疲勞，但可以量化疲勞相關動作學變化」這個研究定位。
+
+實際改動：
+
+- 新增 `tools/plot_imu_fatigue_component_relevance.py`；
+- 新增 `docs/imu_fatigue_component_relevance_024_zh.md`；
+- 合併第 023 版 CE phase-aware correlation 與第 022 版 VO2 correlation；
+- 輸出 correlation bar chart、raw vs within-subject/exercise comparison、exercise-feature heatmap。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/024_imu_fatigue_component_relevance_figure/
+
+Accumulated TUT        rho =  0.4594
+Delayed VO2 slope     rho =  0.3639
+VO2 baseline delta    rho = -0.3500
+CE phase range        rho =  0.3377
+CE phase similarity   rho = -0.3272
+Concentric gyro       rho =  0.2830
+Phase movement rate   rho =  0.2801
+Phase timing drift    rho =  0.1740
+CE ratio drift        rho =  0.1011
+```
+
+結論：
+
+結果支持 IMU 可量化疲勞相關動作學表徵，其中最明顯的是累積 TUT、CE phase range、phase similarity drift、concentric gyro variation 與 phase movement rate。CE ratio drift 與單純向心時間變長不是最強訊號，因此研究表述要避免寫成 IMU 直接量肌肉疲勞。
+
+## 2026-05-16：023 CE Phase-Aware Fatigue 與 RPE 驗證
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+用數據檢查「IMU 疲勞狀態是否能透過 CE phase 變化判斷」這個猜想。重點不是只看整段 rep 是否不穩，而是分開看 concentric / eccentric phase 的時間、gyro、PCA range、movement rate、waveform similarity。
+
+實際改動：
+
+- 新增 `tools/analyze_phase_aware_fatigue_rpe.py`；
+- 新增 `docs/phase_aware_fatigue_ce_rpe_023_zh.md`；
+- 使用 GT rep + GT CE phase segmentation；
+- 合併第 018 版補上 yushuan 後的 Borg/RPE targets；
+- 將訊號改成整段 session 先標準化，再切 phase，避免每一下 rep 重新 z-score 抹掉強度差異；
+- 輸出 rep-level、set-level、by-exercise phase-aware fatigue correlation。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/023_phase_aware_fatigue_ce_rpe_analysis/
+rep rows = 1677
+set rows = 143
+
+Top set-level:
+set_index_numeric                              raw Spearman =  0.4397
+eccentric_pca_range_mean                       raw Spearman =  0.3377
+eccentric_pca_range_last2                      raw Spearman =  0.3351
+eccentric_wave_sim_to_first2_last_minus_first  raw Spearman = -0.3272
+concentric_pca_range_mean                      raw Spearman =  0.3174
+concentric_pca_range_last2                     raw Spearman =  0.3111
+concentric_gyro_diff_rms_last2                 raw Spearman =  0.2830
+
+Hypothesis checks:
+phase_vector_similarity_slope                  raw Spearman = -0.2188
+concentric_sec_last2_vs_first2                 raw Spearman =  0.1740
+concentric_gyro_diff_rms_last2_vs_first2       raw Spearman =  0.1670
+concentric_sec_slope                           raw Spearman =  0.1664
+concentric_pca_movement_rate_last2_vs_first2   raw Spearman =  0.0091
+```
+
+結論：
+
+數據支持「CE phase-aware fatigue」方向，但不支持「向心速度下降」作為唯一疲勞指標。比較有訊號的是 phase similarity 下降、phase PCA range 增加、concentric gyro 變化增加，以及部分動作的向心時間拉長。不同動作的最佳疲勞特徵差異很大，因此後續應使用 exercise-aware phase fatigue score。
+
+下一步：
+
+1. 設計每個動作各自的 phase fatigue feature set；
+2. 做 set-level RPE prediction：progress + phase-aware fatigue + VO2 delayed load；
+3. 用 few-shot subject calibration 校正個人 RPE 尺度；
+4. 把 023 特徵接到 predicted CE segmentation，評估真實部署時的衰退。
+
+## 2026-05-16：022 即時 RPE 特徵與 VO2 融合分析
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+使用補上 yushuan 後的 RPE set-level 特徵，合併 VO2 lag window，分析未來如果要即時估 RPE，IMU 波形和 VO2 應該抓哪些特徵。
+
+背景問題：
+
+使用者補上 yushuan RPE 後，進一步要求即時波形與 VO2 都納入考慮。VO2 不是動作同步訊號，而是有延遲的生理負荷，因此不能只看當下值，需要看 set 後 lag window。
+
+實際改動：
+
+- 新增 `tools/analyze_realtime_rpe_vo2_feature_correlations.py`；
+- 新增 `docs/realtime_rpe_vo2_features_022_zh.md`；
+- 合併：
+  - `021_rpe_feature_correlation_with_yushuan/020_rpe_set_level_feature_dataset.csv`
+  - `019_vo2_gt_waveform_relation/019_vo2_set_waveform_dataset.csv`
+- 計算 VO2 lag `0/10/20/30/45/60s` 和 Borg/RPE 的 Spearman；
+- 輸出即時 IMU + VO2 top feature 圖，以及 VO2-only lag correlation 圖。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/022_realtime_rpe_vo2_feature_correlation/
+subjects = haoyu, yanz, yoru, yushuan
+sets = 96
+lag rows = 572
+
+穩定 IMU / progress features:
+set_index_numeric               raw Spearman ~=  0.41
+movement_rate_cv                raw Spearman ~= -0.39 to -0.40
+concentric_gain_last2_vs_first2 raw Spearman ~=  0.35 to  0.36
+gyro_mag_diff_rms_slope         raw Spearman ~=  0.36
+sim_to_first_slope              raw Spearman ~= -0.32
+concentric_sec_slope            raw Spearman ~=  0.30 to  0.32
+
+VO2 features:
+vo2_mean_delta_subject_min @10s raw Spearman = -0.3500
+vo2_mean_x_n_reps          @10s raw Spearman = -0.3158
+vo2_peak_delta_subject_min @10s raw Spearman = -0.3108
+vo2_slope                  @45s raw Spearman =  0.3639
+```
+
+結論：
+
+即時 RPE 的核心應該是 IMU set-level fatigue state。VO2 有訊號，但目前更像延遲輔助負荷，且 raw VO2 方向不穩，容易受休息、動作種類、受試者基準與呼吸延遲影響。
+
+下一步：
+
+1. 將 VO2 改成 subject baseline-normalized VO2 delta / AUC；
+2. 做 RPE prediction model：IMU fatigue state + VO2 delayed load + subject calibration；
+3. 將模型設計成每個 rep 更新 IMU state，VO2 以 10-60 秒延遲更新；
+4. 加入 few-shot subject calibration，降低不同人主觀 RPE 尺度差異。
+
+## 2026-05-16：021 補上 yushuan 後的 RPE 特徵相關度
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+使用者補上 `yushuan0513workout.xlsx` 的完整 RPE 後，重新跑第 018 與第 020 版分析，確認 yushuan 是否能納入 RPE 訓練與相關度分析。
+
+實際結果：
+
+```text
+018 rerun:
+merged GT reps = 1677
+trainable folders = haoyu, hsianshun, tsenyu, yanz, yoru, yushuan
+
+021 output = artifacts_rep_classification/021_rpe_feature_correlation_with_yushuan/
+rep-level rows = 1677
+set-level rows = 143
+
+Top rep-level:
+rep_progress              raw Spearman =  0.5476
+rep_index                 raw Spearman =  0.5256
+set_index_numeric         raw Spearman =  0.5006
+cumulative_tut_sec        raw Spearman =  0.4594
+cumulative_eccentric_sec  raw Spearman =  0.4533
+cumulative_concentric_sec raw Spearman =  0.4407
+
+Top set-level:
+set_index_numeric              raw Spearman =  0.4397
+n_reps                         raw Spearman = -0.2927
+pca_diff_rms_max               raw Spearman = -0.2873
+pca_diff_rms_mean              raw Spearman = -0.2861
+gyro_diff_gain_last2_vs_first2 raw Spearman =  0.1958
+```
+
+結論：
+
+補上 yushuan 後，進度與累積 TUT 的訊號變得更強，支持使用 set-level fatigue trend 估 RPE。
+
+## 2026-05-16：020 RPE 特徵相關度分析
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+先不訓練新模型，直接量化「哪些特徵和 Borg/RPE 有關」。這用來決定後續 RPE prediction 應該以 rep-level 瞬間波形、set-level 疲勞趨勢、TUT、還是 few-shot subject calibration 為主。
+
+背景問題：
+
+第 018 版顯示 GT 波形可以比 baseline 稍微改善 RPE regression，但還不夠強。使用者希望先把我認為有關的特徵用數據跑出相關度，而不是直接猜模型。
+
+實際改動：
+
+- 新增 `tools/analyze_rpe_feature_correlations.py`；
+- 新增 `docs/rpe_feature_correlation_020_zh.md`；
+- 使用 `018_borg_gt_waveform_relation_exclude_sparse/018_gt_rep_waveform_borg_dataset.csv`；
+- 建立 rep-level 衍生特徵：
+  - rep progress；
+  - cumulative TUT；
+  - cumulative concentric / eccentric duration；
+  - velocity loss proxy；
+  - waveform similarity decay；
+  - last/first baseline change；
+  - variability so far；
+- 建立 set-level 衍生特徵：
+  - final Borg/RPE；
+  - total TUT；
+  - duration / velocity / gyro `last2 vs first2`；
+  - slope 與 variability；
+- 輸出 raw、exercise-centered、subject-centered、subject+exercise-centered Spearman。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/020_rpe_feature_correlation_analysis/
+rep-level rows = 1396
+set-level rows = 119
+
+Top rep-level:
+rep_progress              raw Spearman =  0.5166
+set_index_numeric         raw Spearman =  0.5082
+cumulative_tut_sec        raw Spearman =  0.4254
+cumulative_eccentric_sec  raw Spearman =  0.4247
+cumulative_concentric_sec raw Spearman =  0.4005
+kg_x_rep                  raw Spearman =  0.3892
+
+Top set-level:
+set_index_numeric              raw Spearman =  0.4435
+n_reps                         raw Spearman = -0.2700
+pca_diff_rms_mean              raw Spearman = -0.2483
+gyro_diff_gain_last2_vs_first2 raw Spearman =  0.2302
+gyro_mag_diff_rms_slope        raw Spearman =  0.1878
+```
+
+結論：
+
+RPE 最強訊號是進度與累積負荷：第幾組、第幾下、累積 TUT。單一下波形特徵只有弱相關；比較有用的是 set-level fatigue trend，尤其是 `last2 vs first2` 的 gyro 變化、duration 變長與 velocity loss。
+
+下一步：
+
+1. 做 set-level RPE model，而不是只做 rep-level regression；
+2. 加入 per-subject few-shot calibration；
+3. 補相對負重，例如 1RM 或個人 baseline；
+4. 重新抽 raw-amplitude features，避免 rep 內 z-score 把絕對強度訊號消掉。
+
+## 2026-05-16：018 Borg / REP 與 GT 波形特徵關聯上限測試
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+驗證在使用 ground-truth rep / phase 切割點的前提下，原始 IMU 波形、waveform similarity、TUT、向心 / 離心 duration 是否能預測 Borg/RPE。這是自動切割前的上限測試。
+
+背景問題：
+
+如果完美切割的原始波形都無法學到 Borg/RPE 關聯，繼續改善 rep segmentation 對「訓練建議」的價值就有限。使用者也補充：`X` 代表沒做完，空白代表沿用前一個 REP/Borg 值；`thomas0506workout` 沒有同名 workbook，不放入 training。
+
+實際改動：
+
+- 新增 `tools/analyze_borg_from_gt_waveform_features.py`；
+- 新增 `docs/borg_waveform_relation_018_zh.md`；
+- 在 `requirements.txt` 補上 `openpyxl`；
+- 解析每位受試者同名 `.xlsx`：
+  - `0..11` 欄位對應 rep index；
+  - 空白 forward-fill；
+  - `X` 排除；
+  - `kg` / `KG` 作為重量特徵；
+- 使用 GT rep / phase labels 抽取 TUT、phase ratio、9 軸統計、PCA waveform similarity；
+- 以 subject-wise GroupKFold 評估 Borg/RPE regression。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/018_borg_gt_waveform_relation/
+raw Borg targets = 1425
+completed Borg targets = 1416
+merged GT waveform reps = 1408
+
+含 yushuan sparse target:
+global mean baseline MAE = 1.7274
+exercise mean baseline MAE = 1.6489
+waveform RF MAE = 1.6327
+combined RF MAE = 1.6390
+
+排除 yushuan sparse target:
+output = artifacts_rep_classification/018_borg_gt_waveform_relation_exclude_sparse/
+global mean baseline MAE = 1.7071
+exercise mean baseline MAE = 1.6297
+waveform RF MAE = 1.5554
+combined RF MAE = 1.5741
+```
+
+結論：
+
+GT 波形確實含有 Borg/RPE 訊號，但跨人預測不強。TUT-only 沒有比 metadata 好；waveform RF 比 global baseline 改善約 `0.15` Borg MAE，但仍無法達到高可信絕對 Borg 預測。下一步應改成 within-subject / few-shot calibration，或預測 set-level Borg slope / fatigue trend，而不是只預測單一下的絕對 Borg。
+
+下一步：
+
+1. 做 within-subject few-shot Borg calibration；
+2. 改預測 `delta Borg`、最後一 rep Borg、set-level Borg slope；
+3. 加入 set-level fatigue trend 特徵，例如 waveform similarity decline、rep duration slope、phase ratio slope；
+4. 確認 GT 上限有效後，再比較 predicted segmentation 版本。
+
+## 2026-05-16：017 向心 / 離心 Phase Split 診斷
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+拿目前最佳 rep boundary 方法 `DCP-DP-FS` 的輸出，檢查 rep 內部再切向心 / 離心的可行性，並輸出 phase IoU、phase TUT error 與上下兩排波形圖。
+
+背景問題：
+
+目前 count accuracy 和 rep boundary IoU 已經有比較表，但重訓建議真正需要的是 concentric / eccentric duration。若 phase split 不準，TUT 和 tempo 建議就不可靠。
+
+實際改動：
+
+- 新增 `tools/plot_phase_split_diagnostics.py`；
+- 新增 `docs/phase_split_diagnostics_017_zh.md`；
+- 從 `016_dense_candidate_dp_decoder/methods/dcp_dp_fs/rep_segments_manifest.csv` 讀取 predicted reps；
+- 使用 `pca-reversal` 在每個 predicted rep 內切 phase；
+- 輸出 overall / by-phase / by-exercise / by-subject phase IoU；
+- 輸出 concentric / eccentric TUT error；
+- 輸出 239 張上下兩排 phase waveform 圖。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/017_phase_split_dcp_dp_fs/
+true phase segments = 5364
+predicted phase segments = 5308
+
+Phase IoU@0.50 F1 = 0.5442
+Phase IoU@0.75 F1 = 0.2103
+Phase IoU@0.90 F1 = 0.0469
+
+concentric IoU@0.50 F1 = 0.5683
+eccentric  IoU@0.50 F1 = 0.5201
+
+concentric TUT MAE = 2.3447 sec
+eccentric  TUT MAE = 2.3454 sec
+overall    TUT MAE = 2.3450 sec
+```
+
+結論：
+
+目前 phase split 還不夠好。單純 `pca-reversal` 可在 `one_arm_db_row` 達到 `0.8271` 的 phase IoU@0.50 F1，但 `db_shoulder_press` 只有 `0.3027`，`db_rdl` 只有 `0.3868`。下一步應做 exercise-aware / subject-adaptive phase decoder，尤其要校正 phase ratio、split offset 和主要軸權重。
+
+下一步：
+
+1. 對 `db_shoulder_press`、`db_rdl` 看波形錯誤案例；
+2. 加入 per-exercise phase feature：gyro zero-crossing、dominant-axis reversal、energy valley；
+3. few-shot calibration 從 rep duration 擴充到 phase ratio / split offset；
+4. 將 phase split 納入 SAPA-DP 創新方法。
+
+## 2026-05-16：016 Dense Candidate Pool Dynamic Programming
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+根據第 015 版結論，候選點已經足夠多，但 final decoder 選錯。因此第 016 版改成從 dense candidate pool 做 clustering / pruning，再用 dynamic programming 一次選整組 rep boundaries。
+
+背景問題：
+
+014 的 LIFT-Fusion 仍依賴 uniform/autocorr prior 附近找 valley；015 顯示 `Fusion Candidate Pool` 在 `+/-20 samples` 的 recall 是 `0.8130`，但 `Final 014 LIFT-Fusion` 只有 `0.2745`。這表示需要 sequence-level decoding，而不是再增加局部 feature。
+
+實際改動：
+
+- 新增 `tools/evaluate_dense_candidate_dp_decoder.py`；
+- 新增 `docs/dense_candidate_dp_decoder_016_zh.md`；
+- 實作兩種方法：
+  - `DCP-DP`：dense candidate pool + dynamic programming，不使用 few-shot；
+  - `DCP-DP-FS`：加入 subject / exercise 前 3 下 labeled reps 的 duration calibration；
+- 輸出 method comparison、by-exercise、by-subject、phase IoU 和 239 張 waveform 圖；
+- 更新 `README.md` 與 `artifacts_rep_classification/RESULTS_INDEX.md`。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/016_dense_candidate_dp_decoder/
+active blocks = 239
+true reps = 2720
+waveform plots = 239
+
+DCP-DP:
+count exact = 0.6568
+count +/-1 = 0.8856
+count MAE = 1.4534 reps
+rep IoU@0.50 F1 = 0.7485
+rep IoU@0.75 F1 = 0.4490
+rep IoU@0.90 F1 = 0.2010
+phase IoU@0.50 F1 = 0.5202
+
+DCP-DP-FS:
+count exact = 0.6780
+count +/-1 = 0.9280
+count MAE = 0.6271 reps
+rep IoU@0.50 F1 = 0.7834
+rep IoU@0.75 F1 = 0.4648
+rep IoU@0.90 F1 = 0.2051
+phase IoU@0.50 F1 = 0.5442
+```
+
+和 014 比較：
+
+```text
+014 LIFT-Fusion rep IoU@0.50 / 0.75 / 0.90 = 0.7855 / 0.4610 / 0.1920
+014 MAXXYT-MAP   rep IoU@0.50 / 0.75 / 0.90 = 0.7648 / 0.4380 / 0.2017
+016 DCP-DP-FS    rep IoU@0.50 / 0.75 / 0.90 = 0.7834 / 0.4648 / 0.2051
+```
+
+結論：
+
+`DCP-DP-FS` 是目前高 IoU 和 phase split 最好的方法，但改善幅度仍有限。這證明 DP 方向有效，但只靠 duration calibration 不夠；下一步要學 subject-specific boundary offset、axis weights 和 exercise-specific score。
+
+下一步：
+
+1. 對 few-shot calibration 加入 boundary offset，而不是只用 duration；
+2. 對 `db_shoulder_press`、`db_bench_press` 做錯誤圖分析；
+3. 訓練 candidate-level boundary scorer，再交給 DP 做 sequence decoding；
+4. 保留 015 的 candidate recall 指標，避免只看 final IoU。
+
+## 2026-05-16：015 Boundary Candidate Recall 分析
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+驗證目前 rep boundary 不準的真正原因。第 014 版已經顯示 count-level 接近可用，但 IoU@0.90 仍低；這次不先改模型，而是量化每個 GT internal boundary 附近是否存在候選切點。
+
+背景問題：
+
+如果 GT boundary 附近根本沒有候選點，代表要找新特徵；如果候選點有在附近但最後方法沒選到，代表瓶頸在 scoring / decoding / personalization。
+
+實際改動：
+
+- 新增 `tools/analyze_boundary_candidate_recall.py`；
+- 新增 `docs/boundary_candidate_recall_015_zh.md`；
+- 輸出候選池與 final boundary 的 `+/-5`、`+/-10`、`+/-20`、`+/-50 samples` recall；
+- 同時輸出 overall、by-exercise、by-subject CSV 與結果圖；
+- 更新 `artifacts_rep_classification/RESULTS_INDEX.md`。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/015_boundary_candidate_recall_analysis/
+active blocks = 239
+true internal boundaries = 2481
+
+Raw Gyro + Energy Valleys:
+mean candidates per block = 306.61
+median nearest error = 4 samples
+recall +/-20 samples = 0.9964
+
+Fusion Candidate Pool:
+mean candidates per block = 174.45
+median nearest error = 6 samples
+recall +/-20 samples = 0.8130
+
+Final 014 LIFT-Fusion:
+mean boundaries per block = 10.57
+median nearest error = 54 samples
+recall +/-20 samples = 0.2745
+
+Final 014 MAXXYT-MAP:
+mean boundaries per block = 10.58
+median nearest error = 57 samples
+recall +/-20 samples = 0.2652
+```
+
+結論：
+
+目前問題不是「完全沒有特徵」。dense candidate pool 幾乎都能在 GT 附近找到候選，但 final decoder 只選到少數正確候選。也就是：
+
+```text
+候選點足夠多
+-> 候選太密
+-> uniform/autocorr prior 太粗
+-> scoring / sequence decoding 選錯
+-> IoU@0.90 很低
+```
+
+下一步：
+
+1. 從 dense candidate pool 做 candidate pruning；
+2. 用 dynamic programming / sequence decoding 在候選點之間選整組 boundary；
+3. 加入 subject calibration，學個人 duration scale、boundary offset、axis weight；
+4. 優先處理 `db_shoulder_press`、`db_bench_press`、`yanz0510workout`、`yoru0511workout`。
+
+## 2026-05-16：014 文獻啟發方法比較與 LIFT-Fusion
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+根據前面討論的 StayFit、Maxxyt、M-Fitness、CaRaCount / DTW 等 repetition counting / waveform segmentation 論文，實作可在目前 IMU active-only 資料上比較的 rep boundary 方法，並提出一個融合式新方法 `LIFT-Fusion`。
+
+背景問題：
+
+010 / 011 已能達到約 `0.73` 的 IoU@0.50 F1，但高精度 IoU@0.90 仍只有約 `0.16`。單純 DS-MS-TCN seq-to-seq baseline 也沒有超過 classical boundary 方法。需要把文獻中的 count consensus、energy segmentation、template personalization 拿來做可量化比較。
+
+假設：
+
+- 這版只評估已在運動中的 active set，不處理休息或 set detection；
+- 每個 active block 保留 ground-truth exercise hint，目標是先把 rep boundary 做準；
+- `CARA-DTW-FS` 和 `LIFT-Fusion` 使用少量同 subject/exercise 標註 rep 作為 personalization template；
+- 預設 template refinement 使用快速 resampled shape distance，若要完整 DTW 可加 `--use-dtw-shape-cost`，但計算時間較高。
+
+實際改動：
+
+- 新增 `tools/evaluate_literature_inspired_rep_methods.py`；
+- 新增五個方法：
+  - `STAYFIT-BA`：best-axis periodic peak cutting；
+  - `MAXXYT-MAP`：multi-axis adaptive peak aggregation + gyro valley refinement；
+  - `MFIT-FSTE`：frequency-weighted short-time energy valley segmentation；
+  - `CARA-DTW-FS`：few-shot template alignment；
+  - `LIFT-Fusion`：PCA/autocorr + multi-axis count consensus + energy/gyro valley + few-shot template；
+- 輸出總比較 CSV / PNG、每動作 heatmap、每人 heatmap、每方法 metrics、239 張 waveform all-set plots；
+- 新增 `docs/literature_inspired_rep_methods_014_zh.md`；
+- 更新 `artifacts_rep_classification/RESULTS_INDEX.md`。
+
+正式結果：
+
+```text
+output = artifacts_rep_classification/014_literature_inspired_rep_methods/
+sessions = 14
+active blocks = 239
+true sets = 236
+true reps = 2720
+waveform plots = 239
+
+LIFT-Fusion:
+count exact = 0.6737
+count +/-1 = 0.9280
+count MAE = 0.6314 reps
+rep IoU@0.50 F1 = 0.7855
+rep IoU@0.75 F1 = 0.4610
+rep IoU@0.90 F1 = 0.1920
+phase IoU@0.50 F1 = 0.5319
+
+MAXXYT-MAP:
+count exact = 0.6822
+count +/-1 = 0.9364
+count MAE = 0.6186 reps
+rep IoU@0.50 F1 = 0.7648
+rep IoU@0.75 F1 = 0.4380
+rep IoU@0.90 F1 = 0.2017
+phase IoU@0.50 F1 = 0.5305
+```
+
+結論：
+
+第 014 版確實比 010 / 011 改善：
+
+```text
+010 UGV  IoU@0.50 / 0.75 / 0.90 = 0.7278 / 0.3949 / 0.1626
+011 MFBS IoU@0.50 / 0.75 / 0.90 = 0.7382 / 0.4106 / 0.1621
+014 LIFT IoU@0.50 / 0.75 / 0.90 = 0.7855 / 0.4610 / 0.1920
+```
+
+但仍未達到 IoU@0.90 F1 90% 的目標。現在可以說 count-level 已接近可用，因為 LIFT `count +/-1 = 0.9280`，MAXXYT-MAP `count +/-1 = 0.9364`；但 boundary-level 還不足以支撐高精度 TUT 或向心/離心切割。
+
+下一步：
+
+優先做 boundary candidate recall 分析，而不是直接再加模型：
+
+1. 檢查每種方法在 GT boundary ±5 / ±10 / ±20 samples 是否有候選點；
+2. 針對 `db_bench_press`、`db_shoulder_press`、`yoru0511workout`、`yanz0510workout` 做錯誤波形分析；
+3. 把 few-shot calibration 從「用 template 修 boundary」升級成「學個人 duration scale、axis weight、boundary offset」；
+4. 再重新評估 IoU@0.90、boundary median error、within-10-sample rate。
+
+## 2026-05-16：013 方法比較表加入正式方法名稱
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+讓 count / IoU / TUT 比較表不只顯示 010/011/012 實驗代號，而是每個方法都有可放入報告的方法名稱。
+
+背景問題：
+
+原本 `013_count_iou_tut_method_table` 的第一欄是 artifact 代號，例如 `010_universal_gyro_valley`。這方便追蹤檔案，但不適合直接放入論文式比較表。
+
+假設：
+
+- artifact 代號仍需保留，方便回查原始輸出；
+- 圖表應使用短方法名，避免 x 軸過長；
+- CSV 應同時包含正式名稱、artifact id 與方法說明。
+
+實際結果：
+
+- 更新 `tools/build_count_iou_tut_table.py`；
+- CSV 新增 `method_name`、`method_id`、`method_description`；
+- 圖表改用 `method_name`；
+- `summary.json` 新增 method legend；
+- 重跑 `artifacts_rep_classification/013_count_iou_tut_method_table/`。
+
+下一步：
+
+後續報告使用 `method_name` 作為主名稱，`method_id` 只作為附註或實驗追蹤。
+
+## 2026-05-16：012 DS-MS-TCN 9 軸 sequence baseline
+
+日期：2026-05-16
+
+狀態：implemented
+
+目的：
+
+參考 DS-MS-TCN 論文的資料呈現方式，新增可訓練的 seq-to-seq baseline，讓本專案可以用 sample-wise F1、segment IoU F1、rep boundary IoU、phase IoU、confusion matrix 與 waveform 切割圖比較方法差異。
+
+背景問題：
+
+010/011 已能用 classical / supervised boundary scoring 做 rep IoU 比較，但沒有 sample-wise temporal segmentation baseline，也無法直接和 DS-MS-TCN 這類方法的呈現方式對齊。
+
+假設：
+
+- 先實作 adapted DS-MS-TCN，而不是完全複製 Otago task；
+- 使用者已決定 012 使用 9 軸輸入；
+- DS-MS-TCN / MS-TCN 之間比較 sample-wise F1 與 macro segment IoU；
+- DS-MS-TCN 與 010/011 之間只比較 rep boundary IoU，避免 metric 不公平。
+
+預計改動：
+
+- 新增 9 軸 DS-MS-TCN / MS-TCN model；
+- 新增 training/evaluation script；
+- 新增 012 vs 010/011 comparison script；
+- 新增中文方法文件與結果索引；
+- 先跑 smoke test，不把 smoke test 當正式準確率。
+
+不做的事：
+
+- 不先加入 CNN、Transformer、CNN-LSTM baseline；
+- 不宣稱 1 epoch smoke test 的結果代表正式模型效能；
+- 不把 9 軸 DS-MS-TCN 與 6 軸 classical 方法當成同輸入公平比較。
+
+預期改善：
+
+- 能直接跑出論文式 method comparison table / bar chart；
+- 能檢查 micro label 對 macro segmentation 是否有幫助；
+- 能把 sample-wise prediction 轉成 rep / phase segment 再用 IoU 評估。
+
+評估指標：
+
+- sample-wise macro F1；
+- sample-wise micro F1；
+- macro segment IoU F1@0.50 / 0.75 / 0.90；
+- rep boundary IoU F1@0.50 / 0.75 / 0.90；
+- phase split IoU F1@0.50 / 0.75 / 0.90；
+- 每人、每動作 rep IoU 圖；
+- macro/micro confusion matrix；
+- waveform boundary examples。
+
+風險：
+
+- 完整 5-fold 訓練耗時高於 classical methods；
+- full-session `other` 類容易壓過 active samples；
+- MS-TCN 沒有 micro labels，轉 rep boundary 時只能使用 macro segment proxy，rep IoU 解讀需保守。
+
+審核結果：
+
+使用者要求直接實作計畫。
+
+實際結果：
+
+- 新增 `models/ds_ms_tcn.py`；
+- 新增 `tools/train_ds_ms_tcn_9axis.py`；
+- 新增 `tools/compare_ds_ms_tcn_9axis.py`；
+- 新增 `docs/ds_ms_tcn_9axis_comparison_zh.md`；
+- 更新 `README.md` 與 `artifacts_rep_classification/RESULTS_INDEX.md`；
+- `python -m py_compile` 通過；
+- exercise-only smoke test 通過；
+- full-session + other smoke test 通過；
+- smoke comparison 圖表輸出成功。
+- 正式 5-fold exercise-only 已完成：DS-MS-TCN `Rep F1@0.50 = 0.4765`、`Rep F1@0.90 = 0.1301`；
+- 正式 5-fold full-session + other 已完成：DS-MS-TCN `Rep F1@0.50 = 0.3590`、`Rep F1@0.90 = 0.0759`；
+- 012 正式比較圖已輸出到 `artifacts_rep_classification/012_ds_ms_tcn_9axis_method_comparison/`。
+
+下一步：
+
+目前 012 沒有超過 010/011。下一步若要提升，應優先改 rep boundary decoding，而不是只加訓練 epoch：
+
+```bash
+sample-wise macro prediction
+-> phase-aware smoothing
+-> per-exercise duration prior
+-> rep boundary decoding
+-> IoU@0.90 objective / calibration
+```
+
 ## 2026-05-15：建立研究與實驗規劃文件
 
 日期：2026-05-15

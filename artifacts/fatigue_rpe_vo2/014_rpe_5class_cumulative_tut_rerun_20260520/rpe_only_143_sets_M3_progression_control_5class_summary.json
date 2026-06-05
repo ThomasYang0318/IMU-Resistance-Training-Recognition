@@ -1,0 +1,22 @@
+{
+  "dataset": "rpe_only_143_sets",
+  "model_stage": "M3_progression_control",
+  "n": 143,
+  "overall_accuracy": 0.4825174825174825,
+  "macro_f1": 0.29377718497718497,
+  "weighted_f1": 0.462836779927689,
+  "true_distribution": {
+    "1-2": 0,
+    "3-4": 10,
+    "5-6": 36,
+    "7-8": 49,
+    "9-10": 48
+  },
+  "pred_distribution": {
+    "1-2": 0,
+    "3-4": 0,
+    "5-6": 38,
+    "7-8": 76,
+    "9-10": 29
+  }
+}

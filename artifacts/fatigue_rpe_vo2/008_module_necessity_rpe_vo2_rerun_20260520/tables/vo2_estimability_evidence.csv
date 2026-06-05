@@ -1,0 +1,11 @@
+target,lag_sec,model,n_sets,subjects,mae,r2,spearman,module_claim,source_artifact
+vo2_mean,0.0,random_forest,158,6,2.1678,0.3438,0.6431,IMU set-level waveform features can estimate VO2 as an independent physiological load target.,artifacts_rep_classification/019_vo2_gt_waveform_relation/summary.json
+vo2_mean,10.0,random_forest,158,6,2.323,0.367,0.6798,IMU set-level waveform features can estimate VO2 as an independent physiological load target.,artifacts_rep_classification/019_vo2_gt_waveform_relation/summary.json
+vo2_mean,0.0,ridge,158,6,2.4204,-0.0652,0.5418,IMU set-level waveform features can estimate VO2 as an independent physiological load target.,artifacts_rep_classification/019_vo2_gt_waveform_relation/summary.json
+vo2_mean,10.0,ridge,158,6,2.4234,0.1211,0.6403,IMU set-level waveform features can estimate VO2 as an independent physiological load target.,artifacts_rep_classification/019_vo2_gt_waveform_relation/summary.json
+vo2_mean,20.0,random_forest,157,6,2.5921,0.3277,0.6058,IMU set-level waveform features can estimate VO2 as an independent physiological load target.,artifacts_rep_classification/019_vo2_gt_waveform_relation/summary.json
+vo2_mean,30.0,ridge,157,6,2.6911,0.2339,0.6778,IMU set-level waveform features can estimate VO2 as an independent physiological load target.,artifacts_rep_classification/019_vo2_gt_waveform_relation/summary.json
+vo2_mean,60.0,random_forest,153,6,2.7006,0.1642,0.3865,IMU set-level waveform features can estimate VO2 as an independent physiological load target.,artifacts_rep_classification/019_vo2_gt_waveform_relation/summary.json
+vo2_mean,20.0,ridge,157,6,2.7938,-0.0951,0.6133,IMU set-level waveform features can estimate VO2 as an independent physiological load target.,artifacts_rep_classification/019_vo2_gt_waveform_relation/summary.json
+vo2_mean,30.0,random_forest,157,6,2.9303,0.2806,0.5646,IMU set-level waveform features can estimate VO2 as an independent physiological load target.,artifacts_rep_classification/019_vo2_gt_waveform_relation/summary.json
+vo2_mean,45.0,random_forest,158,6,2.9379,0.2699,0.5158,IMU set-level waveform features can estimate VO2 as an independent physiological load target.,artifacts_rep_classification/019_vo2_gt_waveform_relation/summary.json

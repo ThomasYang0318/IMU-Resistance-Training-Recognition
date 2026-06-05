@@ -1,0 +1,6 @@
+method_id,predicted_reps,predicted_phases,count_mae_reps,rep_f1_iou_0.50,rep_f1_iou_0.75,phase_f1_iou_0.50,phase_f1_iou_0.75,phase_tut_mae_sec,unassigned_pred_reps,runtime_sec
+online_balanced,3062,6237,3.9831,0.6122,0.155,0.2945,0.0722,2.2805,0,25.3595
+online_duration_strong,3236,6589,3.8475,0.6239,0.1518,0.31,0.075,1.9203,0,24.9233
+online_reversal_strong,2661,5446,3.5805,0.601,0.1572,0.269,0.069,2.8552,0,24.1732
+online_fast_confirm,3832,7790,6.5424,0.4606,0.0864,0.2192,0.0424,2.1002,0,28.1442
+online_tut_stable,3528,7174,4.5,0.5948,0.1524,0.3071,0.0716,1.8099,0,27.3791

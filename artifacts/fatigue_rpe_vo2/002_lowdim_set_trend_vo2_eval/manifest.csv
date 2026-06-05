@@ -1,0 +1,11 @@
+path,type,description
+summary.json,json,Artifact summary and key validation results.
+run_config.yaml,yaml,Input paths and model configuration.
+metrics/nested_model_summary.csv,csv,LOSO metrics for low-dimensional nested models.
+metrics/model_delta_summary.csv,csv,Incremental gains from low-dimensional IMU and VO2 groups.
+metrics/fold_metrics.csv,csv,Per-held-out-subject metrics.
+tables/nested_model_predictions.csv,csv,Out-of-subject predictions.
+figures/rpe_lowdim_nested_mae.png,png,RPE-only low-dimensional MAE comparison.
+figures/vo2_lowdim_lag_metrics.png,png,VO2 lag metrics.
+figures/lowdim_incremental_mae_gain.png,png,Incremental MAE gains.
+figures/best_lowdim_predictions.png,png,Best model prediction scatter.

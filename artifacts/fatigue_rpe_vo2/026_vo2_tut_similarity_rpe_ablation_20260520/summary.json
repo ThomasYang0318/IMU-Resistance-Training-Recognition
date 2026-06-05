@@ -1,0 +1,44 @@
+{
+  "input_phase_set": "artifacts/fatigue_rpe_vo2/024_same_name_xlsx_phase_aware_rpe_20260520/023_phase_aware_set_feature_dataset.csv",
+  "input_vo2": "artifacts_rep_classification/022_realtime_rpe_vo2_feature_correlation/022_realtime_rpe_vo2_merged_set_dataset.csv",
+  "output_dir": "artifacts/fatigue_rpe_vo2/026_vo2_tut_similarity_rpe_ablation_20260520",
+  "vo2_definition": "VO2 delay45s is vo2_slope at lag_sec=45s, matching the earlier fatigue-component figure.",
+  "split_protocol": "4 subject-disjoint cyclic rotations on VO2-overlap subjects; each fold uses 2 train subjects, 1 validation subject, 1 test subject.",
+  "subjects": [
+    "haoyu0512workout",
+    "yanz0510workout",
+    "yoru0511workout",
+    "yushuan0513workout"
+  ],
+  "n_rows": 96,
+  "best_by_spearman": {
+    "stage": "TUT + Rep similarity",
+    "n_subjects": 4,
+    "n_test_rows": 96,
+    "selected_alpha_median": 5.5,
+    "n_features_median": 10.0,
+    "n": 96,
+    "mae": 1.0485409883581027,
+    "rmse": 1.3485813536246714,
+    "r2": 0.24983761866160792,
+    "spearman": 0.5576630521257193,
+    "rounded_exact_acc": 0.3541666666666667,
+    "rounded_pm1_acc": 0.7291666666666666,
+    "features": "cumulative_active_time_sec|eccentric_wave_sim_to_first2_last_minus_first",
+    "delta_spearman_vs_exercise_only": 0.5551907187756909,
+    "delta_pm1_vs_exercise_only": 0.15625,
+    "delta_mae_reduction_vs_exercise_only": 0.44104234497523054,
+    "delta_spearman_vs_TUT": 0.11279453050521704,
+    "delta_pm1_vs_TUT": 0.02083333333333326,
+    "delta_mae_reduction_vs_TUT": 0.08267503804810783
+  },
+  "files": {
+    "combo_summary": "vo2_tut_similarity_combo_summary.csv",
+    "fold_metrics": "vo2_tut_similarity_combo_fold_metrics.csv",
+    "predictions": "vo2_tut_similarity_combo_predictions.csv",
+    "input_sets": "vo2_overlap_tut_similarity_input_sets.csv",
+    "splits": "subject_split_rotation.csv",
+    "spearman_plot": "combo_spearman_ranking.png",
+    "pm1_accuracy_plot": "combo_pm1_accuracy_ranking.png"
+  }
+}

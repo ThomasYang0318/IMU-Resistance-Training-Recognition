@@ -1,0 +1,146 @@
+{
+  "config": {
+    "data_dir": "datasets/workout",
+    "output_dir": "artifacts/realtime_action_rf_8class_other_20260518",
+    "window_seconds": 2.0,
+    "stride_seconds": 0.5,
+    "label_majority": 0.55,
+    "min_active_fraction": 0.35,
+    "other_train_ratio": 1.0,
+    "n_splits": 5,
+    "n_estimators": 300,
+    "min_samples_leaf": 2,
+    "seed": 42
+  },
+  "labels": [
+    "db_bench_press",
+    "db_biceps_curl",
+    "db_rdl",
+    "db_shoulder_press",
+    "db_squat",
+    "db_triceps_curl",
+    "db_weighted_crunch",
+    "one_arm_db_row",
+    "Other"
+  ],
+  "sessions": [
+    {
+      "path": "datasets/workout/haoyu0512workout/haoyu0512workout(left)/haoyu0512workout_whole_session_20260512_165722.csv",
+      "subject": "haoyu0512workout",
+      "samples": 486730,
+      "duration_seconds": 5185.150587,
+      "windows": 10367
+    },
+    {
+      "path": "datasets/workout/haoyu0512workout/haoyu0512workout_whole_session_20260512_165723.csv",
+      "subject": "haoyu0512workout",
+      "samples": 457695,
+      "duration_seconds": 5182.27262,
+      "windows": 10361
+    },
+    {
+      "path": "datasets/workout/hsianshun0514workout/hsianshun0514workout_whole_session_20260514_145843.csv",
+      "subject": "hsianshun0514workout",
+      "samples": 512383,
+      "duration_seconds": 5801.368762,
+      "windows": 11599
+    },
+    {
+      "path": "datasets/workout/kevin0509workout/kevin0509workout(left)/kevin0509workout_whole_session_20260509_173018.csv",
+      "subject": "kevin0509workout",
+      "samples": 387356,
+      "duration_seconds": 4126.324822,
+      "windows": 8249
+    },
+    {
+      "path": "datasets/workout/kevin0509workout/kevin0509workout_whole_session_20260509_173017.csv",
+      "subject": "kevin0509workout",
+      "samples": 349154,
+      "duration_seconds": 3953.212676,
+      "windows": 7903
+    },
+    {
+      "path": "datasets/workout/thomas0506workout/thomas0506_whole_session_20260506_154720.csv",
+      "subject": "thomas0506",
+      "samples": 282174,
+      "duration_seconds": 3195.025536,
+      "windows": 6387
+    },
+    {
+      "path": "datasets/workout/thomas0506workout/thomas0506workout(left)/thomas0506workout_whole_session_20260506_154716.csv",
+      "subject": "thomas0506workout",
+      "samples": 300740,
+      "duration_seconds": 3203.940728,
+      "windows": 6404
+    },
+    {
+      "path": "datasets/workout/tsenyu0515workout/tsenyu0515workout_whole_session_20260515_200226.csv",
+      "subject": "yentsen0515workout",
+      "samples": 515727,
+      "duration_seconds": 5843.048584,
+      "windows": 11679
+    },
+    {
+      "path": "datasets/workout/yanz0510workout/yanz0510workout(left)/yanz0510workout_whole_session_20260510_222207.csv",
+      "subject": "yanz0510workout",
+      "samples": 403418,
+      "duration_seconds": 4297.84219,
+      "windows": 8592
+    },
+    {
+      "path": "datasets/workout/yanz0510workout/yanz0510workout_whole_session_20260510_222208.csv",
+      "subject": "yanz0510workout",
+      "samples": 377595,
+      "duration_seconds": 4275.423999,
+      "windows": 8547
+    },
+    {
+      "path": "datasets/workout/yoru0511workout/yoru0511workout(left)/yoru0511workout_whole_session_20260511_180605.csv",
+      "subject": "yoru0511workout",
+      "samples": 81998,
+      "duration_seconds": 873.5158,
+      "windows": 1744
+    },
+    {
+      "path": "datasets/workout/yoru0511workout/yoru0511workout_whole_session_20260511_180608.csv",
+      "subject": "yoru0511workout",
+      "samples": 443597,
+      "duration_seconds": 5022.524881,
+      "windows": 10042
+    },
+    {
+      "path": "datasets/workout/yushuan0513workout/yushuan0513workout_whole_session_20260513_144737.csv",
+      "subject": "yushuan0513workout",
+      "samples": 563179,
+      "duration_seconds": 6376.217405,
+      "windows": 12749
+    },
+    {
+      "path": "datasets/workout/ziho0512workout/ziho0512workout_whole_session_20260512_204157.csv",
+      "subject": "ziho0512workout",
+      "samples": 496843,
+      "duration_seconds": 5625.367807,
+      "windows": 11247
+    }
+  ],
+  "total_windows": 125870,
+  "window_label_counts": {
+    "db_bench_press": 3052,
+    "db_biceps_curl": 2475,
+    "db_rdl": 2992,
+    "db_shoulder_press": 2380,
+    "db_squat": 2352,
+    "db_triceps_curl": 2442,
+    "db_weighted_crunch": 2447,
+    "one_arm_db_row": 2382,
+    "Other": 105348
+  },
+  "accuracy": 0.897743703821403,
+  "balanced_accuracy": 0.5364032830815991,
+  "macro_f1": 0.6046206782858953,
+  "weighted_f1": 0.8841756610082494,
+  "feature_extraction_seconds": 173.4372357919965,
+  "train_seconds": 154.7114055009988,
+  "predict_seconds": 0.8767102070014516,
+  "predict_ms_per_window": 0.0069652038373039776
+}

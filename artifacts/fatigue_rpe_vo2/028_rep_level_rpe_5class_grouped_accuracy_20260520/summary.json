@@ -1,0 +1,28 @@
+{
+  "source": "artifacts/fatigue_rpe_vo2/023_rep_level_rpe_subject_rotation_20260520/rep_rpe_rotation_predictions.csv",
+  "output_dir": "artifacts/fatigue_rpe_vo2/028_rep_level_rpe_5class_grouped_accuracy_20260520",
+  "split_protocol": "Same 7-subject rotation as rep-level training: 5 train, 1 validation, 1 test with disjoint subjects.",
+  "classes": [
+    "1-2",
+    "3-4",
+    "5-6",
+    "7-8",
+    "9-10"
+  ],
+  "best_stage_focus": "M4_add_one__kg",
+  "best_stage_summary": {
+    "stage": "M4_add_one__kg",
+    "n": 1945,
+    "five_class_accuracy": 0.4982005141388175,
+    "five_class_macro_f1": 0.458665301560013,
+    "five_class_weighted_f1": 0.49371010252022185,
+    "true_distribution": "{\"1-2\": 207, \"3-4\": 367, \"5-6\": 733, \"7-8\": 497, \"9-10\": 141}",
+    "pred_distribution": "{\"1-2\": 90, \"3-4\": 535, \"5-6\": 814, \"7-8\": 425, \"9-10\": 81}"
+  },
+  "files": {
+    "stage_summary": "rep_level_5class_stage_summary.csv",
+    "per_class_metrics": "rep_level_5class_per_class_metrics.csv",
+    "best_confusion_matrix": "best_progression_plus_kg_5class_confusion_matrix_row_proportion.png",
+    "accuracy_ranking": "rep_level_5class_accuracy_ranking.png"
+  }
+}

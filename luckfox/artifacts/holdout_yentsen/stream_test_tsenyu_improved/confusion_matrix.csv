@@ -1,0 +1,10 @@
+true\pred,Bench,Biceps,RDL,Shoulder,Squat,Triceps,Crunch,Row,Other
+Bench,361,0,0,0,0,0,0,0,0
+Biceps,0,411,0,0,0,0,0,0,6
+RDL,0,0,636,0,0,0,0,0,31
+Shoulder,0,0,0,331,0,0,52,0,0
+Squat,0,0,0,0,330,0,0,0,9
+Triceps,0,0,0,0,0,317,0,0,0
+Crunch,0,2,0,0,0,0,267,0,0
+Row,0,0,23,0,0,0,0,343,0
+Other,62,343,326,54,205,104,95,78,7286

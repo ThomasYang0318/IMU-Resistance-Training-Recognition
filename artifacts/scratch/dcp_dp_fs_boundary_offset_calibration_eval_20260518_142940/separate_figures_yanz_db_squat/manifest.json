@@ -1,0 +1,27 @@
+{
+  "output_dir": "artifacts/scratch/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940/separate_figures_yanz_db_squat",
+  "subject": "yanz0510workout",
+  "exercise": "db_squat",
+  "set_id": "2:active0",
+  "duration_sec": 26.859447,
+  "true_reps": 12,
+  "baseline_boundaries": 13,
+  "offset_final_boundaries": 13,
+  "figures": [
+    "artifacts/scratch/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940/separate_figures_yanz_db_squat/01_raw_9axis_imu_yanz_db_squat_seconds.png",
+    "artifacts/scratch/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940/separate_figures_yanz_db_squat/02_pca_signal_yanz_db_squat_seconds.png",
+    "artifacts/scratch/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940/separate_figures_yanz_db_squat/03_gyro_magnitude_yanz_db_squat_seconds.png",
+    "artifacts/scratch/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940/separate_figures_yanz_db_squat/04_autocorrelation_count_yanz_db_squat_seconds.png",
+    "artifacts/scratch/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940/separate_figures_yanz_db_squat/05_candidate_boundary_pool_source_rows_yanz_db_squat_seconds.png",
+    "artifacts/scratch/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940/separate_figures_yanz_db_squat/06_final_segmentation_offset_calibrated_yanz_db_squat_seconds.png"
+  ],
+  "source_counts": {
+    "raw gyro valleys": 153,
+    "raw fused valleys": 165,
+    "raw energy valleys": 91,
+    "axis midpoint candidates": 132,
+    "PCA midpoint candidates": 11,
+    "multi-axis consensus candidates": 11,
+    "uniform/count prior candidates": 11
+  }
+}

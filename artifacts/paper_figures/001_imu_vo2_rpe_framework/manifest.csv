@@ -1,0 +1,8 @@
+path,type,description
+summary.json,json,Artifact summary and provenance.
+run_config.yaml,yaml,Inputs constraints and validation commands for this design artifact.
+metrics/overall.csv,csv,Completeness checks for the framework artifact.
+tables/citation_traceability.csv,csv,Sentence-level citation traceability table.
+figures/imu_vo2_rpe_research_framework.png,png,Paper-ready overview diagram of the IMU VO2 RPE research framework.
+figures/imu_vo2_rpe_research_framework.mmd,mermaid,Editable diagram source for the framework figure.
+docs/tasks/005_research_framework_imu_vo2_rpe_report.md,markdown,IEEE-style task report linked from this artifact.

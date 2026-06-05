@@ -1,0 +1,13 @@
+path,bytes
+figures/module_comparison_delta_mae.png,90927
+figures/rpe_module_ladder_mae.png,162031
+figures/single_feature_raw_spearman_ranking.png,121071
+figures/vo2_estimability_spearman.png,96971
+metrics/rpe_module_fold_metrics.csv,10167
+metrics/rpe_module_ladder.csv,2622
+run_config.yaml,956
+summary.json,51756
+tables/module_necessity_comparisons.csv,3518
+tables/rpe_module_predictions.csv,153582
+tables/single_feature_open_ranking.csv,56220
+tables/vo2_estimability_evidence.csv,2248

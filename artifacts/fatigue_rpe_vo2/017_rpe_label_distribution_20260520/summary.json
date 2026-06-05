@@ -1,0 +1,5 @@
+{
+  "counts_csv": "artifacts/fatigue_rpe_vo2/017_rpe_label_distribution_20260520/rpe_1to10_label_distribution_counts.csv",
+  "percent_csv": "artifacts/fatigue_rpe_vo2/017_rpe_label_distribution_20260520/rpe_1to10_label_distribution_percent.csv",
+  "long_csv": "artifacts/fatigue_rpe_vo2/017_rpe_label_distribution_20260520/rpe_1to10_label_distribution.csv"
+}

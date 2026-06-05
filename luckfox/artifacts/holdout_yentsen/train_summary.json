@@ -1,0 +1,40 @@
+{
+  "holdout_subject": "yentsen0515workout",
+  "train_files": [
+    "datasets/workout/haoyu0512workout/haoyu0512workout(left)/haoyu0512workout_whole_session_20260512_165722.csv",
+    "datasets/workout/haoyu0512workout/haoyu0512workout_whole_session_20260512_165723.csv",
+    "datasets/workout/hsianshun0514workout/hsianshun0514workout_whole_session_20260514_145843.csv",
+    "datasets/workout/kevin0509workout/kevin0509workout(left)/kevin0509workout_whole_session_20260509_173018.csv",
+    "datasets/workout/kevin0509workout/kevin0509workout_whole_session_20260509_173017.csv",
+    "datasets/workout/thomas0506workout/thomas0506_whole_session_20260506_154720.csv",
+    "datasets/workout/thomas0506workout/thomas0506workout(left)/thomas0506workout_whole_session_20260506_154716.csv",
+    "datasets/workout/yanz0510workout/yanz0510workout(left)/yanz0510workout_whole_session_20260510_222207.csv",
+    "datasets/workout/yanz0510workout/yanz0510workout_whole_session_20260510_222208.csv",
+    "datasets/workout/yoru0511workout/yoru0511workout(left)/yoru0511workout_whole_session_20260511_180605.csv",
+    "datasets/workout/yoru0511workout/yoru0511workout_whole_session_20260511_180608.csv",
+    "datasets/workout/yushuan0513workout/yushuan0513workout_whole_session_20260513_144737.csv",
+    "datasets/workout/ziho0512workout/ziho0512workout_whole_session_20260512_204157.csv"
+  ],
+  "holdout_files": [
+    "datasets/workout/tsenyu0515workout/tsenyu0515workout_whole_session_20260515_200226.csv"
+  ],
+  "labels": [
+    "db_bench_press",
+    "db_biceps_curl",
+    "db_rdl",
+    "db_shoulder_press",
+    "db_squat",
+    "db_triceps_curl",
+    "db_weighted_crunch",
+    "one_arm_db_row",
+    "Other"
+  ],
+  "training_windows": 28539,
+  "train_window_step": 4,
+  "active_training_windows": 4411,
+  "other_training_windows": 24128,
+  "feature_count": 723,
+  "feature_extraction_seconds": 327.50445562499954,
+  "fit_seconds": 4.522872875000758,
+  "model_path": "luckfox/artifacts/holdout_yentsen/luckfox_model.json"
+}

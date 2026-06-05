@@ -1,0 +1,25 @@
+{
+  "data_dirs": [
+    "datasets/workout"
+  ],
+  "output_dir": "artifacts/fatigue_rpe_vo2/018_same_name_xlsx_rpe_20260520",
+  "same_name_xlsx_only": true,
+  "n_folders": 9,
+  "n_ok_workbooks": 7,
+  "n_set_rows": 168,
+  "n_completed_rep_rows": 1977,
+  "files": {
+    "rep_level": "rpe_rep_level_from_same_name_xlsx.csv",
+    "set_level": "rpe_set_level_from_same_name_xlsx.csv",
+    "exercise_level": "rpe_exercise_level_from_same_name_xlsx.csv",
+    "status": "rpe_workbook_status.csv",
+    "set_distribution_overall": "rpe_final_set_distribution_overall.csv",
+    "rep_distribution_overall": "rpe_rep_distribution_overall.csv"
+  },
+  "notes": {
+    "row_key": "Workbook rows are parsed from labels like exerciseIndex_setId, e.g. 3_2.",
+    "duplicate_handling": "Duplicate workbook row keys are preserved with row_instance instead of being dropped.",
+    "x_handling": "X marks an incomplete rep; it is retained in rep-level output with completed=False and excluded from RPE distributions.",
+    "blank_handling": "Blank cells after an RPE value are forward-filled within the same workbook row and flagged in filled_from_previous."
+  }
+}

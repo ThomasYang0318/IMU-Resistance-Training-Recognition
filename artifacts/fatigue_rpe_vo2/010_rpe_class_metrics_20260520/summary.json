@@ -1,0 +1,33 @@
+{
+  "source_predictions": "artifacts/fatigue_rpe_vo2/006_gt_phase_rpe_model_rerun_20260519/tables/nested_model_predictions.csv",
+  "filter": "dataset=rpe_vo2_overlap_96_sets, lag_sec=45, model_stage=C_metadata_imu_phase_vo2, model_type=random_forest",
+  "n": 96,
+  "exact_rpe": {
+    "n": 96,
+    "overall_accuracy": 0.25,
+    "macro_f1": 0.10989583333333333,
+    "weighted_f1": 0.16328125000000002,
+    "labels": [
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10"
+    ]
+  },
+  "three_level_rpe": {
+    "n": 96,
+    "overall_accuracy": 0.5729166666666666,
+    "macro_f1": 0.37784002489884844,
+    "weighted_f1": 0.5332049486461251,
+    "labels": [
+      "Low",
+      "Moderate",
+      "High"
+    ]
+  },
+  "note": "Class accuracy is the same as per-class recall: correctly predicted samples in that true class divided by support. Predictions are rounded from regression outputs."
+}

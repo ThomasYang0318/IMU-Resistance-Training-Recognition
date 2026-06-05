@@ -1,0 +1,49 @@
+flowchart LR
+  subgraph I[Input Layer]
+    IMU[Wrist IMU waveform\nax ay az gx gy gz mx my mz]
+    GT[Manual GT labels\nset rep CE phase]
+    RPE[Borg/RPE workbook\nrep or set subjective label]
+    VO2[VO2 metabolic data\nset-level lag windows]
+  end
+
+  subgraph F[Feature Layer]
+    SEG[GT upper-bound segmentation]
+    TUT[TUT and progress\nrep duration cumulative TUT]
+    CE[CE phase features\nrange timing CE ratio]
+    WAVE[Waveform trend\nsimilarity drift gyro variation movement rate]
+    VFEAT[Delayed VO2 features\nmean peak slope subject delta]
+  end
+
+  subgraph M[Modeling Layer]
+    REL[Feature relevance\nSpearman centered rho]
+    FAT[Exercise-aware phase fatigue state]
+    FUSE[IMU + delayed VO2 fusion\nsubject calibration]
+    OUT[RPE trend / final RPE\ntraining suggestion]
+  end
+
+  subgraph V[Validation Layer]
+    SW[Subject-wise split]
+    CEN[Subject+exercise-centered analysis]
+    GAP[GT to predicted segmentation gap]
+    LIM[Limitations\nRPE subjectivity VO2 lag sample size]
+  end
+
+  IMU --> SEG
+  GT --> SEG
+  SEG --> TUT
+  SEG --> CE
+  SEG --> WAVE
+  RPE --> REL
+  VO2 --> VFEAT
+  TUT --> REL
+  CE --> REL
+  WAVE --> REL
+  VFEAT --> REL
+  REL --> FAT
+  FAT --> FUSE
+  VFEAT --> FUSE
+  FUSE --> OUT
+  SW --> REL
+  CEN --> REL
+  GAP --> FUSE
+  LIM --> OUT

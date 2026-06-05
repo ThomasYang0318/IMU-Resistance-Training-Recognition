@@ -1,0 +1,15 @@
+{
+  "figure":"artifacts\/scratch\/dcp_dp_fs_waveform_rerun_20260518_124534\/method_explainer_figures\/01_dcp_dp_fs_method_explainer_biceps_curl_seconds.png",
+  "subject":"haoyu0512workout",
+  "exercise":"db_biceps_curl",
+  "set_id":"3:active0",
+  "duration_sec":41.243832,
+  "sample_period_sec":0.009198,
+  "true_reps":12,
+  "predicted_reps":12,
+  "pca_count":12,
+  "multi_axis_consensus_count":12,
+  "center_count_after_few_shot":12,
+  "few_shot_duration_sec":3.761982,
+  "candidate_points":371
+}

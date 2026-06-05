@@ -1,0 +1,23 @@
+{
+  "figure": "artifacts/scratch/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940/figures/offset_calibrated_dense_pool_decision_yanz_db_squat_seconds.png",
+  "subject": "yanz0510workout",
+  "exercise": "db_squat",
+  "set_id": "2:active0",
+  "duration_sec": 26.859447,
+  "true_reps": 12,
+  "baseline_predicted_reps": 12,
+  "offset_predicted_reps": 12,
+  "candidate_points_clustered": 199,
+  "source_counts": {
+    "raw energy valley": 86,
+    "raw gyro valley": 137,
+    "raw fused valley": 145,
+    "axis midpoint": 151,
+    "multi-axis consensus": 11,
+    "PCA midpoint": 11,
+    "uniform/count prior": 11
+  },
+  "baseline_mean_boundary_error_sec": 0.6407239090909091,
+  "offset_mean_boundary_error_sec": 0.12279845454545453,
+  "note": "Candidate sources are summarized as counts only; time-aligned decision rows show merged pool, DP-selected baseline, offset-calibrated final, and GT reference."
+}

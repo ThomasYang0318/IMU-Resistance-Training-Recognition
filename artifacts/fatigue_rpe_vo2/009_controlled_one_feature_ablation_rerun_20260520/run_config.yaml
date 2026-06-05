@@ -1,0 +1,24 @@
+experiment_id: '004'
+domain: fatigue_rpe_vo2
+name: controlled_one_feature_ablation
+created_at: '2026-05-17'
+model: ridge_regression
+split: leave-one-subject-out
+categorical_controls:
+  - exercise
+progression_controls:
+  - set_index_numeric
+  - cumulative_tut_exercise_sec
+one_feature_rule: candidate models add exactly one numeric candidate to the progression control baseline
+inputs:
+  rpe_set_features: artifacts_rep_classification/021_rpe_feature_correlation_with_yushuan/020_rpe_set_level_feature_dataset.csv
+  vo2_merged_features: artifacts_rep_classification/022_realtime_rpe_vo2_feature_correlation/022_realtime_rpe_vo2_merged_set_dataset.csv
+outputs:
+  - tables/controlled_one_feature_ablation.csv
+  - tables/predictions.csv
+  - metrics/model_summary.csv
+  - metrics/fold_metrics.csv
+  - figures/progression_baselines_mae.png
+  - figures/one_feature_delta_mae.png
+  - figures/one_feature_delta_vs_best_progression.png
+  - figures/one_feature_coefficients.png

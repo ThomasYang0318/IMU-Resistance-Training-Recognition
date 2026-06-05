@@ -1,0 +1,54 @@
+{
+  "output_dir": "artifacts/scratch/dcp_dp_fs_slot_balanced_candidate_eval_20260518_142627",
+  "load_template_seconds": 28.34906404100002,
+  "active_blocks": 239,
+  "true_reps": 2720,
+  "variants": [
+    {
+      "method_id": "slot_balanced_t4_g18",
+      "method_name": "Slot-balanced top4/source + global18",
+      "topk_per_source": 4,
+      "global_topk": 18,
+      "source_bonus": 0.0,
+      "axis_bonus": 0.0,
+      "nearest_slot_fallback": true
+    },
+    {
+      "method_id": "slot_balanced_t8_g12",
+      "method_name": "Slot-balanced top8/source + global12",
+      "topk_per_source": 8,
+      "global_topk": 12,
+      "source_bonus": 0.0,
+      "axis_bonus": 0.0,
+      "nearest_slot_fallback": true
+    },
+    {
+      "method_id": "slot_balanced_t8_g24",
+      "method_name": "Slot-balanced top8/source + global24",
+      "topk_per_source": 8,
+      "global_topk": 24,
+      "source_bonus": 0.0,
+      "axis_bonus": 0.0,
+      "nearest_slot_fallback": true
+    },
+    {
+      "method_id": "slot_balanced_bonus_t6_g18",
+      "method_name": "Slot-balanced top6/source + source bonus",
+      "topk_per_source": 6,
+      "global_topk": 18,
+      "source_bonus": 0.05,
+      "axis_bonus": 0.03,
+      "nearest_slot_fallback": true
+    },
+    {
+      "method_id": "slot_balanced_bonus_t8_g24",
+      "method_name": "Slot-balanced top8/source + source bonus",
+      "topk_per_source": 8,
+      "global_topk": 24,
+      "source_bonus": 0.05,
+      "axis_bonus": 0.03,
+      "nearest_slot_fallback": true
+    }
+  ],
+  "comparison_csv": "artifacts/scratch/dcp_dp_fs_slot_balanced_candidate_eval_20260518_142627/comparison_summary.csv"
+}

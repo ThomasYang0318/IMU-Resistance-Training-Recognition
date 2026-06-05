@@ -1,0 +1,4 @@
+dataset,model_stage,class,support,correct,class_accuracy_recall,precision,recall,f1_score
+vo2_lag45_96_sets,M0_exercise_mean,5-6,22,0,0.0,0.0,0.0,0.0
+vo2_lag45_96_sets,M0_exercise_mean,7-8,35,30,0.8571428571428571,0.36585365853658536,0.8571428571428571,0.5128205128205128
+vo2_lag45_96_sets,M0_exercise_mean,9-10,37,6,0.16216216216216217,0.5,0.16216216216216217,0.24489795918367346

@@ -1,0 +1,32 @@
+{
+  "prediction_source": "artifacts/realtime_recofit_9class_other_20260519/window_predictions_9class_recofit.csv",
+  "prediction_col": "prediction_threshold0p25_smooth3_window_vote",
+  "note": "Each subject's rows come from subject-held-out cross-validation predictions. This summarizes per-subject generalization; it is not a fresh train-on-all-other-subjects LOSO retrain.",
+  "gate": {
+    "window_seconds": 4.0,
+    "min_action_windows": 8,
+    "min_action_ratio": 0.9,
+    "streak_windows": 3,
+    "min_peaks": 2,
+    "peak_z": 0.7,
+    "min_peak_distance_seconds": 0.55
+  },
+  "pre_gate": {
+    "method": "pre_gate",
+    "subjects": 10,
+    "mean_accuracy": 0.8498447696923573,
+    "mean_balanced_accuracy_present": 0.7147219709959545,
+    "mean_macro_f1_present": 0.6329914884192624,
+    "mean_other_recall": 0.9249071333094374,
+    "mean_min_present_recall": 0.21180213166236578
+  },
+  "confirmed_gate": {
+    "method": "confirmed_gate",
+    "subjects": 10,
+    "mean_accuracy": 0.8808100602443598,
+    "mean_balanced_accuracy_present": 0.6620425706999771,
+    "mean_macro_f1_present": 0.6551823906656041,
+    "mean_other_recall": 0.9686567522239482,
+    "mean_min_present_recall": 0.16150121692299726
+  }
+}

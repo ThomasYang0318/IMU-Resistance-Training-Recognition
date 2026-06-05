@@ -1,0 +1,5 @@
+method_id,predicted_reps,count_mae_reps,rep_f1_iou_0.50,phase_f1_iou_0.50,phase_tut_mae_sec,unassigned_pred_reps
+direct_ce_original,2655,0.6314,0.7873,0.599,1.6185,0
+improved_shift5,2655,0.6314,0.7847,0.6058,1.6197,0
+improved_shift20,2655,0.6314,0.7855,0.6217,1.7615,0
+improved_shift35,2655,0.6314,0.787,0.6196,1.8508,0

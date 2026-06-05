@@ -1,0 +1,22 @@
+{
+  "figure": "artifacts/scratch/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940/figures/candidate_boundary_pool_source_rows_yanz_db_squat_seconds.png",
+  "subject": "yanz0510workout",
+  "exercise": "db_squat",
+  "set_id": "2:active0",
+  "duration_sec": 26.859447,
+  "true_reps": 12,
+  "dp_selected_boundaries": 13,
+  "offset_final_boundaries": 13,
+  "source_counts": {
+    "raw gyro valleys": 153,
+    "raw fused valleys": 165,
+    "raw energy valleys": 91,
+    "axis midpoint candidates": 132,
+    "PCA midpoint candidates": 11,
+    "multi-axis consensus candidates": 11,
+    "uniform/count prior candidates": 11
+  },
+  "pca_count": 12,
+  "multi_axis_consensus_count": 12,
+  "note": "Row-wise candidate source figure. Red triangles are the DP-selected boundary sequence from the merged candidate pool; source rows are cues, not separate decision tracks."
+}

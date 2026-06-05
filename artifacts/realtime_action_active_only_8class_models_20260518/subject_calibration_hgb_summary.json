@@ -1,0 +1,243 @@
+{
+  "labels": [
+    "db_bench_press",
+    "db_biceps_curl",
+    "db_rdl",
+    "db_shoulder_press",
+    "db_squat",
+    "db_triceps_curl",
+    "db_weighted_crunch",
+    "one_arm_db_row"
+  ],
+  "calibration_definition": "first fraction of each held-out subject/class by time is added to training; metrics are on remaining windows",
+  "results": [
+    {
+      "frac": 0.1,
+      "accuracy": 0.9531921754084265,
+      "balanced_accuracy": 0.952719500797294,
+      "macro_f1": 0.952940029491278,
+      "weighted_f1": 0.9530887968117541,
+      "min_recall": 0.8876040703052729,
+      "per_class_recall": {
+        "db_bench_press": 0.9774217042971595,
+        "db_biceps_curl": 0.96,
+        "db_rdl": 0.9432362698120162,
+        "db_shoulder_press": 0.8876040703052729,
+        "db_squat": 0.9911090313523632,
+        "db_triceps_curl": 0.9914221218961625,
+        "db_weighted_crunch": 0.9176788124156545,
+        "one_arm_db_row": 0.9532839962997225
+      },
+      "train_seconds": 161.8234272930058,
+      "predict_seconds": 1.2644666670021252,
+      "folds": [
+        {
+          "fold": 1,
+          "calib": 315,
+          "test": 2804,
+          "acc": 0.9996433666191156,
+          "macro": 0.9997060651200229
+        },
+        {
+          "fold": 2,
+          "calib": 453,
+          "test": 3999,
+          "acc": 0.9464866216554139,
+          "macro": 0.9464033475490299
+        },
+        {
+          "fold": 3,
+          "calib": 446,
+          "test": 3919,
+          "acc": 0.9852003062005613,
+          "macro": 0.9847543077847514
+        },
+        {
+          "fold": 4,
+          "calib": 447,
+          "test": 3950,
+          "acc": 0.9691139240506329,
+          "macro": 0.9691558226563698
+        },
+        {
+          "fold": 5,
+          "calib": 445,
+          "test": 3936,
+          "acc": 0.8790650406504065,
+          "macro": 0.8774152391612318
+        }
+      ]
+    },
+    {
+      "frac": 0.2,
+      "accuracy": 0.9666162685213184,
+      "balanced_accuracy": 0.9666114158760555,
+      "macro_f1": 0.9672192308950169,
+      "weighted_f1": 0.9666198429559317,
+      "min_recall": 0.9311043566362716,
+      "per_class_recall": {
+        "db_bench_press": 0.9832036050798852,
+        "db_biceps_curl": 0.9804902451225613,
+        "db_rdl": 0.9497925311203319,
+        "db_shoulder_press": 0.9453409682457053,
+        "db_squat": 0.9968437664387164,
+        "db_triceps_curl": 0.9903406202338587,
+        "db_weighted_crunch": 0.9311043566362716,
+        "one_arm_db_row": 0.9557752341311134
+      },
+      "train_seconds": 202.86267237399443,
+      "predict_seconds": 1.365432458005671,
+      "folds": [
+        {
+          "fold": 1,
+          "calib": 628,
+          "test": 2491,
+          "acc": 0.9991971095945403,
+          "macro": 0.9991743480410588
+        },
+        {
+          "fold": 2,
+          "calib": 898,
+          "test": 3554,
+          "acc": 0.9487900956668542,
+          "macro": 0.9487313421309367
+        },
+        {
+          "fold": 3,
+          "calib": 882,
+          "test": 3483,
+          "acc": 0.9879414298018949,
+          "macro": 0.987717228789885
+        },
+        {
+          "fold": 4,
+          "calib": 886,
+          "test": 3511,
+          "acc": 0.9920250640843065,
+          "macro": 0.992187606174987
+        },
+        {
+          "fold": 5,
+          "calib": 885,
+          "test": 3496,
+          "acc": 0.9147597254004577,
+          "macro": 0.9171376119768379
+        }
+      ]
+    },
+    {
+      "frac": 0.3,
+      "accuracy": 0.9688968758639757,
+      "balanced_accuracy": 0.9686025843337771,
+      "macro_f1": 0.9695688412140877,
+      "weighted_f1": 0.968884023274122,
+      "min_recall": 0.9241898148148148,
+      "per_class_recall": {
+        "db_bench_press": 0.9920449227889565,
+        "db_biceps_curl": 0.9959977129788451,
+        "db_rdl": 0.9530583214793741,
+        "db_shoulder_press": 0.9529481834425253,
+        "db_squat": 0.9921780986762936,
+        "db_triceps_curl": 0.9901277584204413,
+        "db_weighted_crunch": 0.9241898148148148,
+        "one_arm_db_row": 0.9482758620689655
+      },
+      "train_seconds": 190.44283437500417,
+      "predict_seconds": 1.1455931250093272,
+      "folds": [
+        {
+          "fold": 1,
+          "calib": 940,
+          "test": 2179,
+          "acc": 0.9990821477742083,
+          "macro": 0.999056861204092
+        },
+        {
+          "fold": 2,
+          "calib": 1343,
+          "test": 3109,
+          "acc": 0.9610807333547765,
+          "macro": 0.9609912342759908
+        },
+        {
+          "fold": 3,
+          "calib": 1318,
+          "test": 3047,
+          "acc": 0.9891696750902527,
+          "macro": 0.9894383038923085
+        },
+        {
+          "fold": 4,
+          "calib": 1325,
+          "test": 3072,
+          "acc": 0.986328125,
+          "macro": 0.9866006764549908
+        },
+        {
+          "fold": 5,
+          "calib": 1320,
+          "test": 3061,
+          "acc": 0.9176739627572689,
+          "macro": 0.9208791183031904
+        }
+      ]
+    },
+    {
+      "frac": 0.4,
+      "accuracy": 0.9803194063558639,
+      "balanced_accuracy": 0.9802959675739967,
+      "macro_f1": 0.9807859375053347,
+      "weighted_f1": 0.9802669935088649,
+      "min_recall": 0.9270762997974341,
+      "per_class_recall": {
+        "db_bench_press": 0.9967213114754099,
+        "db_biceps_curl": 0.9973315543695798,
+        "db_rdl": 0.9667957941339236,
+        "db_shoulder_press": 0.9826388888888888,
+        "db_squat": 0.9985964912280701,
+        "db_triceps_curl": 0.9884745762711864,
+        "db_weighted_crunch": 0.9270762997974341,
+        "one_arm_db_row": 0.9847328244274809
+      },
+      "train_seconds": 191.26558891700552,
+      "predict_seconds": 0.9098305009902106,
+      "folds": [
+        {
+          "fold": 1,
+          "calib": 1251,
+          "test": 1868,
+          "acc": 0.9994646680942184,
+          "macro": 0.9995588164020516
+        },
+        {
+          "fold": 2,
+          "calib": 1787,
+          "test": 2665,
+          "acc": 0.975609756097561,
+          "macro": 0.9754215323015638
+        },
+        {
+          "fold": 3,
+          "calib": 1753,
+          "test": 2612,
+          "acc": 0.9888973966309341,
+          "macro": 0.9891292954073395
+        },
+        {
+          "fold": 4,
+          "calib": 1765,
+          "test": 2632,
+          "acc": 0.9981003039513677,
+          "macro": 0.9980877534601169
+        },
+        {
+          "fold": 5,
+          "calib": 1760,
+          "test": 2621,
+          "acc": 0.9450591377336894,
+          "macro": 0.9475602505675517
+        }
+      ]
+    }
+  ]
+}

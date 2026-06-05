@@ -1,0 +1,22 @@
+{
+  "dataset": "rpe_only_143_sets",
+  "model_stage": "M2_exercise_plus_cumulative_tut",
+  "n": 143,
+  "overall_accuracy": 0.48951048951048953,
+  "macro_f1": 0.29761403508771933,
+  "weighted_f1": 0.4702834008097166,
+  "true_distribution": {
+    "1-2": 0,
+    "3-4": 10,
+    "5-6": 36,
+    "7-8": 49,
+    "9-10": 48
+  },
+  "pred_distribution": {
+    "1-2": 0,
+    "3-4": 0,
+    "5-6": 40,
+    "7-8": 76,
+    "9-10": 27
+  }
+}

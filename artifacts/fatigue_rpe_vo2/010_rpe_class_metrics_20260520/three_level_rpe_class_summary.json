@@ -1,0 +1,11 @@
+{
+  "n": 96,
+  "overall_accuracy": 0.5729166666666666,
+  "macro_f1": 0.37784002489884844,
+  "weighted_f1": 0.5332049486461251,
+  "labels": [
+    "Low",
+    "Moderate",
+    "High"
+  ]
+}

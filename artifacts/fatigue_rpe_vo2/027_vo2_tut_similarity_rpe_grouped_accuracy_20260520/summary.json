@@ -1,0 +1,8 @@
+{
+  "source": "artifacts/fatigue_rpe_vo2/026_vo2_tut_similarity_rpe_ablation_20260520/vo2_tut_similarity_combo_predictions.csv",
+  "stage": "TUT + Rep similarity",
+  "files": [
+    "grouped_accuracy_summary.csv",
+    "grouped_per_class_metrics.csv"
+  ]
+}

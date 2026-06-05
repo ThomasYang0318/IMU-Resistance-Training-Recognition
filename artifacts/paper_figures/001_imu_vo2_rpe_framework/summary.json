@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "001",
+  "domain": "paper_figures",
+  "name": "imu_vo2_rpe_research_framework",
+  "created_at": "2026-05-17",
+  "status": "formal",
+  "task": "research framework design",
+  "question": "How should IMU, VO2 ground truth, and RPE/Borg be connected in a defensible resistance-training research framework?",
+  "input_data": [
+    "docs/borg_waveform_relation_018_zh.md",
+    "docs/realtime_rpe_vo2_features_022_zh.md",
+    "docs/phase_aware_fatigue_ce_rpe_023_zh.md",
+    "docs/imu_fatigue_component_relevance_024_paper_zh.md",
+    "artifacts_rep_classification/018_borg_gt_waveform_relation",
+    "artifacts_rep_classification/019_vo2_gt_waveform_relation",
+    "artifacts_rep_classification/021_rpe_feature_correlation_with_yushuan",
+    "artifacts_rep_classification/022_realtime_rpe_vo2_feature_correlation",
+    "artifacts_rep_classification/023_phase_aware_fatigue_ce_rpe_analysis",
+    "artifacts_rep_classification/024_imu_fatigue_component_relevance_figure"
+  ],
+  "input_artifacts": [
+    "artifacts_rep_classification/024_imu_fatigue_component_relevance_figure/024_imu_fatigue_component_relevance_table.csv",
+    "artifacts_rep_classification/024_imu_fatigue_component_relevance_figure/024_exercise_phase_feature_heatmap_values.csv"
+  ],
+  "output_dir": "artifacts/paper_figures/001_imu_vo2_rpe_framework",
+  "command": "Manual framework synthesis plus matplotlib figure generation; see run_config.yaml.",
+  "git_commit": "dirty-worktree",
+  "split": "not applicable; design artifact",
+  "primary_metrics": {
+    "literature_sources": 17,
+    "local_project_sources": 6,
+    "citation_trace_sentences": 18,
+    "figures": 1,
+    "formal_experiment": null
+  },
+  "key_files": {
+    "task_report": "docs/tasks/005_research_framework_imu_vo2_rpe_report.md",
+    "main_figure": "figures/imu_vo2_rpe_research_framework.png",
+    "figure_source": "figures/imu_vo2_rpe_research_framework.mmd",
+    "citation_traceability": "tables/citation_traceability.csv",
+    "overall_metrics": "metrics/overall.csv"
+  },
+  "notes": "Design artifact only. It does not modify schema, core metrics, artifact root, raw data, or prior formal results."
+}

@@ -1,0 +1,24 @@
+{
+  "output_dir": "artifacts/fatigue_rpe_vo2/007_gt_rep_rpe_model_rerun_20260520",
+  "target_reps_raw": 1696,
+  "target_reps_completed": 1685,
+  "merged_gt_reps": 1677,
+  "trainable_folders": [
+    "haoyu0512workout",
+    "hsianshun0514workout",
+    "tsenyu0515workout",
+    "yanz0510workout",
+    "yoru0511workout",
+    "yushuan0513workout"
+  ],
+  "excluded_training_folders": [
+    "thomas0506workout"
+  ],
+  "summary_csv": "artifacts/fatigue_rpe_vo2/007_gt_rep_rpe_model_rerun_20260520/018_borg_prediction_summary.csv",
+  "notes": {
+    "x_handling": "X is treated as not completed and excluded from Borg target training.",
+    "blank_handling": "Blank Borg cells are forward-filled from the previous rep value in the same set row.",
+    "thomas": "thomas0506workout is excluded from training because no same-name Borg workbook exists.",
+    "upper_bound": "This uses ground-truth rep/phase segmentation, so it tests whether waveform/TUT features contain Borg signal before automatic segmentation noise."
+  }
+}

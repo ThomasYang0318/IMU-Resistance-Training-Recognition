@@ -1,0 +1,42 @@
+{
+  "source": "artifacts/fatigue_rpe_vo2/020_same_name_xlsx_7subject_set_features_20260520/020_rpe_rep_level_feature_dataset.csv",
+  "output_dir": "artifacts/fatigue_rpe_vo2/029_rep_level_rpe_5class_direct_classifiers_20260520",
+  "classes": [
+    "1-2",
+    "3-4",
+    "5-6",
+    "7-8",
+    "9-10"
+  ],
+  "split_protocol": "7 cyclic subject-disjoint rotations: 5 train, 1 validation, 1 test.",
+  "best_pooled_stage": "progression_kg_drift__balanced_logistic_C1",
+  "best_pooled_summary": {
+    "stage": "progression_kg_drift__balanced_logistic_C1",
+    "n": 1945,
+    "accuracy": 0.46632390745501284,
+    "balanced_accuracy": 0.5378799652847988,
+    "macro_f1": 0.4759556642271468,
+    "weighted_f1": 0.4626995546424334,
+    "true_distribution": "{\"1-2\": 207, \"3-4\": 367, \"5-6\": 733, \"7-8\": 497, \"9-10\": 141}",
+    "pred_distribution": "{\"1-2\": 327, \"3-4\": 384, \"5-6\": 495, \"7-8\": 475, \"9-10\": 264}"
+  },
+  "val_selected_summary": {
+    "stage": "val_selected_best_macro_f1",
+    "n": 1945,
+    "accuracy": 0.44781491002570695,
+    "balanced_accuracy": 0.5251216296937031,
+    "macro_f1": 0.46268486404039255,
+    "weighted_f1": 0.44475971467639125,
+    "true_distribution": "{\"1-2\": 207, \"3-4\": 367, \"5-6\": 733, \"7-8\": 497, \"9-10\": 141}",
+    "pred_distribution": "{\"1-2\": 284, \"3-4\": 457, \"5-6\": 527, \"7-8\": 376, \"9-10\": 301}"
+  },
+  "files": {
+    "all_summary": "all_direct_classifier_5class_summary.csv",
+    "val_selected_summary": "val_selected_direct_classifier_5class_summary.csv",
+    "all_predictions": "all_direct_classifier_predictions.csv",
+    "val_selected_predictions": "val_selected_classifier_predictions.csv",
+    "best_confusion": "best_pooled_direct_classifier_confusion_matrix_row_proportion.png",
+    "val_selected_confusion": "val_selected_direct_classifier_confusion_matrix_row_proportion.png",
+    "ranking": "direct_classifier_accuracy_ranking.png"
+  }
+}

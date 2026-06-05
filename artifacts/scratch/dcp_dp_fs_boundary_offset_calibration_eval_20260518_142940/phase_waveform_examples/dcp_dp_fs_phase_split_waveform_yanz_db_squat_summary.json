@@ -1,0 +1,19 @@
+{
+  "figure": "artifacts/scratch/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940/phase_waveform_examples/dcp_dp_fs_phase_split_waveform_yanz_db_squat_seconds.png",
+  "predicted_reps_csv": "artifacts/scratch/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940/baseline_dcp_dp_fs/rep_segments_manifest.csv",
+  "phase_split_method": "pca-reversal",
+  "subject": "yanz0510workout",
+  "exercise": "db_squat",
+  "set_id": "2:active0",
+  "duration_sec": 26.859447,
+  "true_reps": 12,
+  "predicted_reps": 12,
+  "true_phases": 24,
+  "predicted_phases": 24,
+  "phase_order_for_exercise": [
+    "concentric",
+    "eccentric"
+  ],
+  "mean_best_iou": 0.3587354799731288,
+  "matched_iou_050": 5
+}

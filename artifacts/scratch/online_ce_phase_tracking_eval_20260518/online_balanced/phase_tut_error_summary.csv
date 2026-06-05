@@ -1,0 +1,4 @@
+phase,sets,phase_tut_mae_sec,phase_tut_bias_sec,phase_tut_median_abs_error_sec
+concentric,236,2.2751,0.0616,1.7719
+eccentric,235,2.2859,-0.0592,1.7719
+overall,471,2.2805,0.0013,1.7719

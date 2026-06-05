@@ -1,0 +1,14 @@
+{
+  "figure":"artifacts\/scratch\/dcp_dp_fs_boundary_offset_calibration_eval_20260518_142940\/figures\/offset_calibrated_vs_baseline_yanz_db_squat_seconds.png",
+  "subject":"yanz0510workout",
+  "exercise":"db_squat",
+  "set_id":"2:active0",
+  "duration_sec":26.859447,
+  "true_reps":12,
+  "baseline_predicted_reps":12,
+  "offset_predicted_reps":12,
+  "baseline_mean_boundary_error_samples":69.7272727273,
+  "offset_mean_boundary_error_samples":13.3636363636,
+  "baseline_mean_boundary_error_sec":0.6407239091,
+  "offset_mean_boundary_error_sec":0.1227984545
+}

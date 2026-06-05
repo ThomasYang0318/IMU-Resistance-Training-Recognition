@@ -1,0 +1,22 @@
+{
+  "dataset": "vo2_lag45_96_sets",
+  "model_stage": "M3_progression_control",
+  "n": 96,
+  "overall_accuracy": 0.53125,
+  "macro_f1": 0.31914614121510676,
+  "weighted_f1": 0.5295053366174055,
+  "true_distribution": {
+    "1-2": 0,
+    "3-4": 2,
+    "5-6": 22,
+    "7-8": 35,
+    "9-10": 37
+  },
+  "pred_distribution": {
+    "1-2": 0,
+    "3-4": 0,
+    "5-6": 20,
+    "7-8": 55,
+    "9-10": 21
+  }
+}

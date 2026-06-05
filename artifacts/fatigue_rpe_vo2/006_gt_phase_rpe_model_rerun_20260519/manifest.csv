@@ -1,0 +1,11 @@
+path,type,description
+summary.json,json,Artifact summary and key validation results.
+run_config.yaml,yaml,Input paths and validation configuration.
+metrics/nested_model_summary.csv,csv,Leave-subject-out metrics for nested models.
+metrics/model_delta_summary.csv,csv,Incremental gains from IMU and VO2 feature groups.
+metrics/fold_metrics.csv,csv,Per-held-out-subject fold metrics.
+tables/nested_model_predictions.csv,csv,Out-of-subject predictions for all evaluated models.
+figures/rpe_only_nested_mae.png,png,RPE-only MAE comparison on 143 sets.
+figures/vo2_lag_nested_metrics.png,png,VO2 lag nested MAE and Spearman comparison.
+figures/vo2_incremental_mae_gain.png,png,MAE reduction from adding VO2 to IMU phase features.
+figures/best_model_predictions.png,png,Scatter plot for the best nested model.

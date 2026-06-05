@@ -1,0 +1,5 @@
+fold,train_subjects,val_subject,test_subject,n_train_subjects
+1,yoru0511workout|yushuan0513workout,yanz0510workout,haoyu0512workout,2
+2,haoyu0512workout|yushuan0513workout,yoru0511workout,yanz0510workout,2
+3,haoyu0512workout|yanz0510workout,yushuan0513workout,yoru0511workout,2
+4,yanz0510workout|yoru0511workout,haoyu0512workout,yushuan0513workout,2

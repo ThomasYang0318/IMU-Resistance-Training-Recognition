@@ -1,0 +1,51 @@
+schema_version: "1.0"
+created_at: "2026-05-17"
+domain: "paper_figures"
+experiment_id: "001"
+name: "imu_vo2_rpe_research_framework"
+status: "formal"
+task_type: "framework_design"
+inputs:
+  project_docs:
+    - README.md
+    - todo.md
+    - proposal.md
+    - docs/README.md
+    - docs/agent_workflow_zh.md
+    - docs/documentation_policy_zh.md
+    - docs/artifact_organization_zh.md
+    - docs/task_report_template_ieee_zh.md
+  local_evidence:
+    - docs/borg_waveform_relation_018_zh.md
+    - docs/rpe_feature_correlation_020_zh.md
+    - docs/realtime_rpe_vo2_features_022_zh.md
+    - docs/phase_aware_fatigue_ce_rpe_023_zh.md
+    - docs/imu_fatigue_component_relevance_024_paper_zh.md
+    - artifacts_rep_classification/RESULTS_INDEX.md
+  literature_basis:
+    - Borg 1982 RPE scale
+    - Chen et al. 2002 RPE criterion validity meta-analysis
+    - Lea et al. 2022 resistance exercise RPE meta-analysis
+    - Zhao et al. 2022 and 2023 RPE for resistance exercise fatigue
+    - Pernek et al. 2015 strength-training intensity with wearable sensors
+    - Viecelli et al. 2020 accelerometer resistance exercise descriptors
+    - de Beukelaar and Mantini 2023 wearable resistance training review
+    - Staudenmayer et al. 2009 and Kozey et al. 2010 accelerometer EE/VO2 basis
+    - Joao et al. 2021 resistance training VO2/EE response
+    - Braganca et al. 2022 validation methodology
+outputs:
+  report: docs/tasks/005_research_framework_imu_vo2_rpe_report.md
+  figure_png: artifacts/paper_figures/001_imu_vo2_rpe_framework/figures/imu_vo2_rpe_research_framework.png
+  figure_source: artifacts/paper_figures/001_imu_vo2_rpe_framework/figures/imu_vo2_rpe_research_framework.mmd
+  citation_traceability: artifacts/paper_figures/001_imu_vo2_rpe_framework/tables/citation_traceability.csv
+constraints:
+  no_schema_change: true
+  no_core_metric_change: true
+  no_artifact_root_change: true
+  no_raw_data_modification: true
+  no_formal_experiment_rerun: true
+validation_commands:
+  - git status --short
+  - find docs/tasks -maxdepth 1 -type f | sort
+  - find artifacts/paper_figures -maxdepth 3 -type f | sort
+  - rg -n "TBD|UNRESOLVED|待處理" README.md proposal.md todo.md docs

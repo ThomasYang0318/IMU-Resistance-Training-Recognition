@@ -1,5 +1,7 @@
 # Rep 切割文獻比較與方法架構
 
+> 2026-05-17 artifact cleanup note：此文件包含早期歷史 artifact 路徑，例如 `waveform_method_comparison/`。該類舊輸出已被 014/016 論文敘事鏈取代並刪除；保留內容作方法脈絡參考。
+
 ## 結論
 
 目前模型還不能宣稱超越同類型高品質論文。
